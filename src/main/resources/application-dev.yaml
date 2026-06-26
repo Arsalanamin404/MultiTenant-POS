@@ -4,3 +4,8 @@ cookie:
 spring:
   jpa:
     show-sql: true
+
+  mail:
+    properties:
+      mail:
+        debug: true

@@ -20,11 +20,24 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 
 admin:
@@ -41,5 +54,6 @@ jwt:
   refresh-token:
       cookie-name: ${JWT_REFRESH_TOKEN_COOKIE_NAME}
 
-cookie:
-  secure: false
+otp:
+  expiry: ${OTP_EXPIRY}
+  length: ${OTP_LENGTH}

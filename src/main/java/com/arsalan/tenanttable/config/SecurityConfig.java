@@ -35,9 +35,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/auth/login",
                                 "/auth/register",
-                                "/auth/refresh").permitAll()
+                                "/auth/login",
+                                "/auth/refresh",
+                                "/auth/verify-email",
+                                "/auth/resend-verification",
+                                "/auth/forgot-password",
+                                "/mail-test",
+                                "/auth/reset-password").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
