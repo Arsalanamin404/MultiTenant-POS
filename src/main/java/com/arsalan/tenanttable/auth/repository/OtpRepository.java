@@ -4,6 +4,8 @@ import com.arsalan.tenanttable.auth.enitity.Otp;
 import com.arsalan.tenanttable.auth.enums.OtpPurpose;
 import com.arsalan.tenanttable.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,9 +19,16 @@ public interface OtpRepository extends JpaRepository<Otp, UUID> {
             OtpPurpose purpose
     );
 
+    @Query("""
+            SELECT o
+            FROM Otp o
+            WHERE o.user = :user
+              AND o.purpose = :purpose
+              AND o.used = false
+            """)
     List<Otp> findAllByUserAndPurposeAndUsedFalse(
-            User user,
-            OtpPurpose purpose
+            @Param("user") User user,
+            @Param("purpose") OtpPurpose purpose
     );
 
     void deleteAllByExpiresAtBefore(Instant instant);
