@@ -59,3 +59,7 @@ jwt:
 otp:
   expiry: ${OTP_EXPIRY}
   length: ${OTP_LENGTH}
+
+logging:
+  file:
+    name: logs/app.log

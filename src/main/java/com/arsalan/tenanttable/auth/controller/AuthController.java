@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -78,7 +80,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponseDto>> register(
-            @Valid @RequestBody RegisterRequestDto dto, HttpServletRequest request) {
+            @Valid @RequestBody RegisterRequestDto dto,
+            HttpServletRequest request
+    ) {
+        log.info("Registration request received for email: {}", dto.getEmail());
 
         UserResponseDto user = authService.register(dto);
 
@@ -100,7 +105,10 @@ public class AuthController {
             @Valid @RequestBody VerifyEmailRequestDto dto,
             HttpServletRequest request
     ) {
+        log.info("Email verification requested for {}", dto.email());
         authService.verifyEmail(dto);
+        log.info("Email verified successfully for {}", dto.email());
+
         ApiResponse<Void> response = ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Email verified successfully.",
@@ -115,6 +123,7 @@ public class AuthController {
             @Valid @RequestBody ResendOtpRequestDto dto,
             HttpServletRequest request
     ) {
+        log.info("Resend verification OTP requested for {}", dto.email());
         authService.resendVerificationOtp(dto);
         ApiResponse<Void> response = ApiResponse.success(
                 HttpStatus.OK.value(),
@@ -131,6 +140,12 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
+        log.info(
+                "Login request received for {} from IP {}",
+                dto.getEmail(),
+                getClientIp(request)
+        );
+
         ClientInfo clientInfo = new ClientInfo(getClientIp(request), request.getHeader("User-Agent"));
         AuthResponseDto auth = authService.login(dto,clientInfo);
 
@@ -145,6 +160,11 @@ public class AuthController {
                 auth,
                 request.getRequestURI()
         );
+        log.info(
+                "User '{}' logged in successfully from IP {}",
+                dto.getEmail(),
+                getClientIp(request)
+        );
         return ResponseEntity.ok(apiResponse);
     }
 
@@ -153,6 +173,10 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
+        log.info(
+                "Refresh token request received from IP {}",
+                getClientIp(request)
+        );
         String refreshToken = extractRefreshToken(request);
 
         ClientInfo clientInfo = new ClientInfo(
@@ -167,6 +191,11 @@ public class AuthController {
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         auth.setRefreshToken(null);
+
+        log.info(
+                "Access token refreshed from IP {}",
+                getClientIp(request)
+        );
 
         ApiResponse<AuthResponseDto> apiResponse = ApiResponse.success(
                         HttpStatus.OK.value(),
@@ -183,12 +212,20 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ){
+        log.info(
+                "Logout request received from IP {}",
+                getClientIp(request)
+        );
         String refreshToken = extractRefreshToken(request);
         authService.logout(refreshToken);
 
         response.addHeader(
                 HttpHeaders.SET_COOKIE,
                 clearRefreshCookie().toString()
+        );
+        log.info(
+                "User logged out successfully from IP {}",
+                getClientIp(request)
         );
 
         ApiResponse<Void> apiResponse = ApiResponse.success(
@@ -209,6 +246,11 @@ public class AuthController {
     ){
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        log.info(
+                "Logout from all devices requested by user {}",
+                userDetails.getUsername()
+        );
+
         authService.logoutAll(userDetails.getUser());
 
         response.addHeader(
@@ -222,7 +264,10 @@ public class AuthController {
                 null,
                 request.getRequestURI()
         );
-
+        log.info(
+                "User '{}' logged out",
+                authentication.getName()
+        );
         return ResponseEntity.ok(apiResponse);
     }
 
@@ -232,6 +277,10 @@ public class AuthController {
             @Valid @RequestBody ForgotPasswordRequestDto dto,
             HttpServletRequest request
     ) {
+        log.info(
+                "Forgot password request received for {}",
+                dto.email()
+        );
         authService.forgotPassword(dto);
 
         ApiResponse<Void> apiResponse = ApiResponse.success(
@@ -249,8 +298,16 @@ public class AuthController {
             @Valid @RequestBody ResetPasswordRequestDto dto,
             HttpServletRequest request
     ) {
+        log.info(
+                "Password reset request received for {}",
+                dto.email()
+        );
         authService.resetPassword(dto);
 
+        log.info(
+                "Password reset successful for {}",
+                dto.email()
+        );
         ApiResponse<Void> apiResponse = ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Password reset successfully",

@@ -1,0 +1,106 @@
+2026-07-04T15:36:06.082+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : Starting TenanttableApiApplication using Java 25.0.2 with PID 55768 (/Users/arsalanrather/Desktop/tenanttable-api/target/classes started by arsalanrather in /Users/arsalanrather/Desktop/tenanttable-api)
+2026-07-04T15:36:06.083+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : The following 1 profile is active: "dev"
+2026-07-04T15:36:06.111+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-07-04T15:36:06.111+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-07-04T15:36:06.511+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-04T15:36:06.538+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 3 JPA repository interfaces.
+2026-07-04T15:36:06.832+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4000 (http)
+2026-07-04T15:36:06.841+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-04T15:36:06.841+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-04T15:36:06.859+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 748 ms
+2026-07-04T15:36:06.932+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-04T15:36:06.995+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-04T15:36:07.029+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-04T15:36:07.222+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-04T15:36:07.240+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-04T15:36:07.310+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@55f076a8
+2026-07-04T15:36:07.311+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-04T15:36:07.369+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/tenanttable]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 14.17
+	Default catalog/schema: tenanttable/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-04T15:36:07.847+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-04T15:36:07.957+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-04T15:36:07.957+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jdbc.warn              : constraint "uk9qfk9j8toxcudxq21kvs7uw0r" of relation "tenants" does not exist, skipping
+2026-07-04T15:36:07.959+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-04T15:36:07.959+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jdbc.warn              : constraint "ukkn82rs0p55luybrg4n7x7di8" of relation "tenants" does not exist, skipping
+2026-07-04T15:36:07.985+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-04T15:36:08.122+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-04T15:36:08.268+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-04T15:36:08.268+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-04T15:36:08.724+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/api/v1'
+2026-07-04T15:36:08.728+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : Started TenanttableApiApplication in 2.853 seconds (process running for 3.054)
+2026-07-04T15:36:08.916+05:30  INFO 55768 --- [tenant_table-api] [restartedMain] c.a.t.bootstrap.SuperAdminSeeder         : Super Admin already exists. Skipping seeding.
+2026-07-04T15:36:08.917+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-07-04T15:36:08.917+05:30  WARN 55768 --- [tenant_table-api] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-07-04T15:36:17.904+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-1] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-04T15:36:17.905+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-04T15:36:17.913+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2026-07-04T15:36:18.455+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 207 ms
+2026-07-04T15:36:47.897+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-10] c.a.t.auth.controller.AuthController     : Refresh token request received from IP 0:0:0:0:0:0:0:1
+2026-07-04T15:36:47.913+05:30  WARN 55768 --- [tenant_table-api] [http-nio-4000-exec-10] c.a.t.exception.GlobalExceptionHandler   : Invalid refresh token from IP [0:0:0:0:0:0:0:1] for [/api/v1/auth/refresh].
+2026-07-04T15:36:47.957+05:30  WARN 55768 --- [tenant_table-api] [http-nio-4000-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.arsalan.tenanttable.exception.InvalidRefreshTokenException: Refresh token not found.]
+2026-07-04T15:37:20.207+05:30  INFO 55768 --- [tenant_table-api] [http-nio-4000-exec-2] c.a.t.auth.controller.AuthController     : Registration request received for email: user@example.com
+2026-07-04T15:37:59.220+05:30  INFO 55768 --- [tenant_table-api] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-04T15:37:59.236+05:30  INFO 55768 --- [tenant_table-api] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-04T15:37:59.247+05:30  INFO 55768 --- [tenant_table-api] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-04T15:37:59.253+05:30  INFO 55768 --- [tenant_table-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-04T15:37:59.255+05:30  INFO 55768 --- [tenant_table-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-04T15:38:58.027+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : Starting TenanttableApiApplication using Java 25.0.2 with PID 56002 (/Users/arsalanrather/Desktop/tenanttable-api/target/classes started by arsalanrather in /Users/arsalanrather/Desktop/tenanttable-api)
+2026-07-04T15:38:58.028+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : The following 1 profile is active: "dev"
+2026-07-04T15:38:58.053+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-07-04T15:38:58.053+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-07-04T15:38:58.478+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-04T15:38:58.511+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 3 JPA repository interfaces.
+2026-07-04T15:38:58.811+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4000 (http)
+2026-07-04T15:38:58.820+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-04T15:38:58.820+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-04T15:38:58.838+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 785 ms
+2026-07-04T15:38:58.912+05:30  WARN 56002 --- [tenant_table-api] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-04T15:38:58.974+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-04T15:38:59.001+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-04T15:38:59.194+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-04T15:38:59.211+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-04T15:38:59.265+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@73c7692b
+2026-07-04T15:38:59.265+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-04T15:38:59.309+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/tenanttable]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 14.17
+	Default catalog/schema: tenanttable/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-04T15:38:59.788+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-04T15:38:59.857+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-04T15:39:00.009+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-04T15:39:00.156+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-04T15:39:00.156+05:30  WARN 56002 --- [tenant_table-api] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-04T15:39:00.621+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/api/v1'
+2026-07-04T15:39:00.627+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] c.a.t.TenanttableApiApplication          : Started TenanttableApiApplication in 2.803 seconds (process running for 2.998)
+2026-07-04T15:39:00.826+05:30  INFO 56002 --- [tenant_table-api] [restartedMain] c.a.t.bootstrap.SuperAdminSeeder         : Super Admin already exists. Skipping seeding.
+2026-07-04T15:39:00.827+05:30  WARN 56002 --- [tenant_table-api] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-07-04T15:39:00.827+05:30  WARN 56002 --- [tenant_table-api] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-07-04T15:39:05.661+05:30  INFO 56002 --- [tenant_table-api] [http-nio-4000-exec-1] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-04T15:39:05.662+05:30  INFO 56002 --- [tenant_table-api] [http-nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-04T15:39:05.664+05:30  INFO 56002 --- [tenant_table-api] [http-nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-04T15:39:05.760+05:30  INFO 56002 --- [tenant_table-api] [http-nio-4000-exec-1] c.a.t.auth.controller.AuthController     : Registration request received for email: user@example.com
+2026-07-04T15:39:05.771+05:30  WARN 56002 --- [tenant_table-api] [http-nio-4000-exec-1] c.a.t.exception.GlobalExceptionHandler   : Resource already exists. User with email 'user@example.com' already exists
+2026-07-04T15:39:05.803+05:30  WARN 56002 --- [tenant_table-api] [http-nio-4000-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.arsalan.tenanttable.exception.ResourceAlreadyExistsException: User with email 'user@example.com' already exists]
+2026-07-04T15:39:39.540+05:30  INFO 56002 --- [tenant_table-api] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-04T15:39:39.564+05:30  INFO 56002 --- [tenant_table-api] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-04T15:39:39.582+05:30  INFO 56002 --- [tenant_table-api] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-04T15:39:39.592+05:30  INFO 56002 --- [tenant_table-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-04T15:39:39.595+05:30  INFO 56002 --- [tenant_table-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
