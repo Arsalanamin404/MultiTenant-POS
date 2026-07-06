@@ -46,10 +46,12 @@ public class Tenant {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private TenantStatus tenantStatus = TenantStatus.TRIAL;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private PlanType planType = PlanType.FREE;
 
     private LocalDateTime trialEndsAt;
@@ -60,9 +62,11 @@ public class Tenant {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Builder.Default
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<User> users = new ArrayList<>();
 
     @CreationTimestamp
