@@ -59,6 +59,44 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUnauthorizedException(
+            UnauthorizedException ex,
+            HttpServletRequest request
+    ) {
+        log.warn(
+                "Unauthorized user tried to login from IP [{}] for [{}].",
+                request.getRemoteAddr(),
+                request.getRequestURI()
+        );
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(TenantSuspendedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleTenantSuspendedException(
+            TenantSuspendedException ex,
+            HttpServletRequest request
+    ) {
+        log.warn(
+                "Suspended tenant tried to login from IP [{}] for [{}].",
+                request.getRemoteAddr(),
+                request.getRequestURI()
+        );
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(EmailAlreadyVerifiedException.class)
     public ResponseEntity<ApiResponse<Object>> handleEmailAlreadyVerified(
             EmailAlreadyVerifiedException ex,
