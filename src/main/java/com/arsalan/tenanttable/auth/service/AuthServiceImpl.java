@@ -3,14 +3,20 @@ package com.arsalan.tenanttable.auth.service;
 import com.arsalan.tenanttable.auth.dto.*;
 import com.arsalan.tenanttable.auth.enitity.RefreshToken;
 import com.arsalan.tenanttable.auth.enums.OtpPurpose;
+import com.arsalan.tenanttable.auth.mapper.UserMapper;
 import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.exception.*;
 import com.arsalan.tenanttable.mail.IEmailService;
+import com.arsalan.tenanttable.tenant.entity.Tenant;
+import com.arsalan.tenanttable.tenant.enums.PlanType;
+import com.arsalan.tenanttable.tenant.enums.TenantStatus;
+import com.arsalan.tenanttable.tenant.repository.TenantRepository;
 import com.arsalan.tenanttable.user.entity.User;
 import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,14 +24,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
+    private final TenantRepository tenantRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
@@ -48,25 +57,50 @@ public class AuthServiceImpl implements IAuthService {
             );
         }
 
+        if (tenantRepository.existsByNameIgnoreCase(dto.getTenantName())){
+            throw new ResourceAlreadyExistsException(
+                    "Tenant '" + dto.getTenantName() + "' already exists."
+            );
+        }
+
+        String tenantPhone = dto.getTenantPhoneNumber();
+
+        if (tenantPhone == null || tenantPhone.isBlank())
+            tenantPhone = dto.getPhoneNumber();
+
+        Tenant tenant = Tenant.builder()
+                .name(dto.getTenantName())
+                .address(dto.getTenantAddress())
+                .phoneNumber(tenantPhone)
+                .tenantStatus(TenantStatus.TRIAL)
+                .planType(PlanType.FREE)
+                .trialEndsAt(LocalDateTime.now().plusDays(14))
+                .build();
+
+        Tenant savedTenant = tenantRepository.save(tenant);
+
         User user = User.builder()
                 .fullName(dto.getFullName())
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .phoneNumber(dto.getPhoneNumber())
-                .tenantRole(TenantRole.MANAGER)
+                .tenantRole(TenantRole.OWNER)
+                .tenant(savedTenant)
                 .build();
 
-        User savedUser = userRepository.save(user);
+        User owner = userRepository.save(user);
 
-        otpService.generateOtp(savedUser, OtpPurpose.EMAIL_VERIFICATION);
+        log.info(
+                "Tenant '{}' ({}) created. Owner '{}' ({}) registered.",
+                savedTenant.getName(),
+                savedTenant.getId(),
+                owner.getEmail(),
+                owner.getId()
+        );
 
-        return UserResponseDto.builder()
-                .id(savedUser.getId())
-                .fullName(savedUser.getFullName())
-                .email(savedUser.getEmail())
-                .phoneNumber(savedUser.getPhoneNumber())
-                .createdAt(savedUser.getCreatedAt())
-                .build();
+        otpService.generateOtp(owner, OtpPurpose.EMAIL_VERIFICATION);
+
+        return UserMapper.toUserResponseDto(owner);
     }
 
     @Override
@@ -81,6 +115,7 @@ public class AuthServiceImpl implements IAuthService {
         }
 
         otpService.verifyOtp(user, dto.otp(), OtpPurpose.EMAIL_VERIFICATION);
+        log.info("Email '{}' verified successfully.", user.getEmail());
         user.setEmailVerified(true);
 
         userRepository.save(user);
@@ -106,17 +141,22 @@ public class AuthServiceImpl implements IAuthService {
         );
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Tenant tenant = userDetails.getUser().getTenant();
+
+        if (tenant.getTenantStatus() == TenantStatus.SUSPENDED) {
+            throw new TenantSuspendedException("Your organization has been suspended.");
+        }
 
         if (!userDetails.getUser().isEmailVerified()) {
-            throw new EmailNotVerifiedException(
-                    "Please verify your email before logging in."
-            );
+            throw new EmailNotVerifiedException("Please verify your email before logging in.");
         }
 
         Map<String, Object> claims = new HashMap<>();
 
         claims.put("userId", userDetails.getUser().getId().toString());
         claims.put("tenantRole", userDetails.getUser().getTenantRole().name());
+        claims.put("tenantId", userDetails.getUser().getTenant().getId().toString());
+        claims.put("platformRole", userDetails.getUser().getPlatformRole().name());
 
         String accessToken = jwtService.generateAccessToken(claims, userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
@@ -127,6 +167,10 @@ public class AuthServiceImpl implements IAuthService {
                 clientInfo.ipAddress(),
                 clientInfo.userAgent()
         );
+
+        log.info("User '{}' logged in successfully from IP [{}].",
+                userDetails.getUser().getEmail(),
+                clientInfo);
 
         return AuthResponseDto
                 .builder()
@@ -153,6 +197,8 @@ public class AuthServiceImpl implements IAuthService {
 
         claims.put("userId", user.getId().toString());
         claims.put("tenantRole", user.getTenantRole().name());
+        claims.put("tenantId", user.getTenant().getId().toString());
+        claims.put("platformRole", user.getPlatformRole().name());
 
         String newAccessToken = jwtService.generateAccessToken(claims, userDetails);
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);

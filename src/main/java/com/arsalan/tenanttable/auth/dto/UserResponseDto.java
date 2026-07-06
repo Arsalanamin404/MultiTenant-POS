@@ -1,10 +1,18 @@
 package com.arsalan.tenanttable.auth.dto;
 
 import com.arsalan.tenanttable.common.enums.TenantRole;
-import lombok.Builder;
-import lombok.Data;
+import com.arsalan.tenanttable.tenant.enums.PlanType;
+import com.arsalan.tenanttable.tenant.enums.TenantStatus;
+import com.arsalan.tenanttable.user.entity.User;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -14,6 +22,15 @@ public class UserResponseDto {
     private String fullName;
     private String email;
     private String phoneNumber;
+
+    private UUID tenantId;
+    private String tenantName;
+    private String tenantAddress;
+    private String tenantPhoneNumber;
+
     private TenantRole tenantRole;
+    private TenantStatus tenantStatus;
+    private PlanType planType;
+
     private Instant createdAt;
 }
