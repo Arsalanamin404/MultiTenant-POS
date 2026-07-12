@@ -1,6 +1,5 @@
 package com.arsalan.tenanttable.menu.dto;
 
-import com.arsalan.tenanttable.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
 

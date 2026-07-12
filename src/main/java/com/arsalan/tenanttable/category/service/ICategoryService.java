@@ -3,7 +3,6 @@ package com.arsalan.tenanttable.category.service;
 import com.arsalan.tenanttable.category.dto.CategoryResponseDto;
 import com.arsalan.tenanttable.category.dto.CreateCategoryRequestDto;
 import com.arsalan.tenanttable.category.dto.UpdateCategoryRequestDto;
-import com.arsalan.tenanttable.common.dto.ApiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
