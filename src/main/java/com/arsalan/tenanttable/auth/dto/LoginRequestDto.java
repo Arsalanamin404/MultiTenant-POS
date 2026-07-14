@@ -2,6 +2,7 @@ package com.arsalan.tenanttable.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -11,6 +12,7 @@ public class LoginRequestDto {
     private String email;
 
     @NotBlank(message = "password is required")
+    @Size(max = 25,message = "password can not exceed 25 characters")
     private String password;
 
 }
