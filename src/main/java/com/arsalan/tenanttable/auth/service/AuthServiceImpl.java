@@ -6,6 +6,7 @@ import com.arsalan.tenanttable.auth.enums.OtpPurpose;
 import com.arsalan.tenanttable.auth.mapper.UserMapper;
 import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
+import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.exception.*;
 import com.arsalan.tenanttable.mail.IEmailService;
@@ -84,6 +85,7 @@ public class AuthServiceImpl implements IAuthService {
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .phoneNumber(dto.getPhoneNumber())
+                .platformRole(PlatformRole.USER)
                 .tenantRole(TenantRole.OWNER)
                 .tenant(savedTenant)
                 .build();
@@ -207,10 +209,18 @@ public class AuthServiceImpl implements IAuthService {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put("userId", user.getId().toString());
-        claims.put("tenantRole", user.getTenantRole().name());
-        claims.put("tenantId", user.getTenant().getId().toString());
-        claims.put("platformRole", user.getPlatformRole().name());
 
+        if (user.getPlatformRole() != null) {
+            claims.put("platformRole", user.getPlatformRole().name());
+        }
+
+        if (user.getTenantRole() != null) {
+            claims.put("tenantRole", user.getTenantRole().name());
+        }
+
+        if (user.getTenant() != null) {
+            claims.put("tenantId", user.getTenant().getId().toString());
+        }
         String newAccessToken = jwtService.generateAccessToken(claims, userDetails);
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);
 

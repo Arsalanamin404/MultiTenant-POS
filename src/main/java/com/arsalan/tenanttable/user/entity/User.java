@@ -46,7 +46,6 @@ public class User {
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TenantRole tenantRole;
 
     @Enumerated(EnumType.STRING)

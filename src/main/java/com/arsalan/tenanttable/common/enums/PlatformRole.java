@@ -1,5 +1,6 @@
 package com.arsalan.tenanttable.common.enums;
 
 public enum PlatformRole {
-    SUPER_ADMIN
+    SUPER_ADMIN,
+    USER
 }
