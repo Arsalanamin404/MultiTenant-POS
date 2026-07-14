@@ -22,7 +22,7 @@ import java.util.UUID;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_table_tenant_name",
-                        columnNames = {"tenant_id", "name"}
+                        columnNames = {"tenant_id", "table_number"}
                 )
         },
         indexes = {
