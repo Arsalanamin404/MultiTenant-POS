@@ -27,6 +27,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private final ICurrentUserUtilService currentUserUtilService;
 
     @Override
+    @Transactional
     public CategoryResponseDto create(CreateCategoryRequestDto dto) {
         Tenant currentTenant = currentUserUtilService.getCurrentTenant();
         String categoryName = dto.getName().trim();
@@ -52,6 +53,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<CategoryResponseDto> getAll(Pageable pageable) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
         Page<Category> categories = categoryRepository
@@ -68,6 +70,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public CategoryResponseDto getById(UUID id) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
@@ -118,6 +121,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @Transactional
     public void delete(UUID id) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
