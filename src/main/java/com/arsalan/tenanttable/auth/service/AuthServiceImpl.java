@@ -141,22 +141,33 @@ public class AuthServiceImpl implements IAuthService {
         );
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Tenant tenant = userDetails.getUser().getTenant();
 
-        if (tenant.getTenantStatus() == TenantStatus.SUSPENDED) {
+        User user = userDetails.getUser();
+
+        Tenant tenant = user.getTenant();
+
+        if (tenant != null && tenant.getTenantStatus() == TenantStatus.SUSPENDED) {
             throw new TenantSuspendedException("Your organization has been suspended.");
         }
 
-        if (!userDetails.getUser().isEmailVerified()) {
+        if (!user.isEmailVerified()) {
             throw new EmailNotVerifiedException("Please verify your email before logging in.");
         }
 
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("userId", userDetails.getUser().getId().toString());
-        claims.put("tenantRole", userDetails.getUser().getTenantRole().name());
-        claims.put("tenantId", userDetails.getUser().getTenant().getId().toString());
-        claims.put("platformRole", userDetails.getUser().getPlatformRole().name());
+        claims.put("userId", user.getId().toString());
+
+        if (user.getTenantRole() != null) {
+            claims.put("tenantRole", user.getTenantRole().name());
+        }
+        if (tenant != null) {
+            claims.put("tenantId", tenant.getId().toString());
+        }
+
+        if (user.getPlatformRole() != null) {
+            claims.put("platformRole", user.getPlatformRole().name());
+        }
 
         String accessToken = jwtService.generateAccessToken(claims, userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);

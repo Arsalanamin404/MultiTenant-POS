@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,9 +23,21 @@ public class CustomUserDetails implements UserDetails {
     @Override
     @NullMarked
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(
-                new SimpleGrantedAuthority("ROLE_"+user.getTenantRole().name())
-        );
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if (user.getPlatformRole() != null) {
+            authorities.add(
+                    new SimpleGrantedAuthority("ROLE_" + user.getPlatformRole().name())
+            );
+        }
+
+        if (user.getTenantRole() != null) {
+            authorities.add(
+                    new SimpleGrantedAuthority("ROLE_" + user.getTenantRole().name())
+            );
+        }
+
+        return authorities;
     }
 
     @Override
