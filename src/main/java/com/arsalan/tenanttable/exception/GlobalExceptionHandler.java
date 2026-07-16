@@ -40,6 +40,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidOperationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleInvalidOperationException(
+            InvalidOperationException ex,
+            HttpServletRequest request
+    ) {
+        log.warn("Invalid Operation Exception :: {}", ex.getMessage());
+
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(InvalidRefreshTokenException.class)
     public ResponseEntity<ApiResponse<Object>> handleInvalidRefreshToken(
             InvalidRefreshTokenException ex,

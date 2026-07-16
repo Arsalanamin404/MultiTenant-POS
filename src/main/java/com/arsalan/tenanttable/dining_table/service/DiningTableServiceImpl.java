@@ -12,7 +12,9 @@ import com.arsalan.tenanttable.dining_table.repository.DiningTableRepository;
 import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
+import com.arsalan.tenanttable.tenant.repository.TenantRepository;
 import com.arsalan.tenanttable.user.entity.User;
+import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,14 +31,20 @@ import java.util.UUID;
 public class DiningTableServiceImpl implements IDiningTableService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final DiningTableRepository diningTableRepository;
+    private final UserRepository userRepository;
+    private final TenantRepository tenantRepository;
 
     @Override
     @Transactional
     public DiningTableResponseDto create(CreateDiningTableRequestDto dto) {
-        User currentUser = currentUserUtilService.getCurrentUser();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
         String normalizedTableNumber = dto.getTableNumber().trim().toUpperCase(Locale.ROOT);
 
         if (diningTableRepository.existsByTableNumberAndTenant(
@@ -76,7 +84,11 @@ public class DiningTableServiceImpl implements IDiningTableService {
     @Override
     @Transactional(readOnly = true)
     public Page<DiningTableResponseDto> getAll(Pageable pageable) {
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
+
         Page<DiningTable> tables = diningTableRepository.findAllByTenant(currentTenant, pageable);
         log.info(
                 "Retrieved {} dining tables for tenant '{}'.",
@@ -90,7 +102,10 @@ public class DiningTableServiceImpl implements IDiningTableService {
     @Override
     @Transactional(readOnly = true)
     public DiningTableResponseDto getById(UUID id) {
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         DiningTable diningTable = diningTableRepository
                 .findByIdAndTenant(id, currentTenant)
@@ -104,9 +119,14 @@ public class DiningTableServiceImpl implements IDiningTableService {
     @Override
     @Transactional
     public DiningTableResponseDto update(UUID id, UpdateDiningTableRequestDto dto) {
-        User currentUser = currentUserUtilService.getCurrentUser();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         DiningTable diningTable = diningTableRepository.findByIdAndTenant(id, currentTenant)
                 .orElseThrow(() -> new ResourceNotFoundException("Dining table with id '" + id + "' not found."));
@@ -147,9 +167,14 @@ public class DiningTableServiceImpl implements IDiningTableService {
     @Override
     @Transactional
     public DiningTableResponseDto updateStatus(UUID id, UpdateDiningTableStatusRequestDto dto) {
-        User currentUser = currentUserUtilService.getCurrentUser();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         DiningTable table = diningTableRepository.findByIdAndTenant(id,currentTenant)
                 .orElseThrow(()->new ResourceNotFoundException("Dining table with id '" + id + "' not found."));

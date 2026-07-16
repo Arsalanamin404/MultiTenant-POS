@@ -12,7 +12,9 @@ import com.arsalan.tenanttable.menu.entity.MenuItem;
 import com.arsalan.tenanttable.menu.mapper.MenuItemMapper;
 import com.arsalan.tenanttable.menu.repository.MenuRepository;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
+import com.arsalan.tenanttable.tenant.repository.TenantRepository;
 import com.arsalan.tenanttable.user.entity.User;
+import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,8 @@ public class MenuServiceImpl implements IMenuService {
     private final MenuRepository menuRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    private final TenantRepository tenantRepository;
 
     private MenuItem getMenuItemOrThrow(UUID id, UUID tenantId) {
         return menuRepository.findByIdAndTenantId(id, tenantId)
@@ -57,9 +61,14 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     @Transactional
     public MenuItemResponseDto createMenuItem(CreateMenuItemRequestDto dto) {
-        User currentUser = currentUserUtilService.getCurrentUser();
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category with id '" + dto.getCategoryId() + "' not found"));
 
@@ -102,7 +111,10 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     @Transactional(readOnly = true)
     public Page<MenuItemResponseDto> getAll(Pageable pageable) {
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         return menuRepository
                 .findAllByTenantId(currentTenant.getId(), pageable)
@@ -113,7 +125,10 @@ public class MenuServiceImpl implements IMenuService {
     @Transactional(readOnly = true)
     public MenuItemResponseDto getById(UUID id) {
 
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         MenuItem menuItem = menuRepository
                 .findByIdAndTenantId(id, currentTenant.getId())
@@ -125,8 +140,14 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     @Transactional
     public MenuItemResponseDto updateMenuItem(UUID id, UpdateMenuItemRequestDto dto) {
-        User currentUser = currentUserUtilService.getCurrentUser();
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         MenuItem menuItem = getMenuItemOrThrow(id, currentTenant.getId());
 
@@ -166,8 +187,14 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     @Transactional
     public void updateMenuItemAvailability(UUID id, boolean available) {
-        User currentUser = currentUserUtilService.getCurrentUser();
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         MenuItem menuItem = getMenuItemOrThrow(id,currentTenant.getId());
 
@@ -182,7 +209,10 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     @Transactional
     public void delete(UUID id) {
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
         MenuItem menuItem = getMenuItemOrThrow(id,currentTenant.getId());
 

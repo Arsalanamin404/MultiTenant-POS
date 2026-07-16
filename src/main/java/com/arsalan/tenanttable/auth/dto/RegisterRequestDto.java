@@ -42,7 +42,7 @@ public class RegisterRequestDto {
     @Size(max = 500, message = "Tenant address cannot exceed 500 characters")
     private String tenantAddress;
 
-    @NotBlank(message = "Tenant taxRate is required")
+    @NotNull(message = "Tax rate is required")
     @DecimalMin(value = "0.0", message = "Tax rate cannot be negative")
     @DecimalMax(value = "100.0", message = "Tax rate cannot exceed 100")
     private BigDecimal taxRate;

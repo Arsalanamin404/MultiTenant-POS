@@ -23,6 +23,7 @@ public final class UserMapper {
                 .tenantName(tenant.getName())
                 .tenantAddress(tenant.getAddress())
                 .tenantPhoneNumber(tenant.getPhoneNumber())
+                .taxRate(tenant.getTaxRate())
                 .tenantRole(user.getTenantRole())
                 .tenantStatus(tenant.getTenantStatus())
                 .planType(tenant.getPlanType())
