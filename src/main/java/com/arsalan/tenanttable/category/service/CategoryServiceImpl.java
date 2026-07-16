@@ -10,6 +10,7 @@ import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
+import com.arsalan.tenanttable.tenant.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,11 +26,16 @@ import java.util.UUID;
 public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepository categoryRepository;
     private final ICurrentUserUtilService currentUserUtilService;
+    private final TenantRepository tenantRepository;
 
     @Override
     @Transactional
     public CategoryResponseDto create(CreateCategoryRequestDto dto) {
-        Tenant currentTenant = currentUserUtilService.getCurrentTenant();
+        UUID tenantId = currentUserUtilService.getCurrentTenantId();
+
+        Tenant currentTenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
+
         String categoryName = dto.getName().trim();
 
         if (categoryRepository.existsByTenantIdAndNameIgnoreCase(currentTenant.getId(), categoryName))
