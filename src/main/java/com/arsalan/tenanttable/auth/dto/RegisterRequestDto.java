@@ -1,10 +1,9 @@
 package com.arsalan.tenanttable.auth.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 public class RegisterRequestDto {
@@ -42,4 +41,9 @@ public class RegisterRequestDto {
     @NotBlank(message = "Tenant address is required")
     @Size(max = 500, message = "Tenant address cannot exceed 500 characters")
     private String tenantAddress;
+
+    @NotBlank(message = "Tenant taxRate is required")
+    @DecimalMin(value = "0.0", message = "Tax rate cannot be negative")
+    @DecimalMax(value = "100.0", message = "Tax rate cannot exceed 100")
+    private BigDecimal taxRate;
 }

@@ -72,6 +72,7 @@ public class AuthServiceImpl implements IAuthService {
         Tenant tenant = Tenant.builder()
                 .name(dto.getTenantName())
                 .address(dto.getTenantAddress())
+                .taxRate(dto.getTaxRate())
                 .phoneNumber(tenantPhone)
                 .tenantStatus(TenantStatus.TRIAL)
                 .planType(PlanType.FREE)
