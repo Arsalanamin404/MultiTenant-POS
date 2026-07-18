@@ -190,6 +190,7 @@ public class AuthServiceImpl implements IAuthService {
                 .builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .user(UserMapper.toUserResponseDto(user))
                 .build();
 
     }
@@ -235,6 +236,7 @@ public class AuthServiceImpl implements IAuthService {
         return AuthResponseDto.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
+                .user(UserMapper.toUserResponseDto(user))
                 .build();
     }
 
