@@ -1,12 +1,15 @@
 package com.arsalan.tenanttable.dining_table.entity;
 
 import com.arsalan.tenanttable.dining_table.enums.DiningTableStatus;
+import com.arsalan.tenanttable.exception.InvalidOperationException;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -55,10 +58,12 @@ public class DiningTable {
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;
 
+    @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 
+    @LastModifiedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by_id")
     private User updatedBy;
@@ -70,4 +75,31 @@ public class DiningTable {
     @UpdateTimestamp
     @Column(nullable = false)
     private Instant updatedAt;
+
+    public void occupy(User user) {
+        if (this.status != DiningTableStatus.AVAILABLE && status != DiningTableStatus.RESERVED) {
+            throw new InvalidOperationException("Cannot occupy a table that is " + status);
+        }
+
+        this.status = DiningTableStatus.OCCUPIED;
+        this.updatedBy = user;
+    }
+
+    public void makeAvailable(User user) {
+        if (status == DiningTableStatus.AVAILABLE) {
+            return;
+        }
+
+        this.status = DiningTableStatus.AVAILABLE;
+        this.updatedBy = user;
+    }
+
+    public void reserve(User user) {
+        if (this.status != DiningTableStatus.AVAILABLE) {
+            throw new InvalidOperationException("Cannot reserve a table that is " + status);
+        }
+
+        this.status = DiningTableStatus.RESERVED;
+        this.updatedBy = user;
+    }
 }
