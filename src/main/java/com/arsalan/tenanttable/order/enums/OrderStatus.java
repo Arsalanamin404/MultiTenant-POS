@@ -6,14 +6,12 @@ public enum OrderStatus {
     PREPARING,
     READY,
     SERVED,
-    PAID,
     COMPLETED,
     CANCELLED,
     REJECTED;
 
     public boolean isTerminal() {
         return this == COMPLETED
-                || this == CANCELLED
-                || this == PAID;
+                || this == CANCELLED;
     }
 }

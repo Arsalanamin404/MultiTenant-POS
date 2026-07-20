@@ -127,7 +127,7 @@ public class Order {
     }
 
     public boolean isEditable() {
-        return status != OrderStatus.COMPLETED && status != OrderStatus.CANCELLED && status != OrderStatus.PAID;
+        return status != OrderStatus.COMPLETED && status != OrderStatus.CANCELLED;
     }
 
     public boolean canTransitionTo(OrderStatus newStatus) {
@@ -135,7 +135,9 @@ public class Order {
             // If the ORDER_STATUS is currently PENDING,
             // it may only become CONFIRMED or CANCELLED.
             case PENDING -> newStatus == OrderStatus.CONFIRMED
-                    || newStatus == OrderStatus.CANCELLED;
+                    || newStatus == OrderStatus.CANCELLED
+                    || newStatus == OrderStatus.REJECTED
+            ;
 
             case CONFIRMED -> newStatus == OrderStatus.PREPARING
                     || newStatus == OrderStatus.CANCELLED;
@@ -147,9 +149,9 @@ public class Order {
             case SERVED -> newStatus == OrderStatus.COMPLETED;
 
             // If the order is already
-            // COMPLETED, CANCELLED, or PAID
+            // COMPLETED, CANCELLED
             // it cannot transition to any other status.
-            case COMPLETED, CANCELLED, PAID, REJECTED -> false;
+            case COMPLETED, CANCELLED, REJECTED -> false;
         };
     }
 
@@ -159,5 +161,6 @@ public class Order {
                     "Cannot change order status from " + status + " to " + newStatus
             );
         }
+        this.status = newStatus;
     }
 }

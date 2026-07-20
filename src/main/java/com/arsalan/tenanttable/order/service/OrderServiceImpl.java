@@ -355,7 +355,12 @@ public class OrderServiceImpl implements IOrderService {
 
         OrderStatus previousStatus = currentOrder.getStatus();
 
+        log.info("Requested status: {}", dto.getStatus());
+        log.info("Current status before: {}", currentOrder.getStatus());
+
         currentOrder.changeStatus(dto.getStatus());
+
+        log.info("Current status after: {}", currentOrder.getStatus());
 
         if (currentOrder.getStatus().isTerminal()) {
             currentOrder.getDiningTable().makeAvailable(currentUser);
