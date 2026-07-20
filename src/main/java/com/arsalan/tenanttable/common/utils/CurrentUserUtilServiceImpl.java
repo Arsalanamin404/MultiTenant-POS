@@ -4,7 +4,9 @@ import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.exception.UnauthorizedException;
+import com.arsalan.tenanttable.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +41,13 @@ public class CurrentUserUtilServiceImpl implements ICurrentUserUtilService {
 
     @Override
     public UUID getCurrentTenantId() {
-        return getPrincipal().getUser().getTenant().getId();
+        User user = getPrincipal().getUser();
+        if (user.getTenant() == null) {
+            throw new AccessDeniedException(
+                    "Current user is not associated with any tenant."
+            );
+        }
+        return user.getTenant().getId();
     }
 
     @Override

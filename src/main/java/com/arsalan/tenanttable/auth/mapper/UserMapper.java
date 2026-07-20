@@ -14,20 +14,25 @@ public final class UserMapper {
 
         Tenant tenant = user.getTenant();
 
-        return UserResponseDto.builder()
+        UserResponseDto.UserResponseDtoBuilder builder = UserResponseDto.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
-                .tenantId(tenant.getId())
-                .tenantName(tenant.getName())
-                .tenantAddress(tenant.getAddress())
-                .tenantPhoneNumber(tenant.getPhoneNumber())
-                .taxRate(tenant.getTaxRate())
+                .platformRole(user.getPlatformRole())
                 .tenantRole(user.getTenantRole())
-                .tenantStatus(tenant.getTenantStatus())
-                .planType(tenant.getPlanType())
-                .createdAt(user.getCreatedAt())
-                .build();
+                .createdAt(user.getCreatedAt());
+        if (tenant != null) {
+            builder
+                    .tenantId(tenant.getId())
+                    .tenantName(tenant.getName())
+                    .tenantAddress(tenant.getAddress())
+                    .tenantPhoneNumber(tenant.getPhoneNumber())
+                    .taxRate(tenant.getTaxRate())
+                    .tenantStatus(tenant.getTenantStatus())
+                    .planType(tenant.getPlanType());
+        }
+
+        return builder.build();
     }
 }
