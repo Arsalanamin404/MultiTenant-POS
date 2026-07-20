@@ -11,54 +11,138 @@ TenantTable is being developed with a strong emphasis on **clean architecture**,
 The goal is to provide the backend foundation for a cloud-based restaurant POS system where each restaurant operates as an independent tenant while sharing the same application infrastructure.
 
 ---
+# Current Features
 
-## Current Features
+## Authentication & Security
 
-* User registration
-* JWT authentication (Access & Refresh Tokens)
-* Secure HTTP-only Refresh Token cookies
-* Email verification using OTP
-* Resend verification OTP
-* Forgot password with OTP
-* Password reset
-* Refresh token rotation
-* Logout & Logout from all devices
-* Global exception handling
-* Asynchronous email processing
-* Automatic email retry mechanism
-* OpenAPI / Swagger API documentation
+* User Registration
+* Secure JWT Authentication (Access & Refresh Tokens)
+* HTTP-only Refresh Token Cookies
+* Refresh Token Rotation
+* Logout
+* Logout from All Devices
+* Email Verification using OTP
+* Resend Verification OTP
+* Forgot Password using OTP
+* Password Reset
+* Role-based Authorization
+* Spring Security Integration
 
 ---
 
-## Architecture
+## Tenant Management
 
-The project follows a layered architecture to promote maintainability, scalability, and separation of concerns.
+* Restaurant (Tenant) Onboarding
+* Tenant Profile Management
+* Complete Tenant Isolation
+* Owner Account Creation
+* Tenant-specific Data Access
 
-### Current architectural highlights
+---
+
+## Category Management
+
+* Create Category
+* Update Category
+* Delete Category
+* Get Category by ID
+* List All Categories
+* Tenant-specific Categories
+
+---
+
+## Menu Management
+
+* Create Menu Item
+* Update Menu Item
+* Delete Menu Item
+* Get Menu Item by ID
+* List Menu Items
+* Update Item Availability
+* Category Association
+* Tenant-specific Menu Isolation
+
+---
+
+## Dining Table Management
+
+* Create Dining Tables
+* Update Dining Tables
+* Delete Dining Tables
+* Get Table by ID
+* List Dining Tables
+* Unique Table Numbers per Tenant
+* Table Status Management
+* Tenant-specific Table Isolation
+
+---
+
+## Order Management
+
+* Create Orders
+* Get Order by ID
+* List Orders
+* Update Order Status
+* Add Order Items
+* Remove Order Items
+* Order Total Calculation
+* Dining Table Association
+* Tenant-specific Order Isolation
+
+---
+
+## Infrastructure
 
 * Layered Architecture
 * Feature-based Package Structure
 * DTO-based API Design
 * Repository Pattern
-* JWT Authentication
-* Refresh Token Rotation
+* Mapper Layer
+* Bean Validation
 * Global Exception Handling
-* Asynchronous Task Processing
-* Retry Support for Email Delivery
+* Asynchronous Email Processing
+* Automatic Email Retry Mechanism
+* OpenAPI / Swagger Documentation
 * RESTful API Design
 
 ---
 
-## 🛠️ Tech Stack
+## Architecture
+
+The project follows a clean, modular architecture focused on scalability and maintainability.
+
+### Architectural Highlights
+
+* Layered Architecture
+* Feature-based Package Structure
+* DTO-based API Design
+* Repository Pattern
+* Service Layer
+* Mapper Layer
+* Spring Security
+* JWT Authentication
+* Refresh Token Rotation
+* Multi-tenant Architecture
+* Validation Layer
+* Global Exception Handling
+* Asynchronous Processing
+* Retry Support
+* RESTful API Design
+
+---
+
+## Tech Stack
 
 ### Backend
 
-* Java
+* Java 21
 * Spring Boot
 * Spring Security
 * Spring Data JPA
 * Hibernate
+* Spring Validation
 * Spring Retry
+* Spring Async
 * Maven
 
 ### Database
@@ -73,30 +157,41 @@ The project follows a layered architecture to promote maintainability, scalabili
 
 * JavaMailSender
 * Thymeleaf
-* Spring Async (`@Async`)
+* Spring Async
+* Spring Retry
 
 ### Documentation
 
-* OpenAPI / Swagger
+* OpenAPI 3
+* Swagger UI
 
 ---
 
-## Roadmap
+## Upcoming Modules
 
-Planned features include:
-
-* Multi-tenant restaurant management
-* Restaurant onboarding
-* Staff & role management
-* Menu management
-* Table management
-* Order management
-* Billing & payments
-* Inventory management
-* Reporting & analytics
+* Billing & Payments
+* Staff Management
+* Inventory Management
+* Supplier Management
+* Purchase Management
+* Discounts & Coupons
+* QR Code Table Ordering
+* Dashboard & Analytics
+* Reports
+* Restaurant Settings
+* Audit Logs
+* Subscription & Plan Management
+* Redis Caching
+* Docker Support
+* CI/CD Pipeline
+* Monitoring & Logging
 
 ---
 
 ## Author
 
 **Mohammad Arsalan Rather**
+
+* [GitHub](https://github.com/Arslanamin404)
+* [LinkedIn](https://www.linkedin.com/in/mohammad-arsalan-rather-27628722a)
+* [Email](mailto:arsalanrather.dev@gmail.com)
