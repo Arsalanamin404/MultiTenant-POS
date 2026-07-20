@@ -13,4 +13,5 @@ public interface IAuthService {
     void logoutAll(User user);
     void resetPassword(ResetPasswordRequestDto dto);
     void forgotPassword(ForgotPasswordRequestDto dto);
+    UserResponseDto getMe();
 }

@@ -8,6 +8,8 @@ import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
+import com.arsalan.tenanttable.common.utils.CurrentUserUtilServiceImpl;
+import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.*;
 import com.arsalan.tenanttable.mail.IEmailService;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
@@ -28,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -42,6 +45,7 @@ public class AuthServiceImpl implements IAuthService {
     private final IRefreshTokenService refreshTokenService;
     private final IOtpService otpService;
     private final IEmailService emailService;
+    private final ICurrentUserUtilService currentUserUtilService;
 
     @Override
     @Transactional
@@ -282,5 +286,15 @@ public class AuthServiceImpl implements IAuthService {
         userRepository.save(user);
 
         refreshTokenService.revokeAllRefreshTokens(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserResponseDto getMe() {
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(()->new ResourceNotFoundException("USER_NOT_FOUND"));
+
+        return UserMapper.toUserResponseDto(currentUser);
     }
 }

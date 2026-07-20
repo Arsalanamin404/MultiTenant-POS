@@ -318,4 +318,18 @@ public class AuthController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserResponseDto>> getMe(HttpServletRequest request){
+        UserResponseDto profile = authService.getMe();
+
+        ApiResponse<UserResponseDto> apiResponse = ApiResponse.success(
+                HttpStatus.OK.value(),
+                "USER_PROFILE_FETCHED_SUCCESSFULLY",
+                profile,
+                request.getRequestURI()
+                ) ;
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
 }
