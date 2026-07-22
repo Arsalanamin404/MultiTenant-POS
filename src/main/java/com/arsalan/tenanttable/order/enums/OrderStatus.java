@@ -12,6 +12,7 @@ public enum OrderStatus {
 
     public boolean isTerminal() {
         return this == COMPLETED
-                || this == CANCELLED;
+                || this == CANCELLED
+                || this == REJECTED;
     }
 }
