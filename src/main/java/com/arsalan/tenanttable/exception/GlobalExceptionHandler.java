@@ -40,6 +40,44 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BusinessOperationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBusinessOperationException(
+            BusinessOperationException ex,
+            HttpServletRequest request
+    ) {
+        log.warn(
+                "Invalid Business Operation [{}]. {}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidInvitationStateException.class)
+    public ResponseEntity<ApiResponse<Object>> handleInvalidInvitationStateException(
+            InvalidInvitationStateException ex,
+            HttpServletRequest request
+    ) {
+        log.warn(
+                "Invalid Staff Invitation State [{}]. {}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(InvalidOperationException.class)
     public ResponseEntity<ApiResponse<Object>> handleInvalidOperationException(
             InvalidOperationException ex,
