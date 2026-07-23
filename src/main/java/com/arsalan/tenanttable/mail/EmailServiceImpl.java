@@ -38,10 +38,9 @@ public class EmailServiceImpl implements IEmailService {
             helper.setText(html, true);
 
             mailSender.send(mimeMessage);
-        }catch (MailException ex){
+        } catch (MailException ex) {
             throw ex;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new EmailSendingException("Unexpected error while sending email", e);
         }
     }
@@ -51,6 +50,22 @@ public class EmailServiceImpl implements IEmailService {
         context.setVariable("name", fullName);
         context.setVariable("otp", otp);
         context.setVariable("expiry", expiry);
+        return context;
+    }
+
+    private Context createStaffInvitationContext(
+            String fullName,
+            String invitedBy,
+            String tenantName,
+            String invitationLink,
+            int expiryDays
+    ) {
+        Context context = new Context();
+        context.setVariable("name", fullName);
+        context.setVariable("invitedBy", invitedBy);
+        context.setVariable("tenantName", tenantName);
+        context.setVariable("invitationLink", invitationLink);
+        context.setVariable("expiryDays", expiryDays);
         return context;
     }
 
@@ -124,5 +139,37 @@ public class EmailServiceImpl implements IEmailService {
                 "email/verify-email",
                 context
         );
+    }
+
+    @Override
+    @Async
+    @Retryable(
+            retryFor = MailException.class,
+            maxAttempts = MAX_RETRIES,
+            backoff = @Backoff(delay = RETRY_DELAY, multiplier = 2)
+    )
+    public void sendStaffInvitationEmail(
+            String to,
+            String fullName,
+            String invitedBy,
+            String tenantName,
+            String invitationLink,
+            int expiryDays) {
+
+        Context context = createStaffInvitationContext(
+                fullName,
+                invitedBy,
+                tenantName,
+                invitationLink,
+                expiryDays
+        );
+
+        sendHtmlEmail(
+                to,
+                "You're Invited to Join " + tenantName + " on TenantTable",
+                "email/staff-invitation",
+                context
+        );
+
     }
 }

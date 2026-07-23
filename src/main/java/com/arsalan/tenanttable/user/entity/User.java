@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,13 +56,18 @@ public class User {
     @Builder.Default
     private boolean emailVerified = false;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean active = true;
+
+    @Builder.Default
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<RefreshToken> refreshTokens;
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id")
