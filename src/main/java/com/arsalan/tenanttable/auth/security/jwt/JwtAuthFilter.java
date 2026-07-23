@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +53,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                 .getAuthentication() == null
                 ) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                    if (!userDetails.isEnabled()) {
+                        throw new DisabledException("Account is deactivated.");
+                    }
 
                     if (jwtService.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

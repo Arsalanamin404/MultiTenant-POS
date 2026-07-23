@@ -50,4 +50,9 @@ public class CustomUserDetails implements UserDetails {
         return user.getEmail();
     }
 
+    @Override
+    public boolean isEnabled() {
+        return user.isActive();
+    }
+
 }

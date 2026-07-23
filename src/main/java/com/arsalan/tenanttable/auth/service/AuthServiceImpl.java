@@ -8,7 +8,6 @@ import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
-import com.arsalan.tenanttable.common.utils.CurrentUserUtilServiceImpl;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.*;
 import com.arsalan.tenanttable.mail.IEmailService;
@@ -62,7 +61,7 @@ public class AuthServiceImpl implements IAuthService {
             );
         }
 
-        if (tenantRepository.existsByNameIgnoreCase(dto.getTenantName())){
+        if (tenantRepository.existsByNameIgnoreCase(dto.getTenantName())) {
             throw new ResourceAlreadyExistsException(
                     "Tenant '" + dto.getTenantName() + "' already exists."
             );
@@ -159,6 +158,10 @@ public class AuthServiceImpl implements IAuthService {
 
         if (!user.isEmailVerified()) {
             throw new EmailNotVerifiedException("Please verify your email before logging in.");
+        }
+
+        if (!user.isActive()) {
+            throw new InvalidOperationException("Your account has been deactivated. Please contact your administrator.");
         }
 
         Map<String, Object> claims = new HashMap<>();
@@ -293,7 +296,7 @@ public class AuthServiceImpl implements IAuthService {
     public UserResponseDto getMe() {
         UUID userId = currentUserUtilService.getCurrentUserId();
         User currentUser = userRepository.findById(userId)
-                .orElseThrow(()->new ResourceNotFoundException("USER_NOT_FOUND"));
+                .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND"));
 
         return UserMapper.toUserResponseDto(currentUser);
     }
