@@ -54,7 +54,7 @@ jwt:
   refresh-expiry: ${JWT_REFRESH_TOKEN_EXPIRY}
 
   refresh-token:
-      cookie-name: ${JWT_REFRESH_TOKEN_COOKIE_NAME}
+    cookie-name: ${JWT_REFRESH_TOKEN_COOKIE_NAME}
 
 otp:
   expiry: ${OTP_EXPIRY}
@@ -63,3 +63,9 @@ otp:
 logging:
   file:
     name: logs/app.log
+
+app:
+  invitation:
+    expiration-days: ${INVITATION_EXPIRATION_DAYS}
+
+  frontend-url: ${FRONTEND_URL}
