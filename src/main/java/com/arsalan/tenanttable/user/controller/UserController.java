@@ -1,19 +1,19 @@
 package com.arsalan.tenanttable.user.controller;
 
 import com.arsalan.tenanttable.common.dto.ApiResponse;
-import com.arsalan.tenanttable.user.dto.AllUsersResponseDto;
-import com.arsalan.tenanttable.user.dto.ChangePasswordRequestDto;
-import com.arsalan.tenanttable.user.dto.UpdateProfileRequestDto;
-import com.arsalan.tenanttable.user.dto.UserResponseDto;
+import com.arsalan.tenanttable.user.dto.*;
 import com.arsalan.tenanttable.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.jspecify.annotations.NonNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -74,14 +74,52 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<AllUsersResponseDto>>> getAllUsers(
+    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    public ResponseEntity<ApiResponse<Page<UserSummaryResponseDto>>> getAllUsers(
+            Pageable pageable,
             HttpServletRequest request
     ) {
-        List<AllUsersResponseDto> users = userService.getAllUsers();
-        ApiResponse<List<AllUsersResponseDto>> response = ApiResponse.success(
+        Page<UserSummaryResponseDto> users = userService.getUsers(pageable);
+
+        ApiResponse<Page<UserSummaryResponseDto>> response = ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Users fetched successfully",
                 users,
+                request.getRequestURI()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    public ResponseEntity<ApiResponse<UserResponseDto>> getUser(
+            @Valid UUID id,
+            HttpServletRequest request
+    ) {
+        UserResponseDto user = userService.getUserById(id);
+
+        ApiResponse<UserResponseDto> response = ApiResponse.success(
+                HttpStatus.OK.value(),
+                "User fetched successfully",
+                user,
+                request.getRequestURI()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}/status")
+    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    public ResponseEntity<ApiResponse<UserResponseDto>> updateUserStatus(
+            @Valid UUID id,
+            @Valid @RequestBody UpdateUserStatusRequestDto dto,
+            HttpServletRequest request
+    ) {
+        UserResponseDto user = userService.updateUserStatus(id, dto);
+
+        ApiResponse<UserResponseDto> response = ApiResponse.success(
+                HttpStatus.OK.value(),
+                "User status updated successfully",
+                user,
                 request.getRequestURI()
         );
         return ResponseEntity.ok(response);

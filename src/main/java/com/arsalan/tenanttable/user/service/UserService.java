@@ -5,21 +5,20 @@ import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
 import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
-import com.arsalan.tenanttable.user.dto.AllUsersResponseDto;
-import com.arsalan.tenanttable.user.dto.ChangePasswordRequestDto;
-import com.arsalan.tenanttable.user.dto.UpdateProfileRequestDto;
-import com.arsalan.tenanttable.user.dto.UserResponseDto;
+import com.arsalan.tenanttable.user.dto.*;
 import com.arsalan.tenanttable.user.entity.User;
 import com.arsalan.tenanttable.user.mapper.UserMapper;
+import com.arsalan.tenanttable.user.mapper.UserSummaryMapper;
 import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,6 +34,11 @@ public class UserService implements IUserService {
         UUID userId = currentUserUtilService.getCurrentUserId();
 
         return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND"));
+    }
+
+    private User getOrThrowUser(UUID id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND"));
     }
 
@@ -107,16 +111,49 @@ public class UserService implements IUserService {
         return UserMapper.toDto(updatedUser);
     }
 
-    public List<AllUsersResponseDto> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(user -> AllUsersResponseDto.builder()
-                        .id(user.getId())
-                        .fullName(user.getFullName())
-                        .email(user.getEmail())
-                        .tenantRole(user.getTenantRole())
-                        .phoneNumber(user.getPhoneNumber())
-                        .build())
-                .toList();
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UserSummaryResponseDto> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(UserSummaryMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserResponseDto getUserById(UUID id) {
+        User user = getOrThrowUser(id);
+        return UserMapper.toDto(user);
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDto updateUserStatus(UUID userId, UpdateUserStatusRequestDto dto) {
+        User currentUser = getOrThrowCurrentUser();
+        User targetUser = getOrThrowUser(userId);
+
+        if (currentUser.getId().equals(targetUser.getId())) {
+            throw new InvalidOperationException("You cannot change your own account status.");
+        }
+
+        if (targetUser.isActive() == dto.getActive()) {
+            throw new InvalidOperationException("User is already " + (dto.getActive() ? "active." : "inactive."));
+        }
+
+        targetUser.setActive(dto.getActive());
+
+        if (!dto.getActive()) {
+            refreshTokenRepository.deleteAllByUser(targetUser);
+        }
+
+        log.info(
+                "User status updated by admin. adminId={}, userId={}, active={}",
+                currentUser.getId(),
+                targetUser.getId(),
+                dto.getActive()
+        );
+
+        User updatedUser = userRepository.save(targetUser);
+
+        return UserMapper.toDto(updatedUser);
     }
 }

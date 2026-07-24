@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +30,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             WHERE u.tenant.id = :id
                  AND u.tenantRole = :role
             """)
-    List<User> findAllByTenantIdAndTenantRole(UUID id, TenantRole role);
+    Page<User> findAllByTenantIdAndTenantRole(UUID id, TenantRole role);
 
     Page<User> findAllByTenant(Tenant tenant, Pageable pageable);
+
 }
