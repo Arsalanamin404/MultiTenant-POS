@@ -4,7 +4,8 @@ import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.tenant.enums.PlanType;
 import com.arsalan.tenanttable.tenant.enums.TenantStatus;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class UserResponseDto {
+public class RegisterResponseDto {
     private UUID id;
     private String fullName;
     private String email;

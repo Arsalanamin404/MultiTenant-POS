@@ -3,7 +3,7 @@ package com.arsalan.tenanttable.auth.service;
 import com.arsalan.tenanttable.auth.dto.*;
 import com.arsalan.tenanttable.auth.enitity.RefreshToken;
 import com.arsalan.tenanttable.auth.enums.OtpPurpose;
-import com.arsalan.tenanttable.auth.mapper.UserMapper;
+import com.arsalan.tenanttable.auth.mapper.AuthMapper;
 import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -48,7 +47,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     @Transactional
-    public UserResponseDto register(RegisterRequestDto dto) {
+    public RegisterResponseDto register(RegisterRequestDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new ResourceAlreadyExistsException(
                     "User with email '" + dto.getEmail() + "' already exists"
@@ -106,7 +105,7 @@ public class AuthServiceImpl implements IAuthService {
 
         otpService.generateOtp(owner, OtpPurpose.EMAIL_VERIFICATION);
 
-        return UserMapper.toUserResponseDto(owner);
+        return AuthMapper.toUserResponseDto(owner);
     }
 
     @Override
@@ -197,7 +196,7 @@ public class AuthServiceImpl implements IAuthService {
                 .builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .user(UserMapper.toUserResponseDto(user))
+                .user(AuthMapper.toUserResponseDto(user))
                 .build();
 
     }
@@ -243,7 +242,7 @@ public class AuthServiceImpl implements IAuthService {
         return AuthResponseDto.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
-                .user(UserMapper.toUserResponseDto(user))
+                .user(AuthMapper.toUserResponseDto(user))
                 .build();
     }
 
@@ -291,13 +290,5 @@ public class AuthServiceImpl implements IAuthService {
         refreshTokenService.revokeAllRefreshTokens(user);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserResponseDto getMe() {
-        UUID userId = currentUserUtilService.getCurrentUserId();
-        User currentUser = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND"));
 
-        return UserMapper.toUserResponseDto(currentUser);
-    }
 }

@@ -17,7 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 
@@ -79,15 +82,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponseDto>> register(
+    public ResponseEntity<ApiResponse<RegisterResponseDto>> register(
             @Valid @RequestBody RegisterRequestDto dto,
             HttpServletRequest request
     ) {
         log.info("Registration request received for email: {}", dto.getEmail());
 
-        UserResponseDto user = authService.register(dto);
+        RegisterResponseDto user = authService.register(dto);
 
-        ApiResponse<UserResponseDto> response =
+        ApiResponse<RegisterResponseDto> response =
                 ApiResponse.success(
                         HttpStatus.CREATED.value(),
                         "Registration successful. Please verify your email",
@@ -147,7 +150,7 @@ public class AuthController {
         );
 
         ClientInfo clientInfo = new ClientInfo(getClientIp(request), request.getHeader("User-Agent"));
-        AuthResponseDto auth = authService.login(dto,clientInfo);
+        AuthResponseDto auth = authService.login(dto, clientInfo);
 
         ResponseCookie cookie = buildRefreshCookie(auth.getRefreshToken());
 
@@ -198,11 +201,11 @@ public class AuthController {
         );
 
         ApiResponse<AuthResponseDto> apiResponse = ApiResponse.success(
-                        HttpStatus.OK.value(),
-                        "Token refreshed successfully",
-                        auth,
-                        request.getRequestURI()
-                );
+                HttpStatus.OK.value(),
+                "Token refreshed successfully",
+                auth,
+                request.getRequestURI()
+        );
 
         return ResponseEntity.ok(apiResponse);
     }
@@ -211,7 +214,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Void>> logout(
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) {
         log.info(
                 "Logout request received from IP {}",
                 getClientIp(request)
@@ -243,7 +246,7 @@ public class AuthController {
             Authentication authentication,
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         log.info(
@@ -314,20 +317,6 @@ public class AuthController {
                 null,
                 request.getRequestURI()
         );
-
-        return ResponseEntity.ok(apiResponse);
-    }
-
-    @GetMapping("/me")
-    public ResponseEntity<ApiResponse<UserResponseDto>> getMe(HttpServletRequest request){
-        UserResponseDto profile = authService.getMe();
-
-        ApiResponse<UserResponseDto> apiResponse = ApiResponse.success(
-                HttpStatus.OK.value(),
-                "USER_PROFILE_FETCHED_SUCCESSFULLY",
-                profile,
-                request.getRequestURI()
-                ) ;
 
         return ResponseEntity.ok(apiResponse);
     }

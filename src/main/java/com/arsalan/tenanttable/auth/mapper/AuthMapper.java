@@ -1,20 +1,20 @@
 package com.arsalan.tenanttable.auth.mapper;
 
-import com.arsalan.tenanttable.auth.dto.UserResponseDto;
+import com.arsalan.tenanttable.auth.dto.RegisterResponseDto;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.user.entity.User;
 
-public final class UserMapper {
+public final class AuthMapper {
 
-    private UserMapper() {
+    private AuthMapper() {
         // private constructor prevents instantiation
     }
 
-    public static UserResponseDto toUserResponseDto(User user) {
+    public static RegisterResponseDto toUserResponseDto(User user) {
 
         Tenant tenant = user.getTenant();
 
-        UserResponseDto.UserResponseDtoBuilder builder = UserResponseDto.builder()
+        RegisterResponseDto.RegisterResponseDtoBuilder builder = RegisterResponseDto.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
