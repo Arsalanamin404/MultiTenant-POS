@@ -8,9 +8,11 @@ import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
-import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.*;
 import com.arsalan.tenanttable.mail.IEmailService;
+import com.arsalan.tenanttable.settings.entity.Settings;
+import com.arsalan.tenanttable.settings.enums.Currency;
+import com.arsalan.tenanttable.settings.repository.SettingsRepository;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.tenant.enums.PlanType;
 import com.arsalan.tenanttable.tenant.enums.TenantStatus;
@@ -26,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +46,7 @@ public class AuthServiceImpl implements IAuthService {
     private final IRefreshTokenService refreshTokenService;
     private final IOtpService otpService;
     private final IEmailService emailService;
-    private final ICurrentUserUtilService currentUserUtilService;
+    private final SettingsRepository settingsRepository;
 
     @Override
     @Transactional
@@ -82,6 +85,17 @@ public class AuthServiceImpl implements IAuthService {
                 .build();
 
         Tenant savedTenant = tenantRepository.save(tenant);
+
+        Settings settings = Settings.builder()
+                .tenant(tenant)
+                .businessName(tenant.getName())
+                .currency(Currency.INR)
+                .timezone("Asia/Kolkata")
+                .taxRate(BigDecimal.ZERO)
+                .invoicePrefix("INV")
+                .build();
+
+        settingsRepository.save(settings);
 
         User user = User.builder()
                 .fullName(dto.getFullName())
@@ -147,6 +161,7 @@ public class AuthServiceImpl implements IAuthService {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        assert userDetails != null;
         User user = userDetails.getUser();
 
         Tenant tenant = user.getTenant();

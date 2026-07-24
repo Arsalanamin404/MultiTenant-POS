@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             WHERE u.tenant.id = :id
                  AND u.tenantRole = :role
             """)
-    Page<User> findAllByTenantIdAndTenantRole(UUID id, TenantRole role);
+    Page<User> findAllByTenantIdAndTenantRole(UUID id, TenantRole role, Pageable pageable);
 
     Page<User> findAllByTenant(Tenant tenant, Pageable pageable);
 
