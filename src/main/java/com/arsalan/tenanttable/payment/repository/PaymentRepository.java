@@ -49,4 +49,20 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
             @Param("start") Instant start,
             @Param("end") Instant end
     );
+
+    @Query("""
+            SELECT COALESCE(SUM(p.amount),0)
+            FROM Payment p
+            WHERE p.tenant.id = :tenantId
+            AND p.paymentStatus = 'SUCCESS'
+            AND p.paymentMethod = :paymentMethod
+            AND p.createdAt >= :start
+            AND p.createdAt < :end
+            """)
+    BigDecimal sumRevenueByPaymentMethodBetween(
+            UUID tenantId,
+            PaymentMethod paymentMethod,
+            Instant start,
+            Instant end
+    );
 }

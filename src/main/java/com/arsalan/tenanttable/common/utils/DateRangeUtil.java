@@ -39,4 +39,12 @@ public final class DateRangeUtil {
     public static Instant startOfNextMonth() {
         return firstDayOfNextMonth().atStartOfDay(ZONE).toInstant();
     }
+
+    public static Instant startOfDay(LocalDate date) {
+        return date.atStartOfDay(ZONE).toInstant();
+    }
+
+    public static Instant startOfNextDay(LocalDate date) {
+        return date.plusDays(1).atStartOfDay(ZONE).toInstant();
+    }
 }
