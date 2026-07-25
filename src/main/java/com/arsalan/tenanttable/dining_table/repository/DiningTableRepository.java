@@ -17,9 +17,7 @@ public interface DiningTableRepository extends JpaRepository<DiningTable, UUID> 
 
     boolean existsByTableNumberAndTenant(String tableNumber, Tenant tenant);
 
-    Optional<DiningTable> findByTableNumberAndTenant(String tableNumber, Tenant tenant);
+    Long countByTenantId(UUID tenantId);
 
-    long countByTenant(Tenant tenant);
-
-    Page<DiningTable> findAllByTenantAndStatus(DiningTableStatus status, Tenant tenant, Pageable pageable);
+    Long countByTenantIdAndStatus(UUID tenantId, DiningTableStatus status);
 }

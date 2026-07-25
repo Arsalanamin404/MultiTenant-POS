@@ -34,4 +34,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Page<User> findAllByTenant(Tenant tenant, Pageable pageable);
 
+    Long countByTenantId(UUID tenantId);
+
+    Long countByTenantIdAndActiveTrue(UUID tenantId);
+
 }
