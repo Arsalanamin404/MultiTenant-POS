@@ -18,6 +18,7 @@ public final class ExpenseCategorySeeder {
             "Office Supplies",
             "Marketing",
             "Tax",
+            "Inventory Purchase",
             "Other"
     );
 
