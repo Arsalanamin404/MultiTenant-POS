@@ -8,7 +8,9 @@ import com.arsalan.tenanttable.auth.security.CustomUserDetails;
 import com.arsalan.tenanttable.auth.security.jwt.JwtService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
+import com.arsalan.tenanttable.common.seeds.ExpenseCategorySeeder;
 import com.arsalan.tenanttable.exception.*;
+import com.arsalan.tenanttable.expenses.repository.ExpenseCategoryRepository;
 import com.arsalan.tenanttable.mail.IEmailService;
 import com.arsalan.tenanttable.settings.entity.Settings;
 import com.arsalan.tenanttable.settings.enums.Currency;
@@ -47,6 +49,7 @@ public class AuthServiceImpl implements IAuthService {
     private final IOtpService otpService;
     private final IEmailService emailService;
     private final SettingsRepository settingsRepository;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     @Override
     @Transactional
@@ -96,6 +99,8 @@ public class AuthServiceImpl implements IAuthService {
                 .build();
 
         settingsRepository.save(settings);
+
+        expenseCategoryRepository.saveAll(ExpenseCategorySeeder.createDefaultCategories(savedTenant));
 
         User user = User.builder()
                 .fullName(dto.getFullName())
