@@ -50,8 +50,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
 
     @Query("""
             SELECT new com.arsalan.tenanttable.reports.dto.ExpenseCategorySummaryDto(
-                e.expenseCategory.id,
-                e.expenseCategory.name,
+                e.category.id,
+                e.category.name,
                 COALESCE(SUM(e.amount), 0)
             )
             FROM Expense e
@@ -59,8 +59,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
             AND e.expenseDate >= :startDate
             AND e.expenseDate < :endDate
             GROUP BY
-                e.expenseCategory.id,
-                e.expenseCategory.name
+                e.category.id,
+                e.category.name
             ORDER BY
                 SUM(e.amount) DESC
             """)

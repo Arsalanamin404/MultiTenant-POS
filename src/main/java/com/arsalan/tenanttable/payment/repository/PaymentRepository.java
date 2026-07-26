@@ -24,11 +24,7 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
     Page<Payment> findAllByTenant(Tenant tenant, Pageable pageable);
 
-    Page<Payment> findAllByTenantAndPaymentMethod(
-            Tenant tenant,
-            PaymentMethod paymentMethod,
-            Pageable pageable
-    );
+    Optional<Payment> findByOrderIdAndTenant(UUID orderId, Tenant tenant);
 
     @Query("""
             SELECT COALESCE(SUM(p.amount), 0)
@@ -54,7 +50,6 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
             SELECT COALESCE(SUM(p.amount),0)
             FROM Payment p
             WHERE p.tenant.id = :tenantId
-            AND p.paymentStatus = 'SUCCESS'
             AND p.paymentMethod = :paymentMethod
             AND p.createdAt >= :start
             AND p.createdAt < :end
