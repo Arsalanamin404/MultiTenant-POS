@@ -1,0 +1,85 @@
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+
+
+# Services
+# --------
+# • server : Spring Boot REST API
+# • db     : PostgreSQL Database
+#
+# Networking
+# ----------
+# Docker Compose automatically creates a private network for all services.
+# Containers communicate using their service names.
+#
+# Example:
+#     jdbc:postgresql://db:5432/tenanttable
+#
+# The hostname "db" is the PostgreSQL container, NOT localhost.
+#
+# Environment
+# -----------
+# Configuration is loaded from the project's `.env` file.
+# Spring Boot uses the Docker profile (`application-docker.yml`) to configure
+# environment-specific settings such as the database host.
+#
+# Data Persistence
+# ----------------
+# PostgreSQL data is stored in the named volume `db-data`, allowing database
+# contents to survive container restarts and recreation.
+#
+# Startup Order
+# -------------
+# The backend starts only after PostgreSQL reports a healthy status, reducing
+# startup failures caused by database initialization delays.
+# ==============================================================================
+
+services:
+
+  server:
+    build:
+      context: .
+    container_name: tenantTable-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+
+  db:
+    image: postgres:16
+    container_name: tenantTable-db
+    restart: unless-stopped
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  db-data:
+

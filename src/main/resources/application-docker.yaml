@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/tenanttable
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+cookie:
+  secure: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

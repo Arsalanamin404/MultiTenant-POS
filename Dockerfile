@@ -1,30 +1,30 @@
-# Build Stage
-FROM eclipse-temurin:21-jdk AS builder
+# ---- Stage 1: Build ----------------------------------------------------------
+FROM eclipse-temurin:21-jdk-jammy AS build
 
 WORKDIR /app
 
-# Copy Maven wrapper and project files
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# Copy the mvnw wrapper with executable permissions.
+# --chmod=0755 Sets permissions (Owner: read/write/execute | Group/Others: read/execute)
+COPY --chmod=0755 mvnw mvnw
+COPY .mvn/ .mvn/
 
-RUN chmod +x mvnw
+# Copy only the POM first so dependency layers are cached separately
+# from source code changes (faster rebuilds).
+COPY pom.xml .
+RUN ./mvnw -B dependency:go-offline
 
-# Download dependencies (cached unless pom.xml changes)
-RUN ./mvnw dependency:go-offline
-
-# Copy source code
+# Now copy the rest of the source and build.
 COPY src ./src
+RUN ./mvnw -B clean package -DskipTests
 
-# Build application
-RUN ./mvnw clean package -DskipTests
 
-# Runtime Stage
-FROM eclipse-temurin:21-jre
+# ---- Stage 2: Run -------------------------------------------------------------
+FROM eclipse-temurin:21-jre-jammy AS run
 
 WORKDIR /app
 
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
