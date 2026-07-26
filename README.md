@@ -1,16 +1,25 @@
 # TenantTable API
 
-TenantTable is a **multi-tenant Restaurant Point of Sale (POS) backend** built with **Spring Boot**, designed for startup restaurants. The project focuses on providing a secure, scalable, and maintainable backend architecture that can evolve into a complete restaurant management platform.
+TenantTable is a **multi-tenant Restaurant Point of Sale (POS) backend** built with **Spring Boot**, designed for
+startup restaurants. The project focuses on providing a secure, scalable, and maintainable backend architecture that can
+evolve into a complete restaurant management platform.
 
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 ---
 
 ## About
 
-TenantTable is being developed with a strong emphasis on **clean architecture**, **security**, and **production-ready practices** rather than rapid feature development.
+TenantTable is being developed with a strong emphasis on **clean architecture**, **security**, and **production-ready
+practices** rather than rapid feature development.
 
-The goal is to provide the backend foundation for a cloud-based restaurant POS system where each restaurant operates as an independent tenant while sharing the same application infrastructure.
+The goal is to provide the backend foundation for a cloud-based restaurant POS system where each restaurant operates as
+an independent tenant while sharing the same application infrastructure.
 
 ---
+
 # Current Features
 
 ## Authentication & Security
@@ -37,6 +46,19 @@ The goal is to provide the backend foundation for a cloud-based restaurant POS s
 * Complete Tenant Isolation
 * Owner Account Creation
 * Tenant-specific Data Access
+
+---
+
+## User Management
+
+* Create Staff Members
+* Update Staff Members
+* Delete Staff Members
+* Get User by ID
+* List All Users
+* Update User Roles
+* Update User Status
+* Tenant-specific User Isolation
 
 ---
 
@@ -91,6 +113,53 @@ The goal is to provide the backend foundation for a cloud-based restaurant POS s
 
 ---
 
+## Payment Management
+
+* Process Payments
+* Record Payment Transactions
+* Support Multiple Payment Methods
+* Payment Status Tracking
+* Payment History
+* Order Payment Association
+* Tenant-specific Payment Isolation
+
+---
+
+## Restaurant Settings
+
+* Restaurant Profile Management
+* Business Hours Configuration
+* Currency Configuration
+* Tax Configuration
+* Receipt Settings
+* Restaurant Preferences
+
+---
+
+## Dashboard & Analytics
+
+* Dashboard Overview
+* Daily Sales Summary
+* Revenue Analytics
+* Order Analytics
+* Popular Menu Items
+* Payment Analytics
+* Active Tables Overview
+* Business Insights
+
+---
+
+## Reports
+
+* Sales Reports
+* Revenue Reports
+* Payment Reports
+* Order Reports
+* Date Range Filtering
+* Report Export Support
+
+---
+
 ## Infrastructure
 
 * Layered Architecture
@@ -104,8 +173,8 @@ The goal is to provide the backend foundation for a cloud-based restaurant POS s
 * Automatic Email Retry Mechanism
 * OpenAPI / Swagger Documentation
 * RESTful API Design
-
----
+* Docker Support
+* Monitoring & Logging
 
 ## Architecture
 
@@ -169,22 +238,13 @@ The project follows a clean, modular architecture focused on scalability and mai
 
 ## Upcoming Modules
 
-* Billing & Payments
-* Staff Management
-* Inventory Management
-* Supplier Management
-* Purchase Management
 * Discounts & Coupons
 * QR Code Table Ordering
-* Dashboard & Analytics
-* Reports
-* Restaurant Settings
 * Audit Logs
 * Subscription & Plan Management
+* Platform Administration
 * Redis Caching
-* Docker Support
 * CI/CD Pipeline
-* Monitoring & Logging
 
 ---
 
