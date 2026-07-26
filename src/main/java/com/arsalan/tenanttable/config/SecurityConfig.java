@@ -33,7 +33,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> { })
+                .cors(cors -> {
+                })
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/register",
@@ -42,11 +43,18 @@ public class SecurityConfig {
                                 "/auth/verify-email",
                                 "/auth/resend-verification-otp",
                                 "/auth/forgot-password",
-                                "/auth/reset-password").permitAll()
+                                "/auth/reset-password"
+                        ).permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/v3/api-docs/**").permitAll()
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/actuator/health",
+                                "/actuator/info"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
