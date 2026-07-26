@@ -59,6 +59,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(PdfGenerationException.class)
+    public ResponseEntity<ApiResponse<Object>> handlePdfGenerationException(
+            PdfGenerationException ex,
+            HttpServletRequest request
+    ) {
+        log.warn(
+                "Exception occurred while generating PDF [{}]. {}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+        ApiResponse<Object> response = ApiResponse.failure(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(InvalidInvitationStateException.class)
     public ResponseEntity<ApiResponse<Object>> handleInvalidInvitationStateException(
             InvalidInvitationStateException ex,
