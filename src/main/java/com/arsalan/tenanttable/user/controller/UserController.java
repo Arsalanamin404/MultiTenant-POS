@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<Page<UserSummaryResponseDto>>> getAllUsers(
             Pageable pageable,
             HttpServletRequest request
@@ -91,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDto>> getUser(
             @Valid UUID id,
             HttpServletRequest request
@@ -108,7 +108,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/status")
-    @PreAuthorize("hasRole('PLATFORM_ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDto>> updateUserStatus(
             @Valid UUID id,
             @Valid @RequestBody UpdateUserStatusRequestDto dto,

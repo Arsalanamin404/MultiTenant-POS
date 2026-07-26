@@ -13,8 +13,16 @@ public final class UserSummaryMapper {
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .platformRole(user.getPlatformRole())
-                .tenantId(user.getTenant().getId())
-                .tenantName(user.getTenant().getName())
+                .tenantId(
+                        user.getTenant() != null
+                                ? user.getTenant().getId()
+                                : null
+                )
+                .tenantName(
+                        user.getTenant() != null
+                                ? user.getTenant().getName()
+                                : null
+                )
                 .active(user.isActive())
                 .emailVerified(user.isEmailVerified())
                 .createdAt(user.getCreatedAt())
