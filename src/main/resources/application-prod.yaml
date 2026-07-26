@@ -1,8 +1,40 @@
-cookie:
-  secure: true
-
 spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/tenanttable
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
   jpa:
     show-sql: false
     hibernate:
       ddl-auto: validate
+
+  mail:
+    properties:
+      mail:
+        debug: false
+
+cookie:
+  secure: true
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      mail:
+        enabled: false
+
+info:
+  app:
+    name: TenantTable API
+    version: 1.0.0

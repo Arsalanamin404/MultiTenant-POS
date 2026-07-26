@@ -1,7 +1,9 @@
-cookie:
-  secure: false
-
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tenanttable
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
   jpa:
     show-sql: true
 
@@ -9,3 +11,6 @@ spring:
     properties:
       mail:
         debug: false
+
+cookie:
+  secure: false

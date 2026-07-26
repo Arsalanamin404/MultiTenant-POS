@@ -1,5 +1,5 @@
 server:
-  port: 4000
+  port: ${PORT}
   servlet:
     context-path: /api/v1
 
@@ -12,11 +12,6 @@ spring:
 
   profiles:
     active: ${ACTIVE_PROFILE}
-
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -31,7 +26,6 @@ spring:
     port: 587
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-
     properties:
       mail:
         smtp:
