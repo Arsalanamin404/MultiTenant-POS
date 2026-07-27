@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/settings")
-@PreAuthorize("OWNER")
+@PreAuthorize("hasRole('OWNER')")
 public class SettingsController {
     private final ISettingService settingService;
 

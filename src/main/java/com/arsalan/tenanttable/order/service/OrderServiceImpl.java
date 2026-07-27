@@ -127,7 +127,7 @@ public class OrderServiceImpl implements IOrderService {
                 .orderNumber(orderNumber)
                 .tenant(currentTenant)
                 .diningTable(table)
-                .taxRate(currentTenant.getTaxRate())
+                .taxRate(currentTenant.getSettings().getTaxRate())
                 .discountRate(BigDecimal.ZERO)
                 .createdBy(currentUser)
                 .updatedBy(currentUser)

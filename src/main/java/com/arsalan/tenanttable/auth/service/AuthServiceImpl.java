@@ -33,7 +33,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,16 +75,8 @@ public class AuthServiceImpl implements IAuthService {
             );
         }
 
-        String tenantPhone = dto.getTenantPhoneNumber();
-
-        if (tenantPhone == null || tenantPhone.isBlank())
-            tenantPhone = dto.getPhoneNumber();
-
         Tenant tenant = Tenant.builder()
                 .name(dto.getTenantName())
-                .address(dto.getTenantAddress())
-                .taxRate(dto.getTaxRate())
-                .phoneNumber(tenantPhone)
                 .tenantStatus(TenantStatus.TRIAL)
                 .planType(PlanType.FREE)
                 .trialEndsAt(LocalDateTime.now().plusDays(14))
@@ -94,18 +85,26 @@ public class AuthServiceImpl implements IAuthService {
         Tenant savedTenant = tenantRepository.save(tenant);
 
         auditLogService.log(
+                savedTenant,
                 AuditAction.CREATE,
                 AuditEntityType.TENANT,
                 savedTenant.getId(),
                 "Tenant " + savedTenant.getName() + " registered successfully"
         );
 
+        String tenantPhone = dto.getTenantPhoneNumber();
+
+        if (tenantPhone == null || tenantPhone.isBlank())
+            tenantPhone = dto.getPhoneNumber();
+
         Settings settings = Settings.builder()
-                .tenant(tenant)
-                .businessName(tenant.getName())
+                .tenant(savedTenant)
+                .email(dto.getEmail())
+                .phoneNumber(tenantPhone)
+                .address(dto.getTenantAddress())
                 .currency(Currency.INR)
                 .timezone("Asia/Kolkata")
-                .taxRate(BigDecimal.ZERO)
+                .taxRate(dto.getTaxRate())
                 .invoicePrefix("INV")
                 .build();
 

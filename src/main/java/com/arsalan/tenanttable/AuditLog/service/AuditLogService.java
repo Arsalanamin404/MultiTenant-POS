@@ -102,6 +102,27 @@ public class AuditLogService implements IAuditLogService {
     }
 
     @Override
+    public void log(Tenant tenant, AuditAction action, AuditEntityType entityType, UUID entityId, String description) {
+        log.debug("Recording audit log: action={}, entityType={}, entityId={}, tenantId={}", action, entityType, entityId, tenant.getId());
+
+        String ipAddress = request.getRemoteAddr();
+        String userAgent = request.getHeader("User-Agent");
+
+        AuditLog auditLog = AuditLog.builder()
+                .tenant(tenant)
+                .performedBy(null)
+                .action(action)
+                .entityType(entityType)
+                .entityId(entityId)
+                .description(description)
+                .ipAddress(ipAddress)
+                .userAgent(userAgent)
+                .build();
+
+        auditLogRepository.save(auditLog);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Page<AuditLogResponseDto> getAll(Pageable pageable) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();

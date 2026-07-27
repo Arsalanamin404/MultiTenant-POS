@@ -10,7 +10,7 @@ public final class SettingsMapper {
     public static SettingsResponseDto toDto(Settings settings) {
         return SettingsResponseDto.builder()
                 .id(settings.getId())
-                .businessName(settings.getBusinessName())
+                .businessName(settings.getTenant().getName())
                 .phoneNumber(settings.getPhoneNumber())
                 .email(settings.getEmail())
                 .website(settings.getWebsite())

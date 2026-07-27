@@ -32,8 +32,6 @@ public class Settings {
     @JoinColumn(name = "tenant_id", nullable = false, unique = true)
     private Tenant tenant;
 
-    @Column(nullable = false, length = 150)
-    private String businessName;
 
     @Column(nullable = false, length = 100)
     private String email;
@@ -91,10 +89,6 @@ public class Settings {
 
 
     public void update(UpdateSettingsRequestDto dto) {
-
-        if (dto.getBusinessName() != null)
-            this.businessName = dto.getBusinessName();
-
         if (dto.getEmail() != null)
             this.email = dto.getEmail();
 

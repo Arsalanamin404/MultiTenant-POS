@@ -14,21 +14,20 @@ public final class AuthMapper {
 
         Tenant tenant = user.getTenant();
 
-        RegisterResponseDto.RegisterResponseDtoBuilder builder = RegisterResponseDto.builder()
-                .id(user.getId())
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
-                .platformRole(user.getPlatformRole())
-                .tenantRole(user.getTenantRole())
-                .createdAt(user.getCreatedAt());
+        RegisterResponseDto.RegisterResponseDtoBuilder builder =
+                RegisterResponseDto.builder()
+                        .id(user.getId())
+                        .fullName(user.getFullName())
+                        .email(user.getEmail())
+                        .phoneNumber(user.getPhoneNumber())
+                        .platformRole(user.getPlatformRole())
+                        .tenantRole(user.getTenantRole())
+                        .createdAt(user.getCreatedAt());
+
         if (tenant != null) {
             builder
                     .tenantId(tenant.getId())
                     .tenantName(tenant.getName())
-                    .tenantAddress(tenant.getAddress())
-                    .tenantPhoneNumber(tenant.getPhoneNumber())
-                    .taxRate(tenant.getTaxRate())
                     .tenantStatus(tenant.getTenantStatus())
                     .planType(tenant.getPlanType());
         }

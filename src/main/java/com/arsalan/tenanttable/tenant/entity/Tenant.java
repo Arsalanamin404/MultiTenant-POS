@@ -1,18 +1,15 @@
 package com.arsalan.tenanttable.tenant.entity;
 
+import com.arsalan.tenanttable.category.entity.Category;
+import com.arsalan.tenanttable.settings.entity.Settings;
 import com.arsalan.tenanttable.tenant.enums.PlanType;
 import com.arsalan.tenanttable.tenant.enums.TenantStatus;
 import com.arsalan.tenanttable.user.entity.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.arsalan.tenanttable.category.entity.Category;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,22 +39,15 @@ public class Tenant {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
-
-    @Column(nullable = false)
-    private String address;
-
-    @Builder.Default
-    @DecimalMin(value = "0.0", message = "Tax rate cannot be negative")
-    @DecimalMax(value = "100.0", message = "Tax rate cannot exceed 100")
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal taxRate = BigDecimal.ZERO;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
     private TenantStatus tenantStatus = TenantStatus.TRIAL;
+
+    @OneToOne(mappedBy = "tenant",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Settings settings;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

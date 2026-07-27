@@ -3,6 +3,7 @@ package com.arsalan.tenanttable.AuditLog.service;
 import com.arsalan.tenanttable.AuditLog.dto.AuditLogResponseDto;
 import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
 import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,14 @@ public interface IAuditLogService {
 
     void log(
             User performedBy,
+            AuditAction action,
+            AuditEntityType entityType,
+            UUID entityId,
+            String description
+    );
+
+    void log(
+            Tenant tenant,
             AuditAction action,
             AuditEntityType entityType,
             UUID entityId,
