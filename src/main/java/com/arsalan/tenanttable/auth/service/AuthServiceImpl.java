@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.auth.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.auth.dto.*;
 import com.arsalan.tenanttable.auth.enitity.RefreshToken;
 import com.arsalan.tenanttable.auth.enums.OtpPurpose;
@@ -50,6 +53,7 @@ public class AuthServiceImpl implements IAuthService {
     private final IEmailService emailService;
     private final SettingsRepository settingsRepository;
     private final ExpenseCategoryRepository expenseCategoryRepository;
+    private final IAuditLogService auditLogService;
 
     @Override
     @Transactional
@@ -89,6 +93,13 @@ public class AuthServiceImpl implements IAuthService {
 
         Tenant savedTenant = tenantRepository.save(tenant);
 
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntityType.TENANT,
+                savedTenant.getId(),
+                "Tenant " + savedTenant.getName() + " registered successfully"
+        );
+
         Settings settings = Settings.builder()
                 .tenant(tenant)
                 .businessName(tenant.getName())
@@ -113,6 +124,14 @@ public class AuthServiceImpl implements IAuthService {
                 .build();
 
         User owner = userRepository.save(user);
+
+        auditLogService.log(
+                owner,
+                AuditAction.CREATE,
+                AuditEntityType.USER,
+                owner.getId(),
+                "Created owner account '" + owner.getEmail() + "'"
+        );
 
         log.info(
                 "Tenant '{}' ({}) created. Owner '{}' ({}) registered.",
@@ -143,6 +162,14 @@ public class AuthServiceImpl implements IAuthService {
         user.setEmailVerified(true);
 
         userRepository.save(user);
+        auditLogService.log(
+                user,
+                AuditAction.VERIFY,
+                AuditEntityType.USER,
+                user.getId(),
+                "Email verified: " + user.getEmail()
+        );
+
         emailService.sendWelcomeEmail(user.getEmail(), user.getFullName());
     }
 
@@ -156,6 +183,14 @@ public class AuthServiceImpl implements IAuthService {
             throw new EmailAlreadyVerifiedException("Email is already verified.");
 
         otpService.generateOtp(user, OtpPurpose.EMAIL_VERIFICATION);
+
+        auditLogService.log(
+                user,
+                AuditAction.UPDATE,
+                AuditEntityType.OTP,
+                user.getId(),
+                "Verification OTP resend: "
+        );
     }
 
     @Override
@@ -206,6 +241,14 @@ public class AuthServiceImpl implements IAuthService {
                 refreshToken,
                 clientInfo.ipAddress(),
                 clientInfo.userAgent()
+        );
+
+        auditLogService.log(
+                user,
+                AuditAction.LOGIN,
+                AuditEntityType.USER,
+                user.getId(),
+                "User logged In: "
         );
 
         log.info("User '{}' logged in successfully from IP [{}].",
@@ -268,12 +311,31 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public void logout(String refreshToken) {
+        RefreshToken token = refreshTokenService.verifyRefreshToken(refreshToken);
+
+        User user = token.getUser();
+
+        auditLogService.log(
+                user,
+                AuditAction.LOGOUT,
+                AuditEntityType.USER,
+                user.getId(),
+                "User logged out"
+        );
+
         refreshTokenService.revokeRefreshToken(refreshToken);
     }
 
     @Override
     public void logoutAll(User user) {
         refreshTokenService.revokeAllRefreshTokens(user);
+        auditLogService.log(
+                user,
+                AuditAction.LOGOUT,
+                AuditEntityType.USER,
+                user.getId(),
+                "Logged out from all devices"
+        );
     }
 
     @Override
@@ -283,6 +345,14 @@ public class AuthServiceImpl implements IAuthService {
                 .ifPresent(user -> {
                     if (user.isEmailVerified()) {
                         otpService.generateOtp(user, OtpPurpose.RESET_PASSWORD);
+
+                        auditLogService.log(
+                                user,
+                                AuditAction.VERIFY,
+                                AuditEntityType.USER,
+                                user.getId(),
+                                "Password reset requested"
+                        );
                     }
                 });
 
@@ -306,6 +376,14 @@ public class AuthServiceImpl implements IAuthService {
 
         user.setPassword(passwordEncoder.encode(dto.newPassword()));
         userRepository.save(user);
+
+        auditLogService.log(
+                user,
+                AuditAction.UPDATE,
+                AuditEntityType.USER,
+                user.getId(),
+                "Password Updated"
+        );
 
         refreshTokenService.revokeAllRefreshTokens(user);
     }

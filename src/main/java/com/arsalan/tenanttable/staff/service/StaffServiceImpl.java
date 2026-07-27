@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.staff.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.auth.repository.RefreshTokenRepository;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
@@ -32,6 +35,7 @@ public class StaffServiceImpl implements IStaffService {
     private final TenantRepository tenantRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final IAuditLogService auditLogService;
 
     private @NonNull User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -92,6 +96,13 @@ public class StaffServiceImpl implements IStaffService {
 
         staff.setTenantRole(dto.getTenantRole());
 
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.STAFF,
+                staff.getId(),
+                "Staff role updated successfully"
+        );
+
         return StaffMapper.toDto(staff);
     }
 
@@ -121,6 +132,13 @@ public class StaffServiceImpl implements IStaffService {
         }
 
         staff.setActive(dto.getActive());
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.STAFF,
+                staff.getId(),
+                "Staff status updated successfully"
+        );
 
         if (!dto.getActive()) {
             refreshTokenRepository.deleteAllByUser(staff);

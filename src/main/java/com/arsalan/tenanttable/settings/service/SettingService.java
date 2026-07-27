@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.settings.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
 import com.arsalan.tenanttable.settings.dto.SettingsResponseDto;
@@ -20,6 +23,7 @@ import java.util.UUID;
 public class SettingService implements ISettingService {
     private final SettingsRepository settingsRepository;
     private final ICurrentUserUtilService currentUserUtilService;
+    private final IAuditLogService auditLogService;
 
     private Settings getOrThrowSettings() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
@@ -51,6 +55,13 @@ public class SettingService implements ISettingService {
                 settings.getTenant().getId());
 
         settings.update(dto);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.SETTINGS,
+                settings.getId(),
+                "Settings updated successfully for tenantId: " + settings.getTenant().getId()
+        );
 
         log.info("Settings updated successfully for tenantId={}",
                 settings.getTenant().getId());

@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.menu.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.category.entity.Category;
 import com.arsalan.tenanttable.category.repository.CategoryRepository;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
@@ -33,6 +36,7 @@ public class MenuServiceImpl implements IMenuService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final TenantRepository tenantRepository;
+    private final IAuditLogService auditLogService;
 
     private MenuItem getMenuItemOrThrow(UUID id, UUID tenantId) {
         return menuRepository.findByIdAndTenantId(id, tenantId)
@@ -100,6 +104,15 @@ public class MenuServiceImpl implements IMenuService {
                 .build();
 
         MenuItem savedMenuItem = menuRepository.save(menuItem);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.CREATE,
+                AuditEntityType.MENU_ITEM,
+                savedMenuItem.getId(),
+                "Menu item created"
+        );
+
         log.info(
                 "Menu item '{}' created successfully with id {}",
                 savedMenuItem.getName(),
@@ -151,7 +164,7 @@ public class MenuServiceImpl implements IMenuService {
 
         MenuItem menuItem = getMenuItemOrThrow(id, currentTenant.getId());
 
-        Category category =  getCategoryOrThrow(dto.getCategoryId(),currentTenant.getId());
+        Category category = getCategoryOrThrow(dto.getCategoryId(), currentTenant.getId());
 
         String menuName = dto.getName().trim();
 
@@ -181,6 +194,14 @@ public class MenuServiceImpl implements IMenuService {
 
         MenuItem updated = menuRepository.save(menuItem);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.MENU_ITEM,
+                updated.getId(),
+                "Menu item updated"
+        );
+
         return MenuItemMapper.toDto(updated);
     }
 
@@ -196,12 +217,20 @@ public class MenuServiceImpl implements IMenuService {
         Tenant currentTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
-        MenuItem menuItem = getMenuItemOrThrow(id,currentTenant.getId());
+        MenuItem menuItem = getMenuItemOrThrow(id, currentTenant.getId());
 
         log.info("Updating availability of menu item '{}' to {}", id, available);
 
         menuItem.setAvailable(available);
         menuItem.setUpdatedBy(currentUser);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.MENU_ITEM,
+                menuItem.getId(),
+                "Menu item availability changed"
+        );
 
         menuRepository.save(menuItem);
     }
@@ -214,10 +243,17 @@ public class MenuServiceImpl implements IMenuService {
         Tenant currentTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
-        MenuItem menuItem = getMenuItemOrThrow(id,currentTenant.getId());
+        MenuItem menuItem = getMenuItemOrThrow(id, currentTenant.getId());
 
         log.info("Deleting menu item '{}'", id);
 
         menuRepository.delete(menuItem);
+
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntityType.MENU_ITEM,
+                menuItem.getId(),
+                "Menu item deleted"
+        );
     }
 }

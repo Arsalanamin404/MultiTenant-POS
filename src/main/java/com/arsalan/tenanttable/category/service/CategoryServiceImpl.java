@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.category.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.category.dto.CategoryResponseDto;
 import com.arsalan.tenanttable.category.dto.CreateCategoryRequestDto;
 import com.arsalan.tenanttable.category.dto.UpdateCategoryRequestDto;
@@ -27,6 +30,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepository categoryRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final TenantRepository tenantRepository;
+    private final IAuditLogService auditLogService;
 
     @Override
     @Transactional
@@ -48,6 +52,13 @@ public class CategoryServiceImpl implements ICategoryService {
                 .build();
 
         Category savedCategory = categoryRepository.save(category);
+
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntityType.CATEGORY,
+                savedCategory.getId(),
+                "Category created"
+        );
 
         log.info(
                 "Category '{}' created in tenant '{}'.",
@@ -117,6 +128,14 @@ public class CategoryServiceImpl implements ICategoryService {
             category.setDescription(dto.getDescription().trim());
 
         Category updatedCategory = categoryRepository.save(category);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.CATEGORY,
+                updatedCategory.getId(),
+                "Category updated"
+        );
+
         log.info(
                 "Category '{}' updated in tenant '{}'.",
                 updatedCategory.getName(),
@@ -139,6 +158,13 @@ public class CategoryServiceImpl implements ICategoryService {
                         ));
 
         categoryRepository.delete(category);
+
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntityType.CATEGORY,
+                category.getId(),
+                "Category deleted"
+        );
 
         log.info("Category '{}' deleted.", category.getName());
     }

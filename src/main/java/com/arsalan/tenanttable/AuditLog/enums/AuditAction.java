@@ -4,19 +4,20 @@ public enum AuditAction {
     CREATE,
     UPDATE,
     DELETE,
+
     LOGIN,
     LOGOUT,
+
+    VERIFY,
     INVITE,
     ACCEPT,
-    ENABLE,
-    DISABLE,
-    PAYMENT,
-    CANCEL,
-    VERIFY,
+
     ACTIVATE,
     DEACTIVATE,
+
     COMPLETE,
-    PAY,
+    CANCEL,
+
     IMPORT,
     EXPORT
 }

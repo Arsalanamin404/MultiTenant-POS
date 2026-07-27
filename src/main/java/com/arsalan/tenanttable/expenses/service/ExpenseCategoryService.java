@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.expenses.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
 import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
@@ -29,6 +32,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final TenantRepository tenantRepository;
     private final ExpenseRepository expenseRepository;
+    private final IAuditLogService auditLogService;
 
     private Tenant getOrThrowCurrentTenant() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
@@ -65,6 +69,13 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
                 .build();
 
         expenseCategoryRepository.save(category);
+
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntityType.EXPENSE_CATEGORY,
+                category.getId(),
+                "Expense category created"
+        );
 
         log.info("Expense category '{}' created for tenantId={}",
                 category.getName(), category.getId());
@@ -114,6 +125,13 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
             category.setActive(dto.getActive());
         }
 
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.EXPENSE_CATEGORY,
+                category.getId(),
+                "Expense category updated"
+        );
+
         log.info("Expense category '{}' updated.", category.getName());
 
         return ExpenseCategoryMapper.toDto(category);
@@ -131,6 +149,13 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
         }
 
         category.setActive(false);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.EXPENSE_CATEGORY,
+                category.getId(),
+                "Expense category archived"
+        );
 
         log.info("Expense category '{}' archived for tenant id '{}'.", category.getName(), currentTenant.getId());
 

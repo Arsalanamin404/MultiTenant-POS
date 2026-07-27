@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.payment.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
@@ -35,6 +38,7 @@ public class PaymentService implements IPaymentService {
     private final UserRepository userRepository;
     private final TenantRepository tenantRepository;
     private final OrderRepository orderRepository;
+    private final IAuditLogService auditLogService;
 
     private User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -92,6 +96,14 @@ public class PaymentService implements IPaymentService {
 
         payment = paymentRepository.save(payment);
         orderRepository.save(order);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.CREATE,
+                AuditEntityType.PAYMENT,
+                payment.getId(),
+                "Payment created successfully for orderId: " + order.getId()
+        );
 
         log.info(
                 "Payment recorded. orderId={}, paymentId={}, amount={}, method={}",

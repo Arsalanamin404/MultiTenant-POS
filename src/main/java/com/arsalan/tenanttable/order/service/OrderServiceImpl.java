@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.order.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.dining_table.entity.DiningTable;
 import com.arsalan.tenanttable.dining_table.enums.DiningTableStatus;
@@ -41,6 +44,7 @@ public class OrderServiceImpl implements IOrderService {
     private final IOrderCalculationService orderCalculationService;
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
+    private final IAuditLogService auditLogService;
 
     private User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -160,6 +164,14 @@ public class OrderServiceImpl implements IOrderService {
 
         diningTableRepository.save(table);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.CREATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Order created successfully"
+        );
+
         log.info(
                 "Order #{} created successfully for tenant '{}' on table '{}'.",
                 savedOrder.getOrderNumber(),
@@ -260,6 +272,14 @@ public class OrderServiceImpl implements IOrderService {
         orderCalculationService.calculateTotal(currentOrder);
         Order savedOrder = orderRepository.save(currentOrder);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Item added to existing successfully"
+        );
+
         return OrderMapper.toDto(savedOrder);
 
     }
@@ -283,6 +303,14 @@ public class OrderServiceImpl implements IOrderService {
         currentOrder.setUpdatedBy(currentUser);
 
         Order savedOrder = orderRepository.save(currentOrder);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Order item quantity updated successfully"
+        );
 
         log.info(
                 "Updated quantity of item '{}' in order #{}.",
@@ -319,6 +347,14 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(currentOrder);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "item removed successfully from order"
+        );
+
         log.info(
                 "Removed item '{}' from order #{}.",
                 orderItem.getMenuItem().getName(),
@@ -342,6 +378,14 @@ public class OrderServiceImpl implements IOrderService {
         currentOrder.setUpdatedBy(currentUser);
 
         Order savedOrder = orderRepository.save(currentOrder);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Discount applied"
+        );
 
         return OrderMapper.toDto(savedOrder);
     }
@@ -368,6 +412,14 @@ public class OrderServiceImpl implements IOrderService {
 
         currentOrder.setUpdatedBy(currentUser);
         Order savedOrder = orderRepository.save(currentOrder);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Order status changed to " + savedOrder.getStatus()
+        );
 
         log.info(
                 "Order #{} status changed from {} to {}.",

@@ -32,7 +32,7 @@ public class ReceiptService implements IReceiptService {
     private final SettingsRepository settingsRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final ReceiptPdfGenerator receiptPdfGenerator;
-
+    
     private Tenant getOrThrowCurrentTenant() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
 

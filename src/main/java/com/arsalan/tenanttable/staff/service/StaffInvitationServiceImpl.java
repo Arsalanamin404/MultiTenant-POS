@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.staff.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.enums.PlatformRole;
 import com.arsalan.tenanttable.common.enums.TenantRole;
 import com.arsalan.tenanttable.common.utils.HashUtil;
@@ -44,6 +47,7 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final IEmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final IAuditLogService auditLogService;
 
     @Value("${app.invitation.expiration-days}")
     private int invitationExpirationDays;
@@ -209,6 +213,13 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
 
         StaffInvitation savedInvitation = invitationRepository.save(invitation);
 
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntityType.STAFF_INVITATION,
+                savedInvitation.getId(),
+                "Staff invitation created"
+        );
+
         log.info(
                 "STAFF_INVITATION_CREATED: invitationId={}, email={}, tenantId={}, invitedBy={}",
                 savedInvitation.getId(),
@@ -258,6 +269,14 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
                 invitationExpirationDays
         );
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.STAFF_INVITATION,
+                invitation.getId(),
+                "Resend Staff invitation"
+        );
+
         log.info(
                 "STAFF_INVITATION_RESENT: invitationId={}, tenantId={}",
                 invitation.getId(),
@@ -279,6 +298,13 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
         invitation.setStatus(InvitationStatus.CANCELLED);
 
         invitationRepository.save(invitation);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.STAFF_INVITATION,
+                invitation.getId(),
+                "Staff invitation cancelled"
+        );
 
         log.info(
                 "STAFF_INVITATION_CANCELLED: invitationId={}, tenantId={}",
@@ -348,6 +374,13 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
         );
 
         invitation.setStatus(InvitationStatus.ACCEPTED);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntityType.STAFF_INVITATION,
+                invitation.getId(),
+                "Staff invitation accepted and staff account created"
+        );
 
         log.info(
                 "STAFF_INVITATION_ACCEPTED: invitationId={}, userEmail={}, tenantId={}",

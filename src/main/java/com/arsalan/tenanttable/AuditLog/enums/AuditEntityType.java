@@ -2,15 +2,25 @@ package com.arsalan.tenanttable.AuditLog.enums;
 
 public enum AuditEntityType {
     USER,
-    MENU_ITEM,
+    TENANT,
+    OTP,
+    REFRESH_TOKEN,
+
     CATEGORY,
+    MENU_ITEM,
+    DINING_TABLE,
+
     ORDER,
     PAYMENT,
-    DINING_TABLE,
-    TENANT,
-    ROLE,
-    AUTH,
-    EXPENSES,
+
+    EXPENSE,
     EXPENSE_CATEGORY,
-    STAFF_INVITATION
+
+    STAFF_INVITATION,
+
+    SETTINGS,
+    STAFF,
+
+    COUPON,
+    SUBSCRIPTION
 }

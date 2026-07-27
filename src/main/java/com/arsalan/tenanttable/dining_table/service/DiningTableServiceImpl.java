@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.dining_table.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.dining_table.dto.CreateDiningTableRequestDto;
 import com.arsalan.tenanttable.dining_table.dto.DiningTableResponseDto;
@@ -33,6 +36,7 @@ public class DiningTableServiceImpl implements IDiningTableService {
     private final DiningTableRepository diningTableRepository;
     private final UserRepository userRepository;
     private final TenantRepository tenantRepository;
+    private final IAuditLogService auditLogService;
 
     @Override
     @Transactional
@@ -70,6 +74,14 @@ public class DiningTableServiceImpl implements IDiningTableService {
                 .build();
 
         DiningTable savedTable = diningTableRepository.save(diningTable);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.CREATE,
+                AuditEntityType.DINING_TABLE,
+                savedTable.getId(),
+                "Table created"
+        );
 
         log.info(
                 "Dining table {} created successfully for tenant {} by user {}.",
@@ -155,6 +167,14 @@ public class DiningTableServiceImpl implements IDiningTableService {
 
         DiningTable updatedTable = diningTableRepository.save(diningTable);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.DINING_TABLE,
+                updatedTable.getId(),
+                "Table updated"
+        );
+
         log.info(
                 "Dining table {} updated successfully for tenant {}.",
                 updatedTable.getTableNumber(),
@@ -176,13 +196,21 @@ public class DiningTableServiceImpl implements IDiningTableService {
         Tenant currentTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
 
-        DiningTable table = diningTableRepository.findByIdAndTenant(id,currentTenant)
-                .orElseThrow(()->new ResourceNotFoundException("Dining table with id '" + id + "' not found."));
+        DiningTable table = diningTableRepository.findByIdAndTenant(id, currentTenant)
+                .orElseThrow(() -> new ResourceNotFoundException("Dining table with id '" + id + "' not found."));
 
         table.setStatus(dto.getStatus());
         table.setUpdatedBy(currentUser);
 
         DiningTable updatedTable = diningTableRepository.save(table);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.DINING_TABLE,
+                updatedTable.getId(),
+                "Table status updated to: " + dto.getStatus()
+        );
 
         log.info(
                 "Dining table {} status changed to {} for tenant {} by user {}.",

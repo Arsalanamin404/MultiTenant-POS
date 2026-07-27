@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.expenses.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
@@ -33,6 +36,7 @@ public class ExpenseService implements IExpenseService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
+    private final IAuditLogService auditLogService;
 
     private User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -94,6 +98,14 @@ public class ExpenseService implements IExpenseService {
 
         expenseRepository.save(expense);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.CREATE,
+                AuditEntityType.EXPENSE,
+                expense.getId(),
+                "Expense created"
+        );
+
         log.info("Expense '{}' created for tenantId={}",
                 expense.getTitle(),
                 expense.getTenant().getId());
@@ -136,6 +148,14 @@ public class ExpenseService implements IExpenseService {
         expense.update(dto, expenseCategory);
         expense.setUpdatedBy(currentUser);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.EXPENSE,
+                expense.getId(),
+                "Expense updated"
+        );
+
         log.info("Expense updated with id={}", expenseId);
 
         return ExpenseMapper.toDto(expense);
@@ -148,6 +168,13 @@ public class ExpenseService implements IExpenseService {
         Expense expense = getOrThrowExpense(expenseId, currentTenant.getId());
 
         expenseRepository.delete(expense);
+
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntityType.EXPENSE,
+                expense.getId(),
+                "Expense deleted"
+        );
         log.info("Expense deleted with id={}", expenseId);
         return ExpenseMapper.toDto(expense);
     }

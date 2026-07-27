@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.user.service;
 
+import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
+import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
+import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.auth.repository.RefreshTokenRepository;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
@@ -29,6 +32,7 @@ public class UserService implements IUserService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final IAuditLogService auditLogService;
 
     private User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -73,6 +77,14 @@ public class UserService implements IUserService {
 
         User updatedUser = userRepository.save(currentUser);
 
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.USER,
+                updatedUser.getId(),
+                "User profile updated"
+        );
+
         log.info("Profile updated successfully for userId={}", updatedUser.getId());
 
         return UserMapper.toDto(updatedUser);
@@ -106,6 +118,14 @@ public class UserService implements IUserService {
         log.debug("Password hash updated for userId={}", updatedUser.getId());
 
         refreshTokenRepository.deleteAllByUser(currentUser);
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.USER,
+                updatedUser.getId(),
+                "Password changed"
+        );
         log.info("PASSWORD_CHANGED_SUCCESSFULLY_FOR_USER_ID='{}'. All refresh tokens revoked.", updatedUser.getId());
 
         return UserMapper.toDto(updatedUser);
@@ -144,6 +164,15 @@ public class UserService implements IUserService {
         if (!dto.getActive()) {
             refreshTokenRepository.deleteAllByUser(targetUser);
         }
+
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.USER,
+                targetUser.getId(),
+                "User status updated by: " + currentUser.getId()
+        );
 
         log.info(
                 "User status updated by admin. adminId={}, userId={}, active={}",
