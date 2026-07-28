@@ -10,15 +10,34 @@
     </parent>
     <groupId>com.arsalan</groupId>
     <artifactId>tenanttable-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name/>
-    <description/>
-    <url/>
+    <version>1.0.0</version>
+
+    <name>TenantTable API</name>
+
+    <description>
+        Multi-tenant Restaurant Management System API built with Spring Boot.
+        Provides secure tenant isolation, authentication, dining table management,
+        menu management, order processing, and restaurant operations.
+    </description>
+
+    <url>https://github.com/Arsalanamin404/MultiTenant-POS</url>
+
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
+
     <developers>
-        <developer/>
+        <developer>
+            <id>MohammadArsalanRather</id>
+            <name>Arsalan Rather</name>
+            <email>arsalanrather.dev@gmail.com</email>
+            <organization>Independent Developer</organization>
+            <organizationUrl>https://github.com/Arsalanamin404</organizationUrl>
+        </developer>
     </developers>
     <scm>
         <connection/>
