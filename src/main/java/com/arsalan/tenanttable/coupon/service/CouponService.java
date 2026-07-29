@@ -5,11 +5,9 @@ import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
 import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
 import com.arsalan.tenanttable.coupon.dto.CouponResponseDto;
-import com.arsalan.tenanttable.coupon.dto.CouponValidationResponse;
 import com.arsalan.tenanttable.coupon.dto.CreateCouponRequestDto;
 import com.arsalan.tenanttable.coupon.dto.UpdateCouponRequestDto;
 import com.arsalan.tenanttable.coupon.entity.Coupon;
-import com.arsalan.tenanttable.coupon.enums.CouponType;
 import com.arsalan.tenanttable.coupon.mapper.CouponMapper;
 import com.arsalan.tenanttable.coupon.repository.CouponRepository;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
@@ -27,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -85,27 +82,6 @@ public class CouponService implements ICouponService {
                 startsAt.isAfter(expiresAt)) {
             throw new InvalidOperationException("Start date cannot be after expiry date.");
         }
-    }
-
-    private BigDecimal calculateDiscount(Coupon coupon, BigDecimal orderAmount) {
-        BigDecimal discount;
-        if (coupon.getCouponType().equals(CouponType.PERCENTAGE)) {
-            discount = orderAmount
-                    .multiply(coupon.getValue())
-                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-
-            if (coupon.getMaximumDiscount() != null &&
-                    discount.compareTo(coupon.getMaximumDiscount()) > 0) {
-                return coupon.getMaximumDiscount();
-            }
-            return discount;
-        } else {
-            discount = coupon.getValue();
-            if (discount.compareTo(orderAmount) > 0) {
-                return orderAmount;
-            }
-        }
-        return discount;
     }
 
     private void validateCoupon(Coupon coupon, BigDecimal orderAmount) {
@@ -240,26 +216,13 @@ public class CouponService implements ICouponService {
 
     @Override
     @Transactional(readOnly = true)
-    public CouponValidationResponse validate(String couponCode, BigDecimal orderAmount) {
+    public Coupon validate(String couponCode, BigDecimal orderAmount) {
         Coupon coupon = getCouponByCodeOrThrow(couponCode);
 
         validateCoupon(coupon, orderAmount);
 
-        BigDecimal discount = calculateDiscount(coupon, orderAmount);
-
-        BigDecimal finalAmount = orderAmount.subtract(discount);
-
-        log.debug("Coupon validated code={} discount={} finalAmount={}.",
-                couponCode,
-                discount,
-                finalAmount
-        );
-        return CouponValidationResponse.builder()
-                .valid(true)
-                .message("Coupon validated")
-                .discount(discount)
-                .finalAmount(finalAmount)
-                .build();
+        log.debug("Coupon '{}' validated successfully.", couponCode);
+        return coupon;
     }
 
     @Override

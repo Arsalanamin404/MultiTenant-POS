@@ -28,8 +28,8 @@ public class ReceiptResponseDto {
 
     private BigDecimal subtotal;
 
-    private BigDecimal discountRate;
-    private BigDecimal discountAmount;
+    private String coupon;
+    private BigDecimal couponDiscountAmount;
 
     private BigDecimal taxRate;
     private BigDecimal taxAmount;

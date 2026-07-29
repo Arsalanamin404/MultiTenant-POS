@@ -1,10 +1,11 @@
 package com.arsalan.tenanttable.order.dto;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +16,12 @@ public class CreateOrderRequestDto {
 
     @Valid
     @NotEmpty(message = "Order must contain at least one item.")
-    List<OrderItemRequestDto> items;
+    private List<OrderItemRequestDto> items;
+    
+    @Size(max = 50)
+    private String couponCode;
 
+    @Size(max = 300)
     private String notes;
 
 }

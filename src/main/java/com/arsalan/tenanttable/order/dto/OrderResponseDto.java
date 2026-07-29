@@ -29,8 +29,8 @@ public class OrderResponseDto {
     private BigDecimal taxRate;
     private BigDecimal taxAmount;
 
-    private BigDecimal discountRate;
-    private BigDecimal discountAmount;
+    private String coupon;
+    private BigDecimal couponDiscountAmount;
 
     private BigDecimal totalAmount;
 

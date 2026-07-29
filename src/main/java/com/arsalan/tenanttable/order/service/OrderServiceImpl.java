@@ -4,6 +4,8 @@ import com.arsalan.tenanttable.AuditLog.enums.AuditAction;
 import com.arsalan.tenanttable.AuditLog.enums.AuditEntityType;
 import com.arsalan.tenanttable.AuditLog.service.IAuditLogService;
 import com.arsalan.tenanttable.common.utils.ICurrentUserUtilService;
+import com.arsalan.tenanttable.coupon.entity.Coupon;
+import com.arsalan.tenanttable.coupon.service.ICouponService;
 import com.arsalan.tenanttable.dining_table.entity.DiningTable;
 import com.arsalan.tenanttable.dining_table.enums.DiningTableStatus;
 import com.arsalan.tenanttable.dining_table.repository.DiningTableRepository;
@@ -45,6 +47,7 @@ public class OrderServiceImpl implements IOrderService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
     private final IAuditLogService auditLogService;
+    private final ICouponService couponService;
 
     private User getOrThrowCurrentUser() {
         UUID userId = currentUserUtilService.getCurrentUserId();
@@ -128,7 +131,6 @@ public class OrderServiceImpl implements IOrderService {
                 .tenant(currentTenant)
                 .diningTable(table)
                 .taxRate(currentTenant.getSettings().getTaxRate())
-                .discountRate(BigDecimal.ZERO)
                 .createdBy(currentUser)
                 .updatedBy(currentUser)
                 .notes(dto.getNotes())
@@ -154,6 +156,13 @@ public class OrderServiceImpl implements IOrderService {
             orderItem.calculateLineTotal();
 
             order.addItem(orderItem);
+        }
+
+        BigDecimal subtotal = orderCalculationService.calculateSubTotal(order);
+
+        if (dto.getCouponCode() != null && !dto.getCouponCode().isBlank()) {
+            Coupon coupon = couponService.validate(dto.getCouponCode(), subtotal);
+            order.setCoupon(coupon);
         }
 
         orderCalculationService.calculateTotal(order);
@@ -359,32 +368,6 @@ public class OrderServiceImpl implements IOrderService {
                 "Removed item '{}' from order #{}.",
                 orderItem.getMenuItem().getName(),
                 savedOrder.getOrderNumber()
-        );
-
-        return OrderMapper.toDto(savedOrder);
-    }
-
-    @Override
-    @Transactional
-    public OrderResponseDto applyDiscount(UUID orderId, ApplyDiscountRequestDto dto) {
-        User currentUser = getOrThrowCurrentUser();
-        Tenant currentTenant = getOrThrowCurrentTenant();
-        Order currentOrder = getOrThrowOrder(orderId, currentTenant);
-
-        validateEditable(currentOrder);
-
-        currentOrder.setDiscountRate(dto.getDiscountRate());
-        orderCalculationService.calculateTotal(currentOrder);
-        currentOrder.setUpdatedBy(currentUser);
-
-        Order savedOrder = orderRepository.save(currentOrder);
-
-        auditLogService.log(
-                currentUser,
-                AuditAction.UPDATE,
-                AuditEntityType.ORDER,
-                savedOrder.getId(),
-                "Discount applied"
         );
 
         return OrderMapper.toDto(savedOrder);

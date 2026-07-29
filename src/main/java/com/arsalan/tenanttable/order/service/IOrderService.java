@@ -21,8 +21,6 @@ public interface IOrderService {
 
     OrderResponseDto removeItem(UUID orderId, UUID orderItemId);
 
-    OrderResponseDto applyDiscount(UUID orderId, ApplyDiscountRequestDto dto);
-
     OrderResponseDto changeStatus(UUID orderId, UpdateOrderStatusRequestDto dto);
 
 }

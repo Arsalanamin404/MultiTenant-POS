@@ -1,7 +1,9 @@
 package com.arsalan.tenanttable.coupon.controller;
 
 import com.arsalan.tenanttable.common.dto.ApiResponse;
-import com.arsalan.tenanttable.coupon.dto.*;
+import com.arsalan.tenanttable.coupon.dto.CouponResponseDto;
+import com.arsalan.tenanttable.coupon.dto.CreateCouponRequestDto;
+import com.arsalan.tenanttable.coupon.dto.UpdateCouponRequestDto;
 import com.arsalan.tenanttable.coupon.service.ICouponService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -146,24 +148,6 @@ public class CouponController {
         ApiResponse<CouponResponseDto> apiResponse = ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Coupon deactivated",
-                coupon,
-                request.getRequestURI()
-        );
-
-        return ResponseEntity.ok(apiResponse);
-    }
-
-    @PreAuthorize("hasAnyRole('OWNER','MANAGER','CASHIER')")
-    @PostMapping("/validate")
-    public ResponseEntity<ApiResponse<CouponValidationResponse>> validate(
-            @Valid @RequestBody ValidateCouponRequestDto dto,
-            HttpServletRequest request
-    ) {
-        CouponValidationResponse coupon = couponService.validate(dto.getCouponCode(), dto.getOrderAmount());
-
-        ApiResponse<CouponValidationResponse> apiResponse = ApiResponse.success(
-                HttpStatus.OK.value(),
-                "Coupon validated",
                 coupon,
                 request.getRequestURI()
         );

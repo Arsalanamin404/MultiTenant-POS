@@ -174,8 +174,8 @@ public class ReceiptPdfGenerator {
 
         addTotalRow(table, "Subtotal", money(receipt.getSubtotal()), TOTAL_LABEL_FONT, VALUE_FONT, false);
         addTotalRow(table,
-                "Discount (" + receipt.getDiscountRate().stripTrailingZeros().toPlainString() + "%)",
-                "-" + money(receipt.getDiscountAmount()),
+                "Coupon (" + receipt.getCoupon() + "%)",
+                "-" + money(receipt.getCouponDiscountAmount()),
                 TOTAL_LABEL_FONT, VALUE_FONT, false);
         addTotalRow(table,
                 "Tax (" + receipt.getTaxRate().stripTrailingZeros() + "%)",

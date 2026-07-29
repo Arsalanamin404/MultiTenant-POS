@@ -32,7 +32,7 @@ public class ReceiptService implements IReceiptService {
     private final SettingsRepository settingsRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final ReceiptPdfGenerator receiptPdfGenerator;
-    
+
     private Tenant getOrThrowCurrentTenant() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
 
@@ -98,8 +98,8 @@ public class ReceiptService implements IReceiptService {
                 .businessInfo(businessInfo)
                 .items(items)
                 .subtotal(order.getSubTotal())
-                .discountRate(order.getDiscountRate())
-                .discountAmount(order.getDiscountAmount())
+                .coupon(order.getCoupon().getCode())
+                .couponDiscountAmount(order.getCouponDiscountAmount())
                 .taxRate(order.getTaxRate())
                 .taxAmount(order.getTaxAmount())
                 .totalAmount(order.getTotalAmount())

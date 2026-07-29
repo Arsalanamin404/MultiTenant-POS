@@ -1,9 +1,9 @@
 package com.arsalan.tenanttable.coupon.service;
 
 import com.arsalan.tenanttable.coupon.dto.CouponResponseDto;
-import com.arsalan.tenanttable.coupon.dto.CouponValidationResponse;
 import com.arsalan.tenanttable.coupon.dto.CreateCouponRequestDto;
 import com.arsalan.tenanttable.coupon.dto.UpdateCouponRequestDto;
+import com.arsalan.tenanttable.coupon.entity.Coupon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +21,7 @@ public interface ICouponService {
 
     void delete(UUID id);
 
-    CouponValidationResponse validate(String couponCode, BigDecimal orderAmount);
+    Coupon validate(String couponCode, BigDecimal orderAmount);
 
     CouponResponseDto activate(UUID id);
 

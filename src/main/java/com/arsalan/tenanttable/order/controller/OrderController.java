@@ -123,7 +123,7 @@ public class OrderController {
             @Valid @RequestBody @Schema OrderItemRequestDto dto,
             HttpServletRequest request
     ) {
-        OrderResponseDto order = orderService.addItem(orderId,dto);
+        OrderResponseDto order = orderService.addItem(orderId, dto);
 
         ApiResponse<OrderResponseDto> apiResponse = ApiResponse
                 .success(HttpStatus.OK.value(),
@@ -145,7 +145,7 @@ public class OrderController {
             @Valid @RequestBody @Schema UpdateOrderItemQuantityRequestDto dto,
             HttpServletRequest request
     ) {
-        OrderResponseDto order = orderService.updateItemQuantity(orderId,dto);
+        OrderResponseDto order = orderService.updateItemQuantity(orderId, dto);
 
         ApiResponse<OrderResponseDto> apiResponse = ApiResponse
                 .success(HttpStatus.OK.value(),
@@ -167,7 +167,7 @@ public class OrderController {
             @PathVariable UUID orderItemId,
             HttpServletRequest request
     ) {
-        OrderResponseDto order = orderService.removeItem(orderId,orderItemId);
+        OrderResponseDto order = orderService.removeItem(orderId, orderItemId);
 
         ApiResponse<OrderResponseDto> apiResponse = ApiResponse
                 .success(HttpStatus.OK.value(),
@@ -179,29 +179,7 @@ public class OrderController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @PatchMapping("/{orderId}/discount")
-    @Operation(
-            summary = "Apply discount",
-            description = "Applies a discount to the order and recalculates the final payable amount."
-    )
-    public ResponseEntity<ApiResponse<OrderResponseDto>> applyDiscount(
-            @PathVariable UUID orderId,
-            @Valid @RequestBody @Schema ApplyDiscountRequestDto dto,
-            HttpServletRequest request
-            ) {
-
-        OrderResponseDto order = orderService.applyDiscount(orderId,dto);
-
-        ApiResponse<OrderResponseDto> apiResponse = ApiResponse
-                .success(HttpStatus.OK.value(),
-                        "DISCOUNT_APPLIED_ON_CURRENT_ORDER_SUCCESSFULLY",
-                        order,
-                        request.getRequestURI()
-                );
-
-        return ResponseEntity.ok(apiResponse);
-    }
-
+    
     @PatchMapping("/{orderId}/status")
     @Operation(
             summary = "Change order status",
@@ -212,11 +190,11 @@ public class OrderController {
             @Valid @RequestBody @Schema UpdateOrderStatusRequestDto dto,
             HttpServletRequest request) {
 
-        OrderResponseDto order = orderService.changeStatus(orderId,dto);
+        OrderResponseDto order = orderService.changeStatus(orderId, dto);
 
         ApiResponse<OrderResponseDto> apiResponse = ApiResponse
                 .success(HttpStatus.OK.value(),
-                        "ORDER_STATUS_CHANGED_SUCCESSFULLY to"+dto.getStatus().toString(),
+                        "ORDER_STATUS_CHANGED_SUCCESSFULLY to" + dto.getStatus().toString(),
                         order,
                         request.getRequestURI()
                 );

@@ -1,8 +1,8 @@
 package com.arsalan.tenanttable.order.entity;
 
+import com.arsalan.tenanttable.coupon.entity.Coupon;
 import com.arsalan.tenanttable.dining_table.entity.DiningTable;
 import com.arsalan.tenanttable.exception.InvalidOperationException;
-import com.arsalan.tenanttable.order.enums.DiscountType;
 import com.arsalan.tenanttable.order.enums.OrderStatus;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.user.entity.User;
@@ -78,18 +78,13 @@ public class Order {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal taxAmount = BigDecimal.ZERO;
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    // this field is used for upcoming versions
-    private DiscountType discountType = DiscountType.PERCENTAGE;
-
-    @Builder.Default
-    @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal discountRate = BigDecimal.ZERO;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
 
     @Builder.Default
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal discountAmount = BigDecimal.ZERO;
+    private BigDecimal couponDiscountAmount = BigDecimal.ZERO;
 
     @Builder.Default
     @Column(nullable = false, precision = 10, scale = 2)
@@ -114,6 +109,10 @@ public class Order {
     private Instant updatedAt;
 
 
+    public boolean hasCoupon() {
+        return coupon != null;
+    }
+    
     public void addItem(OrderItem orderItem) {
         orderItem.calculateLineTotal();
         items.add(orderItem);
