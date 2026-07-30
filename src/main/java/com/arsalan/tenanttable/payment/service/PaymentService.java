@@ -74,6 +74,10 @@ public class PaymentService implements IPaymentService {
             throw new ResourceAlreadyExistsException("Payment already exists for this order");
         }
 
+        if (order.getCoupon() != null) {
+            order.getCoupon().incrementUsage();
+        }
+
         if (dto.getPaymentMethod() != PaymentMethod.CASH &&
                 (dto.getTransactionReference() == null ||
                         dto.getTransactionReference().isBlank())) {

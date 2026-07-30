@@ -1,6 +1,7 @@
 package com.arsalan.tenanttable.coupon.entity;
 
 import com.arsalan.tenanttable.coupon.enums.CouponType;
+import com.arsalan.tenanttable.exception.InvalidOperationException;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.user.entity.User;
 import jakarta.persistence.*;
@@ -88,4 +89,12 @@ public class Coupon {
     @UpdateTimestamp
     @Column(nullable = false)
     private Instant updatedAt;
+
+
+    public void incrementUsage() {
+        if (usedCount >= usageLimit) {
+            throw new InvalidOperationException("Coupon usage limit exceeded.");
+        }
+        usedCount++;
+    }
 }

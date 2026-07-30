@@ -160,6 +160,35 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
+## Coupon Management
+
+* Create Coupons
+* Update Coupons
+* Delete Coupons
+* Get Coupon by ID
+* List Coupons
+* Activate Coupons
+* Deactivate Coupons
+* Percentage & Fixed Amount Discounts
+* Minimum Order Amount Validation
+* Usage Limit Management
+* Coupon Expiry Validation
+* Coupon Validation During Order Processing
+* Tenant-specific Coupon Isolation
+
+---
+
+## Audit Log Management
+
+* Automatic Audit Logging
+* Track Create, Update & Delete Operations
+* User Activity Tracking
+* Entity-based Audit History
+* Timestamped Audit Records
+* Tenant-specific Audit Logs
+
+---
+
 ## Infrastructure
 
 * Layered Architecture
@@ -238,13 +267,12 @@ The project follows a clean, modular architecture focused on scalability and mai
 
 ## Upcoming Modules
 
-* Discounts & Coupons
 * QR Code Table Ordering
-* Audit Logs
 * Subscription & Plan Management
 * Platform Administration
 * Redis Caching
 * CI/CD Pipeline
+* Cloud deployment
 
 ---
 

@@ -78,7 +78,7 @@ public class Order {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal taxAmount = BigDecimal.ZERO;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
