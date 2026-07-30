@@ -157,14 +157,6 @@ public class OrderServiceImpl implements IOrderService {
 
             order.addItem(orderItem);
         }
-
-        BigDecimal subtotal = orderCalculationService.calculateSubTotal(order);
-
-        if (dto.getCouponCode() != null && !dto.getCouponCode().isBlank()) {
-            Coupon coupon = couponService.validate(dto.getCouponCode(), subtotal);
-            order.setCoupon(coupon);
-        }
-
         orderCalculationService.calculateTotal(order);
 
         table.occupy(currentUser);
@@ -410,6 +402,108 @@ public class OrderServiceImpl implements IOrderService {
                 previousStatus,
                 savedOrder.getStatus()
         );
+        return OrderMapper.toDto(savedOrder);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponseDto applyCoupon(UUID orderId, ApplyCouponRequestDto dto) {
+        User currentUser = getOrThrowCurrentUser();
+        Tenant tenant = getOrThrowCurrentTenant();
+        Order currentOrder = getOrThrowOrder(orderId, tenant);
+
+        validateEditable(currentOrder);
+
+        if (currentOrder.hasCoupon()
+                && currentOrder.getCoupon().getCode().equalsIgnoreCase(dto.getCouponCode())) {
+            throw new InvalidOperationException("Coupon already applied to this order.");
+        }
+
+        String previousCoupon = currentOrder.hasCoupon()
+                ? currentOrder.getCoupon().getCode()
+                : null;
+
+        BigDecimal subtotal = orderCalculationService.calculateSubTotal(currentOrder);
+
+        Coupon coupon = couponService.validate(dto.getCouponCode(), subtotal);
+
+        currentOrder.setCoupon(coupon);
+
+        orderCalculationService.calculateTotal(currentOrder);
+
+        currentOrder.setUpdatedBy(currentUser);
+
+        Order savedOrder = orderRepository.save(currentOrder);
+
+        if (previousCoupon == null) {
+            auditLogService.log(
+                    currentUser,
+                    AuditAction.UPDATE,
+                    AuditEntityType.ORDER,
+                    savedOrder.getId(),
+                    "Applied coupon #'" + coupon.getCode() + "' successfully."
+            );
+            log.info("Applied coupon '{}' to order #{}.",
+                    coupon.getCode(),
+                    savedOrder.getOrderNumber()
+            );
+        } else {
+            auditLogService.log(
+                    currentUser,
+                    AuditAction.UPDATE,
+                    AuditEntityType.ORDER,
+                    savedOrder.getId(),
+                    "Replaced coupon #'"
+                            + previousCoupon + "' with '"
+                            + coupon.getCode() + "' successfully."
+            );
+            log.info("Replaced coupon '{}' with '{}' to order #{}.",
+                    previousCoupon,
+                    coupon.getCode(),
+                    savedOrder.getOrderNumber()
+            );
+        }
+
+        return OrderMapper.toDto(savedOrder);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponseDto removeCoupon(UUID orderId) {
+        User currentUser = getOrThrowCurrentUser();
+        Tenant tenant = getOrThrowCurrentTenant();
+        Order currentOrder = getOrThrowOrder(orderId, tenant);
+
+        validateEditable(currentOrder);
+
+        if (!currentOrder.hasCoupon()) {
+            log.warn("No coupon applied to this order #{}", currentOrder.getOrderNumber());
+            throw new InvalidOperationException("No coupon applied to this order");
+        }
+
+        String couponCode = currentOrder.getCoupon().getCode();
+
+        currentOrder.setCoupon(null);
+        orderCalculationService.calculateTotal(currentOrder);
+
+        currentOrder.setUpdatedBy(currentUser);
+
+        Order savedOrder = orderRepository.save(currentOrder);
+
+
+        auditLogService.log(
+                currentUser,
+                AuditAction.UPDATE,
+                AuditEntityType.ORDER,
+                savedOrder.getId(),
+                "Coupon #'" + couponCode + "' removed successfully."
+        );
+
+        log.info("Coupon #'{}' removed from order #{}.",
+                couponCode,
+                savedOrder.getOrderNumber()
+        );
+
         return OrderMapper.toDto(savedOrder);
     }
 }

@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequestMapping("/orders")
 @Tag(
         name = "Orders",
-        description = "Create and manage customer orders, order items, discounts, and order lifecycle."
+        description = "Create and manage customer orders, order items, s, and order lifecycle."
 )
 public class OrderController {
     private final IOrderService orderService;
@@ -179,7 +179,7 @@ public class OrderController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    
+
     @PatchMapping("/{orderId}/status")
     @Operation(
             summary = "Change order status",
@@ -195,6 +195,50 @@ public class OrderController {
         ApiResponse<OrderResponseDto> apiResponse = ApiResponse
                 .success(HttpStatus.OK.value(),
                         "ORDER_STATUS_CHANGED_SUCCESSFULLY to" + dto.getStatus().toString(),
+                        order,
+                        request.getRequestURI()
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @PostMapping("/{orderId}/coupon")
+    @Operation(
+            summary = "Apply coupon code",
+            description = "Apply coupon code on current order."
+    )
+
+    public ResponseEntity<ApiResponse<OrderResponseDto>> applyCoupon(
+            @PathVariable UUID orderId,
+            @Valid @RequestBody @Schema ApplyCouponRequestDto dto,
+            HttpServletRequest request) {
+
+        OrderResponseDto order = orderService.applyCoupon(orderId, dto);
+
+        ApiResponse<OrderResponseDto> apiResponse = ApiResponse
+                .success(HttpStatus.OK.value(),
+                        "COUPON_APPLIED_SUCCESSFULLY",
+                        order,
+                        request.getRequestURI()
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @DeleteMapping("/{orderId}/coupon")
+    @Operation(
+            summary = "Remove coupon",
+            description = "Removes coupon from the current order."
+    )
+    public ResponseEntity<ApiResponse<OrderResponseDto>> removeCoupon(
+            @PathVariable UUID orderId,
+            HttpServletRequest request) {
+
+        OrderResponseDto order = orderService.removeCoupon(orderId);
+
+        ApiResponse<OrderResponseDto> apiResponse = ApiResponse
+                .success(HttpStatus.OK.value(),
+                        "COUPON_REMOVED_SUCCESSFULLY",
                         order,
                         request.getRequestURI()
                 );

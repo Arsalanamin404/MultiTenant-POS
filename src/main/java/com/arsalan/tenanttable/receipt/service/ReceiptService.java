@@ -98,8 +98,16 @@ public class ReceiptService implements IReceiptService {
                 .businessInfo(businessInfo)
                 .items(items)
                 .subtotal(order.getSubTotal())
-                .coupon(order.getCoupon().getCode())
-                .couponDiscountAmount(order.getCouponDiscountAmount())
+                .coupon(
+                        order.getCoupon() != null
+                                ? order.getCoupon().getCode()
+                                : null
+                )
+                .couponDiscountAmount(
+                        order.getCouponDiscountAmount() != null
+                                ? order.getCouponDiscountAmount()
+                                : null
+                )
                 .taxRate(order.getTaxRate())
                 .taxAmount(order.getTaxAmount())
                 .totalAmount(order.getTotalAmount())

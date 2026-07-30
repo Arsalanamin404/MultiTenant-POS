@@ -84,7 +84,7 @@ public class Order {
 
     @Builder.Default
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal couponDiscountAmount = BigDecimal.ZERO;
+    private BigDecimal couponAmount = BigDecimal.ZERO;
 
     @Builder.Default
     @Column(nullable = false, precision = 10, scale = 2)
@@ -112,7 +112,7 @@ public class Order {
     public boolean hasCoupon() {
         return coupon != null;
     }
-    
+
     public void addItem(OrderItem orderItem) {
         orderItem.calculateLineTotal();
         items.add(orderItem);

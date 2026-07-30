@@ -23,8 +23,16 @@ public final class OrderMapper {
                 .subTotal(order.getSubTotal())
                 .taxRate(order.getTaxRate())
                 .taxAmount(order.getTaxAmount())
-                .coupon(order.getCoupon().getCode())
-                .couponDiscountAmount(order.getCouponDiscountAmount())
+                .coupon(
+                        order.getCoupon() != null
+                                ? order.getCoupon().getCode()
+                                : null
+                )
+                .couponAmount(
+                        order.getCouponAmount() != null
+                                ? order.getCouponAmount()
+                                : null
+                )
                 .totalAmount(order.getTotalAmount())
                 .notes(order.getNotes())
                 .createdByName(order.getCreatedBy().getFullName())

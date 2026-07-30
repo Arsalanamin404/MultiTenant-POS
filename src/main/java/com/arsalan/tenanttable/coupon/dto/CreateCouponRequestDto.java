@@ -2,14 +2,12 @@ package com.arsalan.tenanttable.coupon.dto;
 
 import com.arsalan.tenanttable.coupon.enums.CouponType;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
-@Builder
 public class CreateCouponRequestDto {
 
     @NotBlank(message = "Coupon code is required")

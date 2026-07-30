@@ -23,4 +23,7 @@ public interface IOrderService {
 
     OrderResponseDto changeStatus(UUID orderId, UpdateOrderStatusRequestDto dto);
 
+    OrderResponseDto applyCoupon(UUID orderId, ApplyCouponRequestDto dto);
+
+    OrderResponseDto removeCoupon(UUID orderId);
 }

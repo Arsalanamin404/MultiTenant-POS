@@ -17,9 +17,6 @@ public class CreateOrderRequestDto {
     @Valid
     @NotEmpty(message = "Order must contain at least one item.")
     private List<OrderItemRequestDto> items;
-    
-    @Size(max = 50)
-    private String couponCode;
 
     @Size(max = 300)
     private String notes;

@@ -26,8 +26,16 @@ public final class CouponMapper {
                 .active(coupon.getActive())
                 .createdById(coupon.getCreatedBy().getId())
                 .createdByName(coupon.getCreatedBy().getFullName())
-                .updatedById(coupon.getUpdatedBy().getId())
-                .updatedByName(coupon.getUpdatedBy().getFullName())
+                .updatedById(
+                        coupon.getUpdatedBy() != null
+                                ? coupon.getUpdatedBy().getId()
+                                : null
+                )
+                .updatedByName(
+                        coupon.getUpdatedBy() != null
+                                ? coupon.getUpdatedBy().getFullName()
+                                : null
+                )
                 .createdAt(coupon.getCreatedAt())
                 .updatedAt(coupon.getUpdatedAt())
                 .build();

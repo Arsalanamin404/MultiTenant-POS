@@ -30,7 +30,7 @@ public class OrderResponseDto {
     private BigDecimal taxAmount;
 
     private String coupon;
-    private BigDecimal couponDiscountAmount;
+    private BigDecimal couponAmount;
 
     private BigDecimal totalAmount;
 
