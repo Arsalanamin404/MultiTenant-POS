@@ -104,8 +104,8 @@ public class ReceiptService implements IReceiptService {
                                 : null
                 )
                 .couponDiscountAmount(
-                        order.getCouponDiscountAmount() != null
-                                ? order.getCouponDiscountAmount()
+                        order.getCouponAmount() != null
+                                ? order.getCouponAmount()
                                 : null
                 )
                 .taxRate(order.getTaxRate())
