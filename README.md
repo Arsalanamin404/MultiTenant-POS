@@ -107,6 +107,9 @@ an independent tenant while sharing the same application infrastructure.
 * Update Order Status
 * Add Order Items
 * Remove Order Items
+* Automatic Order Total Calculation
+* Automatic Tax Calculation
+* Coupon Application & Removal
 * Order Total Calculation
 * Dining Table Association
 * Tenant-specific Order Isolation
@@ -115,10 +118,13 @@ an independent tenant while sharing the same application infrastructure.
 
 ## Payment Management
 
-* Process Payments
-* Record Payment Transactions
+* Payment Management
+* Process Order Payments
 * Support Multiple Payment Methods
-* Payment Status Tracking
+* Transaction Reference Validation
+* Automatic Order Completion
+* Automatic Dining Table Release
+* Coupon Redemption Tracking
 * Payment History
 * Order Payment Association
 * Tenant-specific Payment Isolation
@@ -242,6 +248,8 @@ The project follows a clean, modular architecture focused on scalability and mai
 * Spring Retry
 * Spring Async
 * Maven
+* Docker
+* SLF4J
 
 ### Database
 
