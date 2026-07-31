@@ -26,3 +26,8 @@ logging:
   level:
     org.hibernate.SQL: WARN
     org.hibernate.type.descriptor.sql.BasicBinder: WARN
+
+
+app:
+  scheduler:
+    trial-expiry-cron: "0 * * * * *"

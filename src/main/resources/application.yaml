@@ -63,3 +63,6 @@ app:
     expiration-days: ${INVITATION_EXPIRATION_DAYS}
 
   frontend-url: ${FRONTEND_URL}
+
+  scheduler:
+    trial-expiry-cron: "0 0 0 * * *"

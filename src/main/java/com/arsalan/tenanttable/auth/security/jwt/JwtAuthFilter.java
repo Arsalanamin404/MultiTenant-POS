@@ -1,5 +1,8 @@
 package com.arsalan.tenanttable.auth.security.jwt;
 
+import com.arsalan.tenanttable.auth.security.CustomUserDetails;
+import com.arsalan.tenanttable.exception.TenantSuspendedException;
+import com.arsalan.tenanttable.tenant.enums.TenantStatus;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,6 +62,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     }
 
                     if (jwtService.validateToken(token, userDetails)) {
+
+                        CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
+
+                        if (customUserDetails.getUser().getTenant() != null &&
+                                customUserDetails.getUser().getTenant().getTenantStatus() == TenantStatus.SUSPENDED) {
+                            throw new TenantSuspendedException(
+                                    "Your restaurant trial has expired. Please contact support to reactivate your account."
+                            );
+                        }
+
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                                 userDetails,
                                 null,
