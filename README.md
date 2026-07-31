@@ -62,6 +62,18 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
+## Staff Invitation Management
+
+* Invite Staff Members via Email
+* Secure Invitation Token Generation
+* Invitation Expiration
+* Accept Staff Invitations
+* Automatic Staff Account Creation
+* Invitation Status Tracking
+* Tenant-specific Invitation Management
+
+---
+
 ## Category Management
 
 * Create Category
@@ -195,6 +207,22 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
+## Platform Administration
+
+* Platform Dashboard
+* Tenant Management
+* View All Tenants
+* Search & Filter Tenants
+* View Tenant Details & Business Statistics
+* Update Tenant Status
+* Update Tenant Subscription Plan
+* Platform-wide Audit Log Monitoring
+* Audit Log Filtering & Pagination
+* Super Admin RBAC
+* Multi-tenant Administration
+
+---
+
 ## Infrastructure
 
 * Layered Architecture
@@ -277,7 +305,6 @@ The project follows a clean, modular architecture focused on scalability and mai
 
 * QR Code Table Ordering
 * Subscription & Plan Management
-* Platform Administration
 * Redis Caching
 * CI/CD Pipeline
 * Cloud deployment
