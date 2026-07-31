@@ -8,15 +8,24 @@ public final class UserMapper {
     }
 
     public static UserResponseDto toDto(User user) {
+
+        var tenant = user.getTenant();
+
         return UserResponseDto.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .platformRole(user.getPlatformRole())
-                .tenantId(user.getTenant().getId())
-                .tenantName(user.getTenant().getName())
-                .tenantRole(user.getTenantRole())
+                .tenantId(
+                        tenant != null ? tenant.getId() : null
+                )
+                .tenantName(
+                        tenant != null ? tenant.getName() : null
+                )
+                .tenantRole(
+                        tenant != null ? user.getTenantRole() : null
+                )
                 .emailVerified(user.isEmailVerified())
                 .active(user.isActive())
                 .createdAt(user.getCreatedAt())

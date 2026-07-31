@@ -1,8 +1,11 @@
 {
   "info": {
+    "_postman_id": "c5c795dd-17ec-49ba-8ba2-636b5f4665c3",
     "name": "TenantTable API",
     "description": "TenantTable is a multi-tenant Restaurant POS backend API.\n\nFeatures: Authentication & Authorization, Tenant Management, Employee Management, Category & Menu Management, Dining Table Management, Order Management, Billing & Payments.\n\nAll protected endpoints require a JWT Bearer token. Every request is isolated to the authenticated tenant.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39362470",
+    "_collection_link": "https://go.postman.co/collection/39362470-c5c795dd-17ec-49ba-8ba2-636b5f4665c3?source=collection_link"
   },
   "item": [
     {
@@ -11,74 +14,53 @@
         {
           "name": "Verify Email",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"arslanamin.org@gmail.com\",\n  \"otp\": \"308943\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/auth/verify-email",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "verify-email"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"arslanamin.org@gmail.com\",\n  \"otp\": \"248155\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Reset Password",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/auth/reset-password",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "reset-password"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"string\",\n  \"otp\": \"string\",\n  \"newPassword\": \"string\"\n}",
@@ -87,39 +69,34 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Resend Verification Otp",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/auth/resend-verification-otp",
-              "protocol": "",
+              "raw": "{{baseUrl}}/auth/reset-password",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
-                "resend-verification-otp"
-              ],
-              "query": [],
-              "variable": []
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Resend Verification Otp",
+          "request": {
+            "auth": {
+              "type": "noauth"
             },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"string\"\n}",
@@ -128,39 +105,34 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Register",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/auth/register",
-              "protocol": "",
+              "raw": "{{baseUrl}}/auth/resend-verification-otp",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
-                "register"
-              ],
-              "query": [],
-              "variable": []
+                "resend-verification-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "auth": {
+              "type": "noauth"
             },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"fullName\": \"Mohammad Arsalan Rather\",\n  \"email\": \"arslanamin.org@gmail.com\",\n  \"password\": \"Password@123\",\n  \"phoneNumber\": \"9070899112\",\n  \"tenantName\": \"Bugerology\",\n  \"tenantAddress\": \"Kashmir\",\n  \"taxRate\": 12\n}",
@@ -169,176 +141,151 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Refresh Token",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/auth/refresh",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "refresh"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Logout",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/auth/logout",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "logout"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Logout From All Devices",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/auth/logout-all",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "logout-all"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Login",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"arsalanrather.dev@gmail.com\",\n  \"password\": \"Admin@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/auth/login",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "login"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"arslanamin.org@gmail.com\",\n  \"password\": \"Password@123\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Forgot Password",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/auth/forgot-password",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "forgot-password"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"string\"\n}",
@@ -347,8 +294,19 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -358,15 +316,13 @@
         {
           "name": "Activate Coupon",
           "request": {
-            "method": "PATCH",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
+            "method": "PATCH",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/coupons/:id/activate",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -375,45 +331,35 @@
                 ":id",
                 "activate"
               ],
-              "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create Coupon",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOWQ4ZWE4Zi03ZTZlLTRhMDctYTJlMC02NDRjMzYyMTM3YmMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3MTAwLCJleHAiOjE3ODUzNDc3MDB9.FTtJwEUBDXUcncU-aDrOCZNmPGBfIhorQDxqFGbS4cE",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/coupons",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "coupons"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"code\":\"SAVE10\",\n  \"name\":\"Summer Sale\",\n  \"description\":\"10% off on orders above 500\",\n  \"type\":\"PERCENTAGE\",\n  \"value\":10,\n  \"minimumOrderAmount\":500,\n  \"maximumDiscount\":100,\n  \"usageLimit\":100,\n  \"startsAt\":\"2026-07-29T00:00:00Z\",\n  \"expiresAt\":\"2026-12-31T23:59:59Z\",\n  \"active\":true\n}",
@@ -422,21 +368,29 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "coupons"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Deactivate Coupon",
           "request": {
-            "method": "PATCH",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
+            "method": "PATCH",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/coupons/:id/deactivate",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -445,23 +399,25 @@
                 ":id",
                 "deactivate"
               ],
-              "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Delete Coupon",
           "request": {
-            "method": "DELETE",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
+            "method": "DELETE",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/coupons/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -469,51 +425,51 @@
                 "coupons",
                 ":id"
               ],
-              "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get All Coupons",
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOWQ4ZWE4Zi03ZTZlLTRhMDctYTJlMC02NDRjMzYyMTM3YmMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3MTAwLCJleHAiOjE3ODUzNDc3MDB9.FTtJwEUBDXUcncU-aDrOCZNmPGBfIhorQDxqFGbS4cE",
-                "type": "string"
-              }
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/coupons",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "coupons"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Coupon By Id",
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/coupons/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -521,41 +477,29 @@
                 "coupons",
                 ":id"
               ],
-              "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Coupon",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/coupons/:id",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "coupons",
-                ":id"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\":\"Updated Summer Sale\",\n  \"description\":\"Updated description\",\n  \"couponType\":\"PERCENTAGE\",\n  \"value\":15,\n  \"minimumOrderAmount\":500,\n  \"maximumDiscount\":150,\n  \"usageLimit\":200,\n  \"startsAt\":\"2026-07-29T00:00:00Z\",\n  \"expiresAt\":\"2026-12-31T23:59:59Z\",\n  \"active\":true\n}",
@@ -564,8 +508,24 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "coupons",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -575,30 +535,35 @@
         {
           "name": "Update User Status",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/users/:id/status?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/users/:id/status?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users",
                 ":id",
-                "status?id="
+                "status"
               ],
               "query": [
                 {
@@ -612,85 +577,62 @@
                   "value": ""
                 }
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"active\": true\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Me",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                },
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3YzQ5YjlmNS1iY2E3LTQ0MzUtYTNmOS0yMzdkNWRkZGI2ZWMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIyNzRkOGE3Zi00OGM2LTQwMzUtOGJhNi05MjQ0OWIwMDdkMzgiLCJ1c2VySWQiOiIxNjNmODEzNy1hYzk2LTRmN2YtOWQwZS1hMmM0NjVkMGUyMmIiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTU4MjA4LCJleHAiOjE3ODUxNTg4MDh9.nl0Vg_EGVJD1xJG_tT_Sc-WqSWbuMEj55FekrhCv10U",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/users/me",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users",
                 "me"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update My Profile",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/users/me",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "me"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"fullName\": \"string\",\n  \"phoneNumber\": \"string\"\n}",
@@ -699,40 +641,34 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Change Password",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/users/me/password",
-              "protocol": "",
+              "raw": "{{baseUrl}}/users/me",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users",
-                "me",
-                "password"
-              ],
-              "query": [],
-              "variable": []
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
             },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"currentPassword\": \"string\",\n  \"newPassword\": \"string\",\n  \"confirmPassword\": \"string\"\n}",
@@ -741,39 +677,62 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/me/password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "me",
+                "password"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get All Users",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                },
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/users?page=1&size=20",
-              "protocol": "",
+              "raw": "{{baseUrl}}/users?page=1&size=20?page=1&size=20&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "users?page=1&size=20"
+                "users"
               ],
               "query": [
                 {
                   "key": "page",
                   "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "20?page=1"
                 },
                 {
                   "key": "size",
@@ -783,37 +742,33 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get User",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/users/:id?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/users/:id?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users",
-                ":id?id="
+                ":id"
               ],
               "query": [
                 {
@@ -828,7 +783,8 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -838,39 +794,17 @@
         {
           "name": "Update Status",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/staff/:id/status",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "staff",
-                ":id",
-                "status"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"active\": true\n}",
@@ -879,45 +813,41 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Update Role",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/staff/:id/role",
-              "protocol": "",
+              "raw": "{{baseUrl}}/staff/:id/status",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "staff",
                 ":id",
-                "role"
+                "status"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
                   "value": ""
                 }
               ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "auth": {
+              "type": "noauth"
             },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tenantRole\": \"MANAGER\"\n}",
@@ -926,34 +856,49 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/:id/role",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff",
+                ":id",
+                "role"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get All Staff",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNjhkMTlkNS0yM2Y5LTQ5NzktYmNkMC01ZTI2MGU0ZmJlNjUiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTU5NzMzLCJleHAiOjE3ODUxNjAzMzN9.8hUzNYJRwOw9UeDuNSIkIIy-VhcOb6Vhnk6imQYeOQk",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/staff",
-              "protocol": "",
+              "raw": "{{baseUrl}}/staff?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -973,31 +918,27 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Staff By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/staff/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1005,7 +946,6 @@
                 "staff",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1013,7 +953,8 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -1023,28 +964,24 @@
         {
           "name": "Get All Invitations",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/invitations?page=&size=&sort=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/invitations?page=&size=&sort=?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "invitations?page=&size=&sort="
+                "invitations"
               ],
               "query": [
                 {
@@ -1059,40 +996,25 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Invite",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/invitations",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "invitations"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"fullName\": \"string\",\n  \"email\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"tenantRole\": \"CASHIER\"\n}",
@@ -1101,39 +1023,33 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/invitations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "invitations"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Accept Staff Invitation",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/invitations/accept",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "invitations",
-                "accept"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"token\": \"string\",\n  \"password\": \"string\",\n  \"confirmPassword\": \"string\"\n}",
@@ -1142,29 +1058,36 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/invitations/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "invitations",
+                "accept"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Resend Invitation",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/invitations/:id/resend",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1173,7 +1096,6 @@
                 ":id",
                 "resend"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1181,28 +1103,25 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Cancel Invitation",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/invitations/:id/cancel",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1211,7 +1130,6 @@
                 ":id",
                 "cancel"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1219,28 +1137,25 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Invitation By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/invitations/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1248,7 +1163,6 @@
                 "invitations",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1256,7 +1170,8 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -1266,68 +1181,49 @@
         {
           "name": "Get Settings",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNjhkMTlkNS0yM2Y5LTQ5NzktYmNkMC01ZTI2MGU0ZmJlNjUiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTU5NzMzLCJleHAiOjE3ODUxNjAzMzN9.8hUzNYJRwOw9UeDuNSIkIIy-VhcOb6Vhnk6imQYeOQk",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/settings",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "settings"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Settings",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/settings",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "settings"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"businessName\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"email\": \"string\",\n  \"website\": \"string\",\n  \"address\": \"string\",\n  \"city\": \"string\",\n  \"state\": \"string\",\n  \"country\": \"string\",\n  \"postalCode\": \"string\",\n  \"currency\": \"INR\",\n  \"timezone\": \"string\",\n  \"taxRate\": 0,\n  \"gstNumber\": \"string\",\n  \"invoicePrefix\": \"string\",\n  \"receiptFooter\": \"string\",\n  \"logoUrl\": \"string\"\n}",
@@ -1336,8 +1232,18 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "settings"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -1347,23 +1253,19 @@
         {
           "name": "Get By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/categories/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1371,7 +1273,6 @@
                 "categories",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1379,43 +1280,23 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/categories/:id",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "categories",
-                ":id"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\"\n}",
@@ -1424,29 +1305,9 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Delete",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/categories/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1454,7 +1315,6 @@
                 "categories",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1462,43 +1322,79 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "Get All",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                },
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOGIwOTBmOC1mNzVlLTQzMTgtYTFmYS1kODBiYmU2YTYyZmIiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY1ODEzLCJleHAiOjE3ODUxNjY0MTN9.CUSD-kiHBLRAB0Uf85CMIxqsqGUH3hXSwGSt4K7A_vE",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/categories?page=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/categories?page=?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "categories?page="
+                "categories"
               ],
               "query": [
                 {
                   "key": "page",
-                  "value": ""
+                  "value": "?page="
                 },
                 {
                   "key": "size",
@@ -1508,45 +1404,31 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOWQ4ZWE4Zi03ZTZlLTRhMDctYTJlMC02NDRjMzYyMTM3YmMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3MTAwLCJleHAiOjE3ODUzNDc3MDB9.FTtJwEUBDXUcncU-aDrOCZNmPGBfIhorQDxqFGbS4cE",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/categories",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "categories"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "  {\n    \"name\": \"Salads & Raita\",\n    \"description\": \"Fresh salads and yogurt-based side dishes to accompany the main meal\"\n  }",
@@ -1555,8 +1437,18 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -1566,23 +1458,19 @@
         {
           "name": "Get By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/menu-items/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1590,7 +1478,6 @@
                 "menu-items",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1598,43 +1485,23 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Menu Item",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/menu-items/:id",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "menu-items",
-                ":id"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"price\": 0,\n  \"categoryId\": \"uuid\",\n  \"available\": true\n}",
@@ -1643,29 +1510,9 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Delete Menu Item",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/menu-items/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1673,7 +1520,6 @@
                 "menu-items",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1681,33 +1527,64 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Menu Item",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/menu-items/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "menu-items",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "Get All",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOWQ4ZWE4Zi03ZTZlLTRhMDctYTJlMC02NDRjMzYyMTM3YmMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3MTAwLCJleHAiOjE3ODUzNDc3MDB9.FTtJwEUBDXUcncU-aDrOCZNmPGBfIhorQDxqFGbS4cE",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/menu-items",
-              "protocol": "",
+              "raw": "{{baseUrl}}/menu-items?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1727,45 +1604,31 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create Menu Item",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1YzI4NmQxYi1mODdlLTRkODEtODcxMS0wOTdmM2Y0OWIxNjkiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3Mzk4LCJleHAiOjE3ODUzNDc5OTh9.Yt0DMRu1XyNNV5ZYNHshsdPuPR1fEA_VzERL_HZRawA",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/menu-items",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "menu-items"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "  {\n    \"name\": \"Pineapple Raita\",\n    \"description\": \"Sweet and tangy yogurt raita with diced pineapple, roasted cumin, and a touch of black salt.\",\n    \"price\": 110,\n    \"categoryId\": \"fc7a8575-3947-4b63-9596-818a1226300e\",\n    \"available\": true\n  }",
@@ -1774,45 +1637,33 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/menu-items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "menu-items"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Availability",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/menu-items/:id/availability",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "menu-items",
-                ":id",
-                "availability"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"available\": true\n}",
@@ -1821,8 +1672,26 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/menu-items/:id/availability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "menu-items",
+                ":id",
+                "availability"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -1832,23 +1701,19 @@
         {
           "name": "Get By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/dining-tables/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1856,7 +1721,6 @@
                 "dining-tables",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
@@ -1864,43 +1728,23 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/dining-tables/:id",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dining-tables",
-                ":id"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tableNumber\": \"string\",\n  \"capacity\": 4,\n  \"description\": \"string\"\n}",
@@ -1909,34 +1753,48 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dining-tables/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dining-tables",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get All",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NTQ0MjZlMS1kZjQwLTQ4Y2QtODgxNS1mZjg4YWNkZjc3YzgiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY0NjA5LCJleHAiOjE3ODUxNjUyMDl9.YdzvQFpOBBbv9eQl-WoQbPAemPJEr_IrnSzRF3U30Fs",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/dining-tables",
-              "protocol": "",
+              "raw": "{{baseUrl}}/dining-tables?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1956,45 +1814,31 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1YzI4NmQxYi1mODdlLTRkODEtODcxMS0wOTdmM2Y0OWIxNjkiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3Mzk4LCJleHAiOjE3ODUzNDc5OTh9.Yt0DMRu1XyNNV5ZYNHshsdPuPR1fEA_VzERL_HZRawA",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/dining-tables",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dining-tables"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tableNumber\": \"BGL-202\",\n  \"capacity\": 4,\n  \"description\": \"Meeting Table\"\n}",
@@ -2003,50 +1847,39 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dining-tables",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dining-tables"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Status",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "PATCH",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NDY1ZTljYS1mNjU5LTRhYmEtODdkNS0yZmUyZDhiOTdmNmIiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTYwMjI3LCJleHAiOjE3ODUxNjA4Mjd9.bD3mjlw_wtfrkcmH7rdlnUhmq9P8N7xzQm0_f6095E8",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/dining-tables/:id/status",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dining-tables",
-                ":id",
-                "status"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "352bbb6d-d08f-46d3-b58c-5edb2af4aeb4"
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"status\": \"OUT_OF_SERVICE\"\n}",
@@ -2055,8 +1888,26 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dining-tables/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dining-tables",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "352bbb6d-d08f-46d3-b58c-5edb2af4aeb4"
+                }
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -2066,37 +1917,23 @@
         {
           "name": "Create a new order",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlYjU0YTcxMS0yMzRjLTRkMzMtYjcxMC1mNmY5OGRlNzU1ODIiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ3NjAzLCJleHAiOjE3ODUzNDgyMDN9.xRR6m7KlPpmHfgzXvCDhiPqrnmMQMS72rhEdla1oAho",
-                "type": "string"
-              }
-            },
-            "description": "Creates a new order for a dining table and initializes it with the provided menu items.",
-            "url": {
-              "raw": "{{baseUrl}}/orders",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "orders"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"diningTableId\": \"5eba6e5b-f0c8-4027-acbd-f6c2fe9b5716\",\n  \"items\": [\n    {\n      \"menuItemId\": \"b9cd48f8-1028-445f-be01-bc151cab3408\",\n      \"quantity\": 2,\n      \"notes\": \"Extra pineapple\"\n    },\n    {\n      \"menuItemId\": \"c1c2ac38-eec2-4304-8acb-6e8088a10106\",\n      \"quantity\": 1,\n      \"notes\": \"Dressing on the side\"\n    },\n    {\n      \"menuItemId\": \"ebf3cfed-6769-438d-9fab-c8824114aa83\",\n      \"quantity\": 3,\n      \"notes\": \"Less spicy\"\n    },\n    {\n      \"menuItemId\": \"578d2016-0f5d-4023-b77c-0e9926df8a8d\",\n      \"quantity\": 2,\n      \"notes\": \"\"\n    }\n  ],\n  \"notes\": \"Water bottle 2\"\n}",
@@ -2105,45 +1942,34 @@
                   "language": "json"
                 }
               }
-            }
-          }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "Creates a new order for a dining table and initializes it with the provided menu items."
+          },
+          "response": []
         },
         {
           "name": "Add item to order",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Adds a menu item to an existing active order. If the item already exists, its quantity is increased.",
-            "url": {
-              "raw": "{{baseUrl}}/orders/:orderId/items",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "orders",
-                ":orderId",
-                "items"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "orderId",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"menuItemId\": \"uuid\",\n  \"quantity\": 1,\n  \"notes\": \"string\"\n}",
@@ -2152,29 +1978,9 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Update item quantity",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "Updates the quantity of an existing item in an active order and recalculates the order totals.",
             "url": {
               "raw": "{{baseUrl}}/orders/:orderId/items",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2183,7 +1989,6 @@
                 ":orderId",
                 "items"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
@@ -2191,6 +1996,24 @@
                 }
               ]
             },
+            "description": "Adds a menu item to an existing active order. If the item already exists, its quantity is increased."
+          },
+          "response": []
+        },
+        {
+          "name": "Update item quantity",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"orderItemId\": \"uuid\",\n  \"quantity\": 1,\n  \"notes\": \"string\"\n}",
@@ -2199,50 +2022,48 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Change order status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNGMxZjM5Zi1hNjQzLTQ0M2EtOTA5Zi1mMDEzMDNjYzkzNjYiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzQ4MDA2LCJleHAiOjE3ODUzNDg2MDZ9.mbMVe2XwUCG4A6OHozey733SsTqytwDlxCvWWvVNsLQ",
-                "type": "string"
-              }
             },
-            "description": "Updates the current status of an order (for example: PREPARING, SERVED, COMPLETED, or CANCELLED).",
             "url": {
-              "raw": "{{baseUrl}}/orders/:orderId/status",
-              "protocol": "",
+              "raw": "{{baseUrl}}/orders/:orderId/items",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "orders",
                 ":orderId",
-                "status"
+                "items"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
-                  "value": "c6ed9b29-5a3e-4da3-a2b4-c11aa131279f"
+                  "value": ""
                 }
               ]
             },
+            "description": "Updates the quantity of an existing item in an active order and recalculates the order totals."
+          },
+          "response": []
+        },
+        {
+          "name": "Change order status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"status\": \"CONFIRMED\"\n}",
@@ -2251,50 +2072,48 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Apply discount",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNDkwNTljNy1mNDc2LTQ2MzEtYjY0ZS1mZGU5MTI3ZTFlMjUiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY2ODY3LCJleHAiOjE3ODUxNjc0Njd9.BTvaZh5NZMG1oSgrqctTB6fWxUJaOcUkfCYAk7Bew5U",
-                "type": "string"
-              }
             },
-            "description": "Applies a discount to the order and recalculates the final payable amount.",
             "url": {
-              "raw": "{{baseUrl}}/orders/:orderId/discount",
-              "protocol": "",
+              "raw": "{{baseUrl}}/orders/:orderId/status",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "orders",
                 ":orderId",
-                "discount"
+                "status"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
-                  "value": "0342a2e4-6667-4aa8-9cb1-e25b1025d25f"
+                  "value": "c6ed9b29-5a3e-4da3-a2b4-c11aa131279f"
                 }
               ]
             },
+            "description": "Updates the current status of an order (for example: PREPARING, SERVED, COMPLETED, or CANCELLED)."
+          },
+          "response": []
+        },
+        {
+          "name": "Apply discount",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"discountRate\": 10\n}",
@@ -2303,29 +2122,44 @@
                   "language": "json"
                 }
               }
-            }
-          }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders/:orderId/discount",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                ":orderId",
+                "discount"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "0342a2e4-6667-4aa8-9cb1-e25b1025d25f"
+                }
+              ]
+            },
+            "description": "Applies a discount to the order and recalculates the final payable amount."
+          },
+          "response": []
         },
         {
           "name": "Get order by ID",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Retrieves complete details of a specific order, including items, totals, discounts, and current status.",
             "url": {
               "raw": "{{baseUrl}}/orders/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2333,41 +2167,39 @@
                 "orders",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
                   "value": ""
                 }
               ]
-            }
-          }
+            },
+            "description": "Retrieves complete details of a specific order, including items, totals, discounts, and current status."
+          },
+          "response": []
         },
         {
           "name": "Get order history",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNDkwNTljNy1mNDc2LTQ2MzEtYjY0ZS1mZGU5MTI3ZTFlMjUiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY2ODY3LCJleHAiOjE3ODUxNjc0Njd9.BTvaZh5NZMG1oSgrqctTB6fWxUJaOcUkfCYAk7Bew5U",
-                "type": "string"
-              }
-            },
-            "description": "Returns a paginated list of completed and historical orders for the authenticated tenant.",
             "url": {
-              "raw": "{{baseUrl}}/orders/history",
-              "protocol": "",
+              "raw": "{{baseUrl}}/orders/history?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2388,36 +2220,34 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
-            }
-          }
+              ]
+            },
+            "description": "Returns a paginated list of completed and historical orders for the authenticated tenant."
+          },
+          "response": []
         },
         {
           "name": "List active orders",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNTJiODFhYi00Y2VkLTQ1ZmEtOTZlNC1mMmQ2ZmQ5YjE5YTIiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiI3MDFhMjRkZS0wODUxLTQ1MjItYTUyNS0zYWY4ZTYxOTliOWQiLCJ1c2VySWQiOiJmYmRlNWQxMS02MWI1LTQ0MGQtYTljNC04OGE5NTJhYzk0MTciLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MzcyMTM4LCJleHAiOjE3ODUzNzI3Mzh9.g1Mg5fgic3jgUDSn5h9UbNWv7ju7CWd_iYgoGD34Lg8",
-                "type": "string"
-              }
-            },
-            "description": "Returns a paginated list of orders that are currently active (not completed or cancelled).",
             "url": {
-              "raw": "{{baseUrl}}/orders/active",
-              "protocol": "",
+              "raw": "{{baseUrl}}/orders/active?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2438,31 +2268,28 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
-            }
-          }
+              ]
+            },
+            "description": "Returns a paginated list of orders that are currently active (not completed or cancelled)."
+          },
+          "response": []
         },
         {
           "name": "Remove item from order",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "DELETE",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Removes a specific item from an active order and updates the order totals.",
             "url": {
               "raw": "{{baseUrl}}/orders/:orderId/items/:orderItemId",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2472,7 +2299,6 @@
                 "items",
                 ":orderItemId"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
@@ -2483,8 +2309,10 @@
                   "value": ""
                 }
               ]
-            }
-          }
+            },
+            "description": "Removes a specific item from an active order and updates the order totals."
+          },
+          "response": []
         }
       ]
     },
@@ -2494,28 +2322,24 @@
         {
           "name": "Get all payments",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Retrieves a paginated list of payments for the current tenant.",
             "url": {
-              "raw": "{{baseUrl}}/payments?page=&size=&sort=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/payments?page=&size=&sort=?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "payments?page=&size=&sort="
+                "payments"
               ],
               "query": [
                 {
@@ -2530,45 +2354,32 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
-            }
-          }
+              ]
+            },
+            "description": "Retrieves a paginated list of payments for the current tenant."
+          },
+          "response": []
         },
         {
           "name": "Record a payment",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmNlYjdkNi1jN2QzLTRiZWItODdmZS04ODk5NTY4MjFlN2YiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY3NjU0LCJleHAiOjE3ODUxNjgyNTR9.bactyJFOQkH0HvfvZnpnYLOx7ItD-wnJagB1t2BW2z0",
-                "type": "string"
-              }
-            },
-            "description": "Records a payment for an existing order and marks the order as completed.",
-            "url": {
-              "raw": "{{baseUrl}}/payments",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "payments"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"orderId\": \"0342a2e4-6667-4aa8-9cb1-e25b1025d25f\",\n  \"paymentMethod\": \"CASH\"\n}",
@@ -2577,29 +2388,36 @@
                   "language": "json"
                 }
               }
-            }
-          }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            },
+            "description": "Records a payment for an existing order and marks the order as completed."
+          },
+          "response": []
         },
         {
           "name": "Get payment by ID",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Retrieves a payment by its unique identifier.",
             "url": {
               "raw": "{{baseUrl}}/payments/:id",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2607,36 +2425,33 @@
                 "payments",
                 ":id"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "id",
                   "value": ""
                 }
               ]
-            }
-          }
+            },
+            "description": "Retrieves a payment by its unique identifier."
+          },
+          "response": []
         },
         {
           "name": "Get payment by order ID",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "Retrieves the payment associated with a specific order.",
             "url": {
               "raw": "{{baseUrl}}/payments/order/:orderId",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2645,15 +2460,16 @@
                 "order",
                 ":orderId"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
                   "value": ""
                 }
               ]
-            }
-          }
+            },
+            "description": "Retrieves the payment associated with a specific order."
+          },
+          "response": []
         }
       ]
     },
@@ -2663,28 +2479,25 @@
         {
           "name": "Get receipt",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMTIyOGM4My1hODE3LTQ4Y2QtYmMwMC0wMzE4ZDMzZmUzYjMiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTYxMDAyLCJleHAiOjE3ODUxNjE2MDJ9.M5mg-Liqx-BxWjsWcL8Y0_mpQ_JT5cd02D9Fjh0pLmE",
-                "type": "string"
-              }
-            },
-            "description": "Retrieves the receipt details for a paid order.",
             "url": {
               "raw": "{{baseUrl}}/receipts/:orderId",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2692,41 +2505,39 @@
                 "receipts",
                 ":orderId"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
                   "value": "46a5cfd0-ff28-41dd-b01e-299e2bae750b"
                 }
               ]
-            }
-          }
+            },
+            "description": "Retrieves the receipt details for a paid order."
+          },
+          "response": []
         },
         {
           "name": "Download receipt PDF",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlYTk3ZDQ1NS1hYTg4LTQ0NTMtOTIxZi1hN2Y0OGY0Mzk2ZmQiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MTY1NTk0LCJleHAiOjE3ODUxNjYxOTR9.K0Q6sUzejycBjH222x7qlnUgSytAXF35ODnv2m-Dy58",
-                "type": "string"
-              }
-            },
-            "description": "Generates and returns a printable PDF receipt for a paid order.",
             "url": {
               "raw": "{{baseUrl}}/receipts/:orderId/pdf",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2735,15 +2546,16 @@
                 ":orderId",
                 "pdf"
               ],
-              "query": [],
               "variable": [
                 {
                   "key": "orderId",
                   "value": "46a5cfd0-ff28-41dd-b01e-299e2bae750b"
                 }
               ]
-            }
-          }
+            },
+            "description": "Generates and returns a printable PDF receipt for a paid order."
+          },
+          "response": []
         }
       ]
     },
@@ -2753,29 +2565,25 @@
         {
           "name": "Get Expense",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/expenses/:id?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/expenses/:id?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "expenses",
-                ":id?id="
+                ":id"
               ],
               "query": [
                 {
@@ -2790,48 +2598,23 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Update Expense",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/expenses/:id?id=",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "expenses",
-                ":id?id="
-              ],
-              "query": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"categoryId\": \"uuid\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"amount\": 0,\n  \"expenseDate\": \"2026-01-01\",\n  \"paymentMethod\": \"CASH\"\n}",
@@ -2840,35 +2623,15 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Delete Expense",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/expenses/:id?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/expenses/:id?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "expenses",
-                ":id?id="
+                ":id"
               ],
               "query": [
                 {
@@ -2883,38 +2646,75 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Expense",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/expenses/:id?id=?id=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "expenses",
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "Get Expenses",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYTMwYmI0Zi00YTU2LTQxY2ItYmU4ZS0xMDNiM2E5MjI3NjAiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEyNzgwLCJleHAiOjE3ODUyMTMzODB9.AcNGi7bkOmNfJ9hmFgYhNJ01oPVX7kUEb_Q7dCX6E5Y",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/expenses?page=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/expenses?page=?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "expenses?page="
+                "expenses"
               ],
               "query": [
                 {
@@ -2929,45 +2729,31 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create Expense",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYTMwYmI0Zi00YTU2LTQxY2ItYmU4ZS0xMDNiM2E5MjI3NjAiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEyNzgwLCJleHAiOjE3ODUyMTMzODB9.AcNGi7bkOmNfJ9hmFgYhNJ01oPVX7kUEb_Q7dCX6E5Y",
-                "type": "string"
-              }
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/expenses",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "expenses"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"categoryId\": \"aa39cc81-a183-4c92-b5f3-926f783c4f8e\",\n  \"title\": \"Posters, Digital Posts\",\n  \"description\": \"Created and publishted business cards pamplets\",\n  \"amount\": 2500,\n  \"expenseDate\": \"2026-07-24\",\n  \"paymentMethod\": \"CASH\"\n}",
@@ -2976,8 +2762,18 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/expenses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "expenses"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -2987,43 +2783,17 @@
         {
           "name": "Update Category",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/expense-categories/:id?id=",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "expense-categories",
-                ":id?id="
-              ],
-              "query": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"active\": true\n}",
@@ -3032,36 +2802,15 @@
                   "language": "json"
                 }
               }
-            }
-          }
-        },
-        {
-          "name": "Archive Category",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
             },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/expense-categories/:id/archive?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/expense-categories/:id?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "expense-categories",
-                ":id",
-                "archive?id="
+                ":id"
               ],
               "query": [
                 {
@@ -3076,73 +2825,100 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
+        },
+        {
+          "name": "Archive Category",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "default"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/expense-categories/:id/archive?id=?id=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "expense-categories",
+                ":id",
+                "archive"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "Get Categories",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                },
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYTMwYmI0Zi00YTU2LTQxY2ItYmU4ZS0xMDNiM2E5MjI3NjAiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEyNzgwLCJleHAiOjE3ODUyMTMzODB9.AcNGi7bkOmNfJ9hmFgYhNJ01oPVX7kUEb_Q7dCX6E5Y",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/expense-categories",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "expense-categories"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Create Category",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{baseUrl}}/expense-categories",
-              "protocol": "",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "expense-categories"
-              ],
-              "query": [],
-              "variable": []
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\"\n}",
@@ -3151,8 +2927,18 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/expense-categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "expense-categories"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -3162,34 +2948,31 @@
         {
           "name": "Get Sales Report",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ODQwZWFiNS1iNjNlLTQyNTUtODE5Zi01NWY0ZDRmYjAyNjgiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEzNTk4LCJleHAiOjE3ODUyMTQxOTh9.ucaXJNQ09hddR7aUDFuaoHiGOihxzKBS7wd-i6xKFxg",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/reports/sales?fromDate=01-10-2021&toDate=28-07-2026",
-              "protocol": "",
+              "raw": "{{baseUrl}}/reports/sales?fromDate=01-10-2021&toDate=28-07-2026?fromDate=01-10-2021&toDate=28-07-2026",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "reports",
-                "sales?fromDate=01-10-2021&toDate=28-07-2026"
+                "sales"
               ],
               "query": [
                 {
@@ -3200,42 +2983,39 @@
                   "key": "toDate",
                   "value": "28-07-2026"
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Profit Report",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ODQwZWFiNS1iNjNlLTQyNTUtODE5Zi01NWY0ZDRmYjAyNjgiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEzNTk4LCJleHAiOjE3ODUyMTQxOTh9.ucaXJNQ09hddR7aUDFuaoHiGOihxzKBS7wd-i6xKFxg",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/reports/profit?fromDate=01-10-2025&toDate=28-07-2025",
-              "protocol": "",
+              "raw": "{{baseUrl}}/reports/profit?fromDate=01-10-2025&toDate=28-07-2025?fromDate=01-10-2025&toDate=28-07-2025",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "reports",
-                "profit?fromDate=01-10-2025&toDate=28-07-2025"
+                "profit"
               ],
               "query": [
                 {
@@ -3246,37 +3026,33 @@
                   "key": "toDate",
                   "value": "28-07-2025"
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Order Report",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/reports/order?fromDate=10-2-2026&toDate=28-12-2026",
-              "protocol": "",
+              "raw": "{{baseUrl}}/reports/order?fromDate=10-2-2026&toDate=28-12-2026?fromDate=10-2-2026&toDate=28-12-2026",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "reports",
-                "order?fromDate=10-2-2026&toDate=28-12-2026"
+                "order"
               ],
               "query": [
                 {
@@ -3287,37 +3063,33 @@
                   "key": "toDate",
                   "value": "28-12-2026"
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get Expenses Report",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/reports/expenses?fromDate=&toDate=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/reports/expenses?fromDate=&toDate=?fromDate=&toDate=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "reports",
-                "expenses?fromDate=&toDate="
+                "expenses"
               ],
               "query": [
                 {
@@ -3328,10 +3100,10 @@
                   "key": "toDate",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -3341,38 +3113,34 @@
         {
           "name": "Get Dashboard",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYTMwYmI0Zi00YTU2LTQxY2ItYmU4ZS0xMDNiM2E5MjI3NjAiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEyNzgwLCJleHAiOjE3ODUyMTMzODB9.AcNGi7bkOmNfJ9hmFgYhNJ01oPVX7kUEb_Q7dCX6E5Y",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
               "raw": "{{baseUrl}}/dashboard",
-              "protocol": "",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "dashboard"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
@@ -3382,28 +3150,30 @@
         {
           "name": "Get All",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                },
+                {
+                  "key": "undefined",
+                  "type": "any"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "bearer",
-              "bearer": {
-                "key": "token",
-                "value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ODQwZWFiNS1iNjNlLTQyNTUtODE5Zi01NWY0ZDRmYjAyNjgiLCJpc3MiOiJ0ZW5hbnQtdGFibGUtYXBpIiwidGVuYW50Um9sZSI6Ik9XTkVSIiwidGVuYW50SWQiOiIxMGQ3ZGZlYS05ZTAwLTQxMjktYWJlZC0wN2QyOTU5MDE2NGMiLCJ1c2VySWQiOiI5MmY5NjUxOS1jZWZkLTQyZTMtYWNhYS00MTUzOTA1MzU0MDUiLCJwbGF0Zm9ybVJvbGUiOiJVU0VSIiwic3ViIjoiYXJzbGFuYW1pbi5vcmdAZ21haWwuY29tIiwiaWF0IjoxNzg1MjEzNTk4LCJleHAiOjE3ODUyMTQxOTh9.ucaXJNQ09hddR7aUDFuaoHiGOihxzKBS7wd-i6xKFxg",
-                "type": "string"
-              }
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/audit-logs",
-              "protocol": "",
+              "raw": "{{baseUrl}}/audit-logs?page=&size=&sort=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -3423,37 +3193,33 @@
                   "key": "sort",
                   "value": ""
                 }
-              ],
-              "variable": []
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "Get By Id",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
-                "description": "",
-                "disabled": false,
                 "type": "default"
               }
             ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
             "url": {
-              "raw": "{{baseUrl}}/audit-logs/:id?id=",
-              "protocol": "",
+              "raw": "{{baseUrl}}/audit-logs/:id?id=?id=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "audit-logs",
-                ":id?id="
+                ":id"
               ],
               "query": [
                 {
@@ -3468,7 +3234,288 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Administration",
+      "item": [
+        {
+          "name": "Dashboard",
+          "item": [
+            {
+              "name": "Get Platform Dashboard",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "undefined",
+                      "type": "any"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/platform/dashboard",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "dashboard"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Audit Logs",
+          "item": [
+            {
+              "name": "List Audit Logs",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "undefined",
+                      "type": "any"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/platform/audit-logs?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "audit-logs"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "action",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "from",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "to",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Audit Log Details",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/platform/audit-logs/{{auditLogId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "audit-logs",
+                    "{{auditLogId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Tenant Management",
+          "item": [
+            {
+              "name": "Get tenants",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "undefined",
+                      "type": "any"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/platform/tenants?page=0&size=10&sort=name,asc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "tenants"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "name,asc"
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Tenant Details",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "undefined",
+                      "type": "any"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/platform/tenants/{{tenantId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "tenants",
+                    "{{tenantId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Tenant Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tenantStatus\": \"ACTIVE\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/platform/tenants/{{tenantId}}/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "tenants",
+                    "{{tenantId}}",
+                    "status"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Tenant Plan",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"planType\": \"PRO\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/platform/tenants/{{tenantId}}/plan",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "platform",
+                    "tenants",
+                    "{{tenantId}}",
+                    "plan"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     }
@@ -3476,13 +3523,11 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:8080/api/v1",
-      "type": "default"
+      "value": "http://localhost:8080/api/v1"
     },
     {
       "key": "accessToken",
-      "value": "",
-      "type": "default"
+      "value": ""
     }
   ]
 }

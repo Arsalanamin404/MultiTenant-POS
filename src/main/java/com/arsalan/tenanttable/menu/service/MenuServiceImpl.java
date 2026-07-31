@@ -38,6 +38,12 @@ public class MenuServiceImpl implements IMenuService {
     private final TenantRepository tenantRepository;
     private final IAuditLogService auditLogService;
 
+    private User getOrThrowCurrentUser() {
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    }
+
     private MenuItem getMenuItemOrThrow(UUID id, UUID tenantId) {
         return menuRepository.findByIdAndTenantId(id, tenantId)
                 .orElseThrow(() ->
@@ -239,6 +245,7 @@ public class MenuServiceImpl implements IMenuService {
     @Transactional
     public void delete(UUID id) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
+        User currentUser = getOrThrowCurrentUser();
 
         Tenant currentTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
@@ -250,6 +257,7 @@ public class MenuServiceImpl implements IMenuService {
         menuRepository.delete(menuItem);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.DELETE,
                 AuditEntityType.MENU_ITEM,
                 menuItem.getId(),

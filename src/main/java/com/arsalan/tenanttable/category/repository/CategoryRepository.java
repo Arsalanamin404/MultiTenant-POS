@@ -15,9 +15,11 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     Optional<Category> findByTenantIdAndName(UUID tenantId, String name);
 
-    List<Category>findByNameIgnoreCaseAndTenant(String name, Tenant tenant);
+    List<Category> findByNameIgnoreCaseAndTenant(String name, Tenant tenant);
 
-    Page<Category>findAllByTenantId(UUID id, Pageable page);
+    Page<Category> findAllByTenantId(UUID id, Pageable page);
 
     Optional<Category> findByIdAndTenantId(UUID id, UUID tenant_id);
+
+    Long countByTenantId(UUID tenantId);
 }

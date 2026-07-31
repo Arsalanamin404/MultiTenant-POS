@@ -93,7 +93,7 @@ public class UserController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDto>> getUser(
-            @Valid UUID id,
+            @PathVariable @Valid UUID id,
             HttpServletRequest request
     ) {
         UserResponseDto user = userService.getUserById(id);
@@ -110,7 +110,7 @@ public class UserController {
     @PatchMapping("/{id}/status")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDto>> updateUserStatus(
-            @Valid UUID id,
+            @PathVariable @Valid UUID id,
             @Valid @RequestBody UpdateUserStatusRequestDto dto,
             HttpServletRequest request
     ) {

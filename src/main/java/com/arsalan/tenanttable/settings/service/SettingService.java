@@ -10,6 +10,8 @@ import com.arsalan.tenanttable.settings.dto.UpdateSettingsRequestDto;
 import com.arsalan.tenanttable.settings.entity.Settings;
 import com.arsalan.tenanttable.settings.mapper.SettingsMapper;
 import com.arsalan.tenanttable.settings.repository.SettingsRepository;
+import com.arsalan.tenanttable.user.entity.User;
+import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,13 @@ public class SettingService implements ISettingService {
     private final SettingsRepository settingsRepository;
     private final ICurrentUserUtilService currentUserUtilService;
     private final IAuditLogService auditLogService;
+    private final UserRepository userRepository;
+
+    private User getOrThrowCurrentUser() {
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    }
 
     private Settings getOrThrowSettings() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
@@ -48,7 +57,7 @@ public class SettingService implements ISettingService {
     @Override
     @Transactional
     public SettingsResponseDto updateSettings(UpdateSettingsRequestDto dto) {
-
+        User currentUser = getOrThrowCurrentUser();
         Settings settings = getOrThrowSettings();
 
         log.info("Updating settings for tenantId={}",
@@ -57,6 +66,7 @@ public class SettingService implements ISettingService {
         settings.update(dto);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.SETTINGS,
                 settings.getId(),

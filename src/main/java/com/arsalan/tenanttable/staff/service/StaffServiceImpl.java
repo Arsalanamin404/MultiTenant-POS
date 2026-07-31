@@ -83,6 +83,7 @@ public class StaffServiceImpl implements IStaffService {
     @Transactional
     public StaffResponseDto updateRole(UUID staffId, UpdateStaffRoleRequestDto dto) {
         Tenant currentTenant = getOrThrowCurrentTenant();
+        User currentUser = getOrThrowCurrentUser();
 
         User staff = getOrThrowStaff(staffId, currentTenant);
 
@@ -97,6 +98,7 @@ public class StaffServiceImpl implements IStaffService {
         staff.setTenantRole(dto.getTenantRole());
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.STAFF,
                 staff.getId(),
@@ -134,6 +136,7 @@ public class StaffServiceImpl implements IStaffService {
         staff.setActive(dto.getActive());
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.STAFF,
                 staff.getId(),

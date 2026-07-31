@@ -11,12 +11,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface IAuditLogService {
-    void log(
-            AuditAction action,
-            AuditEntityType entityType,
-            UUID entityId,
-            String description
-    );
 
     void log(
             User performedBy,

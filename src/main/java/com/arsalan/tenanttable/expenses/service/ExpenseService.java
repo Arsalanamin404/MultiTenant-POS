@@ -165,11 +165,13 @@ public class ExpenseService implements IExpenseService {
     @Transactional
     public ExpenseResponseDto deleteExpense(UUID expenseId) {
         Tenant currentTenant = getOrThrowCurrentTenant();
+        User currentUser = getOrThrowCurrentUser();
         Expense expense = getOrThrowExpense(expenseId, currentTenant.getId());
 
         expenseRepository.delete(expense);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.DELETE,
                 AuditEntityType.EXPENSE,
                 expense.getId(),

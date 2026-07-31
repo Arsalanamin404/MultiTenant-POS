@@ -16,6 +16,8 @@ import com.arsalan.tenanttable.expenses.repository.ExpenseCategoryRepository;
 import com.arsalan.tenanttable.expenses.repository.ExpenseRepository;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.tenant.repository.TenantRepository;
+import com.arsalan.tenanttable.user.entity.User;
+import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,13 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
     private final TenantRepository tenantRepository;
     private final ExpenseRepository expenseRepository;
     private final IAuditLogService auditLogService;
+    private final UserRepository userRepository;
+
+    private User getOrThrowCurrentUser() {
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    }
 
     private Tenant getOrThrowCurrentTenant() {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
@@ -56,6 +65,8 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
     @Transactional
     public ExpenseCategoryResponseDto createCategory(CreateExpenseCategoryRequestDto dto) {
         Tenant currentTenant = getOrThrowCurrentTenant();
+        User currentUser = getOrThrowCurrentUser();
+
         String name = dto.getName().trim();
 
         if (expenseCategoryRepository.existsByTenantIdAndNameIgnoreCase(currentTenant.getId(), name)) {
@@ -71,6 +82,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
         expenseCategoryRepository.save(category);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.CREATE,
                 AuditEntityType.EXPENSE_CATEGORY,
                 category.getId(),
@@ -100,6 +112,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
             UUID categoryId,
             UpdateExpenseCategoryRequestDto dto) {
 
+        User currentUser = getOrThrowCurrentUser();
         Tenant currentTenant = getOrThrowCurrentTenant();
 
         ExpenseCategory category = getOrThrowCategory(categoryId, currentTenant.getId());
@@ -126,6 +139,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
         }
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.EXPENSE_CATEGORY,
                 category.getId(),
@@ -141,6 +155,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
     @Transactional
     public ExpenseCategoryResponseDto archiveCategory(UUID categoryId) {
         Tenant currentTenant = getOrThrowCurrentTenant();
+        User currentUser = getOrThrowCurrentUser();
 
         ExpenseCategory category = getOrThrowCategory(categoryId, currentTenant.getId());
 
@@ -151,6 +166,7 @@ public class ExpenseCategoryService implements IExpenseCategoryService {
         category.setActive(false);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.EXPENSE_CATEGORY,
                 category.getId(),

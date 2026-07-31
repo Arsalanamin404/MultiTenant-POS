@@ -20,4 +20,6 @@ public interface MenuRepository extends JpaRepository<MenuItem, UUID> {
     boolean existsByNameIgnoreCaseAndTenantId(String name, UUID tenantId);
 
     Page<MenuItem> findAllByTenantId(UUID id, Pageable pageable);
+
+    Long countByTenantId(UUID tenantId);
 }

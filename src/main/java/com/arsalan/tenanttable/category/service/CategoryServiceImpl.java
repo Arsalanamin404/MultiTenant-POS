@@ -14,6 +14,8 @@ import com.arsalan.tenanttable.exception.ResourceAlreadyExistsException;
 import com.arsalan.tenanttable.exception.ResourceNotFoundException;
 import com.arsalan.tenanttable.tenant.entity.Tenant;
 import com.arsalan.tenanttable.tenant.repository.TenantRepository;
+import com.arsalan.tenanttable.user.entity.User;
+import com.arsalan.tenanttable.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,11 +33,20 @@ public class CategoryServiceImpl implements ICategoryService {
     private final ICurrentUserUtilService currentUserUtilService;
     private final TenantRepository tenantRepository;
     private final IAuditLogService auditLogService;
+    private final UserRepository userRepository;
+
+    private User getOrThrowCurrentUser() {
+        UUID userId = currentUserUtilService.getCurrentUserId();
+        return userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + userId));
+    }
 
     @Override
     @Transactional
     public CategoryResponseDto create(CreateCategoryRequestDto dto) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
+        User currentUser = getOrThrowCurrentUser();
 
         Tenant currentTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
@@ -54,6 +65,7 @@ public class CategoryServiceImpl implements ICategoryService {
         Category savedCategory = categoryRepository.save(category);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.CREATE,
                 AuditEntityType.CATEGORY,
                 savedCategory.getId(),
@@ -106,6 +118,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional
     public CategoryResponseDto update(UUID id, UpdateCategoryRequestDto dto) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
+        User currentUser = getOrThrowCurrentUser();
 
         Category category = categoryRepository.findByIdAndTenantId(id, tenantId)
                 .orElseThrow(() ->
@@ -130,6 +143,7 @@ public class CategoryServiceImpl implements ICategoryService {
         Category updatedCategory = categoryRepository.save(category);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.CATEGORY,
                 updatedCategory.getId(),
@@ -149,6 +163,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional
     public void delete(UUID id) {
         UUID tenantId = currentUserUtilService.getCurrentTenantId();
+        User currentUser = getOrThrowCurrentUser();
 
         Category category = categoryRepository
                 .findByIdAndTenantId(id, tenantId)
@@ -160,6 +175,7 @@ public class CategoryServiceImpl implements ICategoryService {
         categoryRepository.delete(category);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.DELETE,
                 AuditEntityType.CATEGORY,
                 category.getId(),

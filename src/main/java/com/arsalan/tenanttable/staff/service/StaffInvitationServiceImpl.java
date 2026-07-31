@@ -214,6 +214,7 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
         StaffInvitation savedInvitation = invitationRepository.save(invitation);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.CREATE,
                 AuditEntityType.STAFF_INVITATION,
                 savedInvitation.getId(),
@@ -290,6 +291,7 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
     @Override
     public StaffInvitationResponseDto cancelInvitation(UUID invitationId) {
         Tenant currentTenant = getOrThrowCurrentTenant();
+        User currentUser = getOrThrowCurrentUser();
 
         StaffInvitation invitation = getOrThrowInvitation(invitationId, currentTenant);
 
@@ -300,6 +302,7 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
         invitationRepository.save(invitation);
 
         auditLogService.log(
+                currentUser,
                 AuditAction.UPDATE,
                 AuditEntityType.STAFF_INVITATION,
                 invitation.getId(),
@@ -376,6 +379,7 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
         invitation.setStatus(InvitationStatus.ACCEPTED);
 
         auditLogService.log(
+                invitation.getTenant(),
                 AuditAction.UPDATE,
                 AuditEntityType.STAFF_INVITATION,
                 invitation.getId(),
