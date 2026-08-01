@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenantTable API</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+            background:white;
+            width:650px;
+            padding:40px;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,.1);
+        }
+
+        h1{
+            margin-bottom:10px;
+        }
+
+        p{
+            color:#555;
+            margin-bottom:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        td{
+            padding:12px 0;
+            border-bottom:1px solid #eee;
+        }
+
+        td:first-child{
+            font-weight:bold;
+            width:180px;
+        }
+
+        .online{
+            color:green;
+            font-weight:bold;
+        }
+
+        footer{
+            margin-top:30px;
+            text-align:center;
+            color:#888;
+            font-size:14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>TenantTable API</h1>
+
+    <p>
+        Multi-tenant Restaurant POS Backend
+    </p>
+
+    <table>
+
+        <tr>
+            <td>Status</td>
+            <td class="online">🟢 Online</td>
+        </tr>
+
+        <tr>
+            <td>Environment</td>
+            <td>Production</td>
+        </tr>
+
+        <tr>
+            <td>Version</td>
+            <td>v1.0.0</td>
+        </tr>
+
+        <tr>
+            <td>Runtime</td>
+            <td>Java 21 / Spring Boot</td>
+        </tr>
+
+        <tr>
+            <td>Database</td>
+            <td>PostgreSQL (AWS RDS)</td>
+        </tr>
+
+        <tr>
+            <td>Infrastructure</td>
+            <td>AWS EC2 • Docker • Nginx</td>
+        </tr>
+
+    </table>
+
+    <footer>
+
+        © 2026 TenantTable
+
+    </footer>
+
+</div>
+
+</body>
+</html>

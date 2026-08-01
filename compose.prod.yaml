@@ -1,13 +1,15 @@
 services:
-
   server:
-    build:
-      context: .
+    image: futuregen/tenanttable-api:latest
     container_name: tenantTable-api
+
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
+
     env_file:
       - .env
+
     environment:
       ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+
     restart: unless-stopped
