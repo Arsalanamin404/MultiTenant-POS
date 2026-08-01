@@ -1,0 +1,13 @@
+services:
+
+  server:
+    build:
+      context: .
+    container_name: tenantTable-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+    restart: unless-stopped
