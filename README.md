@@ -20,6 +20,24 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
+## Running Locally
+
+```bash
+git clone https://github.com/Arslanamin404/tenanttable-api.git
+
+cd tenanttable-api
+
+docker compose up
+```
+
+or
+
+```bash
+./mvnw spring-boot:run
+```
+
+---
+
 # Current Features
 
 ## Authentication & Security
@@ -207,6 +225,23 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
+## CI/CD & Deployment
+
+* Dockerized Spring Boot Application
+* Docker Compose for Local & Production Environments
+* AWS EC2 Deployment
+* AWS RDS PostgreSQL Integration
+* Nginx Reverse Proxy
+* GitHub Actions CI/CD Pipeline
+* Automated Docker Image Build & Push
+* Docker Hub Container Registry
+* Automated Production Deployment to EC2
+* Health Check Verification After Deployment
+* Environment-based Configuration
+* Production-ready Deployment Architecture
+
+---
+
 ## Platform Administration
 
 * Platform Dashboard
@@ -223,7 +258,7 @@ an independent tenant while sharing the same application infrastructure.
 
 ---
 
-## Infrastructure
+## Infrastructure & Deployment
 
 * Layered Architecture
 * Feature-based Package Structure
@@ -238,10 +273,35 @@ an independent tenant while sharing the same application infrastructure.
 * RESTful API Design
 * Docker Support
 * Monitoring & Logging
+* Docker
+* Docker Compose
+* AWS EC2
+* AWS RDS PostgreSQL
+* Nginx Reverse Proxy
+* GitHub Actions CI/CD
+* Docker Hub Container Registry
+* Health Check Endpoint
+* Environment-based Configuration
+* Production-ready Deployment
 
 ## Architecture
 
 The project follows a clean, modular architecture focused on scalability and maintainability.
+
+## Production Architecture
+
+```text
+                     Internet
+                          │
+                     HTTPS (Nginx)
+                          │
+                          ▼
+                 Spring Boot API
+                  (Docker on EC2)
+                          │
+                          ▼
+                 AWS RDS PostgreSQL
+```
 
 ### Architectural Highlights
 
@@ -301,13 +361,12 @@ The project follows a clean, modular architecture focused on scalability and mai
 
 ---
 
-## Upcoming Modules
+## Roadmap
 
-* QR Code Table Ordering
-* Subscription & Plan Management
-* Redis Caching
-* CI/CD Pipeline
-* Cloud deployment
+- QR Code Table Ordering
+- Kitchen Display System (KDS)
+- Inventory Management
+- Mobile Application
 
 ---
 
