@@ -26,11 +26,10 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("""
             SELECT u
             FROM User u
-            JOIN FETCH u.tenant
-            WHERE u.tenant.id = :id
-                 AND u.tenantRole = :role
+            LEFT JOIN FETCH u.tenant
+            WHERE u.email = :email
             """)
-    Page<User> findAllByTenantIdAndTenantRole(UUID id, TenantRole role, Pageable pageable);
+    Optional<User> findByEmailWithTenant(String email);
 
     Page<User> findAllByTenant(Tenant tenant, Pageable pageable);
 
