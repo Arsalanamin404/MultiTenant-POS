@@ -2,13 +2,15 @@ package com.arsalan.tenanttable.settings.dto;
 
 import com.arsalan.tenanttable.settings.enums.Currency;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateSettingsRequestDto {
 
     @Size(max = 150, message = "Business name must not exceed 150 characters")
@@ -47,7 +49,7 @@ public class UpdateSettingsRequestDto {
     private Currency currency;
 
     private String timezone;
-    
+
     @DecimalMin(value = "0.0", message = "Tax rate cannot be negative")
     @DecimalMax(value = "100.0", message = "Tax rate cannot exceed 100%")
     @Digits(integer = 3, fraction = 2, message = "Tax rate must have at most 2 decimal places")

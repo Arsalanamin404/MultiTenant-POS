@@ -2,11 +2,13 @@ package com.arsalan.tenanttable.staff.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AcceptInvitationRequestDto {
     @NotBlank(message = "Invitation token is required.")
     private String token;

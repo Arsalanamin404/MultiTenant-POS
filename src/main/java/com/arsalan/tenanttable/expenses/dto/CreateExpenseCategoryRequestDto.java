@@ -3,14 +3,12 @@ package com.arsalan.tenanttable.expenses.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CreateExpenseCategoryRequestDto {
 
     @NotBlank(message = "Category name is required")

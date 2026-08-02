@@ -2,14 +2,12 @@ package com.arsalan.tenanttable.expenses.dto;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateExpenseCategoryRequestDto {
 
     @Size(max = 100)
