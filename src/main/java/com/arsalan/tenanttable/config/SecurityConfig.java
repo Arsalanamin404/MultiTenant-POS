@@ -38,8 +38,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
-                                "/index.html")
-                        .permitAll()
+                                "/index.html",
+                                "/accept-invitation.html"
+                        ).permitAll()
                         .requestMatchers(
                                 "/auth/register",
                                 "/auth/login",
@@ -48,6 +49,9 @@ public class SecurityConfig {
                                 "/auth/resend-verification-otp",
                                 "/auth/forgot-password",
                                 "/auth/reset-password"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/invitations/accept"
                         ).permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",

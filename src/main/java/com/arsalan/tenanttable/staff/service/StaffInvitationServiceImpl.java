@@ -81,7 +81,8 @@ public class StaffInvitationServiceImpl implements IStaffInvitationService {
     }
 
     private String buildInvitationLink(String token) {
-        return frontendUrl + "/accept-invitation?token=" + token;
+        // remove .html when using reactJs frontend
+        return frontendUrl + "/accept-invitation.html?token=" + token;
     }
 
     private void validatePendingInvitation(@NonNull StaffInvitation invitation) {

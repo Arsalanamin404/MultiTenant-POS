@@ -5,119 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TenantTable API</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial,Helvetica,sans-serif;
+        body {
+            font-family: Inter, system-ui, sans-serif;
         }
 
-        body{
-            background:#f4f6f9;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
+        .pulse-dot {
+            animation: pulse 2s infinite;
         }
 
-        .card{
-            background:white;
-            width:650px;
-            padding:40px;
-            border-radius:12px;
-            box-shadow:0 10px 25px rgba(0,0,0,.1);
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
-        h1{
-            margin-bottom:10px;
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
         }
 
-        p{
-            color:#555;
-            margin-bottom:25px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        table{
-            width:100%;
-            border-collapse:collapse;
+        .spin {
+            animation: spin 0.8s linear infinite;
         }
 
-        td{
-            padding:12px 0;
-            border-bottom:1px solid #eee;
-        }
-
-        td:first-child{
-            font-weight:bold;
-            width:180px;
-        }
-
-        .online{
-            color:green;
-            font-weight:bold;
-        }
-
-        footer{
-            margin-top:30px;
-            text-align:center;
-            color:#888;
-            font-size:14px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 
-<body>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-6">
 
-<div class="card">
+<div class="w-full max-w-xl fade-in">
 
-    <h1>TenantTable API</h1>
+    <!-- Logo -->
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13"/>
+                <path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6"/>
+                <path d="M4 11h16"/>
+            </svg>
+        </div>
+        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">
+            TenantTable API
+        </h1>
+        <p class="text-slate-500 mt-1.5 text-sm">
+            Multi-tenant Restaurant POS Backend
+        </p>
+    </div>
 
-    <p>
-        Multi-tenant Restaurant POS Backend
-    </p>
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
 
-    <table>
+        <!-- Status banner (dynamic) -->
+        <div id="statusBanner"
+             class="flex items-center justify-between px-8 py-5 bg-slate-100 border-b border-slate-200 transition-colors">
+            <div class="flex items-center gap-2.5">
+                <svg id="statusSpinner" class="spin w-4 h-4 text-slate-400" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                <span id="statusDot" class="relative hidden h-2.5 w-2.5">
+                    <span id="statusDotPulse"
+                          class="pulse-dot absolute inline-flex h-full w-full rounded-full opacity-75"></span>
+                    <span id="statusDotCore" class="relative inline-flex rounded-full h-2.5 w-2.5"></span>
+                </span>
+                <span id="statusLabel" class="text-sm font-semibold text-slate-500">Checking status…</span>
+            </div>
+            <span id="statusMeta" class="text-xs font-medium text-slate-400"></span>
+        </div>
 
-        <tr>
-            <td>Status</td>
-            <td class="online">🟢 Online</td>
-        </tr>
+        <!-- Health components (dynamic, hidden until loaded) -->
+        <div id="healthComponents" class="hidden px-8 pt-5 pb-1">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Components</p>
+            <div id="healthComponentsList" class="flex flex-wrap gap-2 mb-4"></div>
+        </div>
 
-        <tr>
-            <td>Environment</td>
-            <td>Production</td>
-        </tr>
+        <!-- Details -->
+        <div class="px-8 py-6 border-t border-slate-100">
+            <dl class="divide-y divide-slate-100">
 
-        <tr>
-            <td>Version</td>
-            <td>v1.0.0</td>
-        </tr>
+                <div class="flex items-center justify-between py-3.5">
+                    <dt class="text-sm text-slate-500">Environment</dt>
+                    <dd class="text-sm font-medium text-slate-900">Production</dd>
+                </div>
 
-        <tr>
-            <td>Runtime</td>
-            <td>Java 21 / Spring Boot</td>
-        </tr>
+                <div class="flex items-center justify-between py-3.5">
+                    <dt class="text-sm text-slate-500">Version</dt>
+                    <dd class="text-sm font-medium text-slate-900 font-mono">v1.0.0</dd>
+                </div>
 
-        <tr>
-            <td>Database</td>
-            <td>PostgreSQL (AWS RDS)</td>
-        </tr>
+                <div class="flex items-center justify-between py-3.5">
+                    <dt class="text-sm text-slate-500">Runtime</dt>
+                    <dd class="text-sm font-medium text-slate-900">Java 21 · Spring Boot</dd>
+                </div>
 
-        <tr>
-            <td>Infrastructure</td>
-            <td>AWS EC2 • Docker • Nginx</td>
-        </tr>
+                <div class="flex items-center justify-between py-3.5">
+                    <dt class="text-sm text-slate-500">Database</dt>
+                    <dd class="text-sm font-medium text-slate-900">PostgreSQL (AWS RDS)</dd>
+                </div>
 
-    </table>
+                <div class="flex items-center justify-between py-3.5">
+                    <dt class="text-sm text-slate-500">Infrastructure</dt>
+                    <dd class="text-sm font-medium text-slate-900">AWS EC2 · Docker · Nginx</dd>
+                </div>
 
-    <footer>
+            </dl>
+        </div>
 
-        © 2026 TenantTable
+    </div>
 
+    <footer class="text-center text-xs text-slate-400 mt-6">
+        &copy; 2026 TenantTable. All rights reserved.
     </footer>
 
 </div>
+
+<script>
+    const HEALTH_ENDPOINT = "/api/v1/actuator/health";
+
+    const spinner = document.getElementById("statusSpinner");
+    const dot = document.getElementById("statusDot");
+    const dotPulse = document.getElementById("statusDotPulse");
+    const dotCore = document.getElementById("statusDotCore");
+    const label = document.getElementById("statusLabel");
+    const meta = document.getElementById("statusMeta");
+    const banner = document.getElementById("statusBanner");
+    const componentsWrap = document.getElementById("healthComponents");
+    const componentsList = document.getElementById("healthComponentsList");
+
+    function setBanner(state, text, metaText) {
+        spinner.classList.add("hidden");
+        dot.classList.remove("hidden");
+
+        const styles = {
+            up: {
+                bannerBg: "bg-green-50 border-green-100",
+                dotColor: "bg-green-500",
+                labelColor: "text-green-700",
+                metaColor: "text-green-600"
+            },
+            down: {
+                bannerBg: "bg-red-50 border-red-100",
+                dotColor: "bg-red-500",
+                labelColor: "text-red-700",
+                metaColor: "text-red-600"
+            },
+            unknown: {
+                bannerBg: "bg-amber-50 border-amber-100",
+                dotColor: "bg-amber-500",
+                labelColor: "text-amber-700",
+                metaColor: "text-amber-600"
+            }
+        };
+
+        const s = styles[state] || styles.unknown;
+
+        banner.className = "flex items-center justify-between px-8 py-5 border-b transition-colors " + s.bannerBg;
+        dotPulse.className = "pulse-dot absolute inline-flex h-full w-full rounded-full opacity-75 " + s.dotColor;
+        dotCore.className = "relative inline-flex rounded-full h-2.5 w-2.5 " + s.dotColor;
+        label.className = "text-sm font-semibold " + s.labelColor;
+        label.textContent = text;
+        meta.className = "text-xs font-medium " + s.metaColor;
+        meta.textContent = metaText || "";
+    }
+
+    function renderComponents(components) {
+        if (!components || typeof components !== "object") return;
+
+        const entries = Object.entries(components);
+        if (entries.length === 0) return;
+
+        componentsList.innerHTML = "";
+
+        entries.forEach(function ([name, detail]) {
+            const status = (detail && detail.status) || "UNKNOWN";
+            const isUp = status === "UP";
+            const isDown = status === "DOWN";
+
+            const pill = document.createElement("span");
+            pill.className = "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium " +
+                (isUp ? "bg-green-50 text-green-700" : isDown ? "bg-red-50 text-red-700" : "bg-slate-100 text-slate-500");
+
+            const dotSpan = document.createElement("span");
+            dotSpan.className = "h-1.5 w-1.5 rounded-full " +
+                (isUp ? "bg-green-500" : isDown ? "bg-red-500" : "bg-slate-400");
+
+            pill.appendChild(dotSpan);
+            pill.appendChild(document.createTextNode(name));
+            componentsList.appendChild(pill);
+        });
+
+        componentsWrap.classList.remove("hidden");
+    }
+
+    async function checkHealth() {
+        const started = performance.now();
+
+        try {
+            const response = await fetch(HEALTH_ENDPOINT, { headers: { "Accept": "application/json" } });
+            const latency = Math.round(performance.now() - started);
+            const data = await response.json().catch(function () { return {}; });
+
+            if (response.ok && data.status === "UP") {
+                setBanner("up", "All systems operational", latency + "ms");
+                renderComponents(data.components);
+            } else if (data.status === "DOWN") {
+                setBanner("down", "Service degraded", latency + "ms");
+                renderComponents(data.components);
+            } else {
+                setBanner("unknown", "Status unavailable", response.status + "");
+            }
+        } catch (err) {
+            setBanner("unknown", "Unable to reach health endpoint", "");
+        }
+    }
+
+    checkHealth();
+</script>
 
 </body>
 </html>
