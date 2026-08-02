@@ -62,5 +62,15 @@ jobs:
             docker compose -f compose.prod.yaml up -d --pull always --remove-orphans
             docker image prune -f
             
-            sleep 20
-            curl --fail http://127.0.0.1:8080/api/v1/actuator/health
+            for i in $(seq 1 15); do
+            if curl --fail -s http://127.0.0.1:8080/api/v1/actuator/health; then
+            echo "Healthy"
+            exit 0
+            fi
+            echo "Waiting for app to be healthy... attempt $i"
+            sleep 5
+            done
+            
+            echo "App failed to become healthy — dumping logs:"
+            docker logs tenanttable-api --tail 100
+            exit 1
