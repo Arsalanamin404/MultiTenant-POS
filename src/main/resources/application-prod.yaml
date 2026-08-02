@@ -15,7 +15,7 @@ spring:
         debug: false
 
 cookie:
-  secure: true
+  secure: false
 
 springdoc:
   api-docs:

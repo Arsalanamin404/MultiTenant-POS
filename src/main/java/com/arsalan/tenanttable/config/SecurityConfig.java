@@ -36,7 +36,9 @@ public class SecurityConfig {
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/")
+                        .requestMatchers(
+                                "/",
+                                "/index.html")
                         .permitAll()
                         .requestMatchers(
                                 "/auth/register",
